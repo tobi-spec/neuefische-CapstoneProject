@@ -1,5 +1,16 @@
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import Main from './pages/Main'
+
 function App() {
-  return <h1>Hallo Welt</h1>
+  return (
+    <Router>
+      <Switch>
+        <Route path="/">
+          <Main />
+        </Route>
+      </Switch>
+    </Router>
+  )
 }
 
 export default App
