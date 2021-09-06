@@ -13,9 +13,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>intestinalinspector</name>
     <description>intestinalinspector</description>
-    <properties>
-        <java.version>16</java.version>
-    </properties>
+
+
     <dependencies>
 
         <!-- Spring -->
@@ -31,6 +30,11 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.23</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
 
         <!-- Testing -->
         <dependency>
@@ -38,13 +42,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.200</version>
-            <scope>test</scope>
-        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
         <dependency>
@@ -54,6 +52,10 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <properties>
+        <java.version>16</java.version>
+    </properties>
 
     <build>
         <plugins>
