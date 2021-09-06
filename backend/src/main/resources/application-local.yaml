@@ -1,0 +1,5 @@
+profile:
+  datasource:
+    url: postgresql://localhost:5432/IntestinalInspector
+    user: admin
+    pass: 12345
