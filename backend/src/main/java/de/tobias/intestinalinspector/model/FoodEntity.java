@@ -1,8 +1,6 @@
 package de.tobias.intestinalinspector.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,6 +11,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FoodEntity {
 
     @Id
@@ -20,12 +20,12 @@ public class FoodEntity {
     @Column(name="id")
     private long id;
 
+    @Column(name="date")
+    private Date date;
 
     @Column(name= "food_name")
     private String foodName;
 
-    @Column(name="date")
-    private Date date;
 
     @Override
     public boolean equals(Object o) {
