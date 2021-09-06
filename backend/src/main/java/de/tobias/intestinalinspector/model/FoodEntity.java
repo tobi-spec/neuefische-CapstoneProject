@@ -1,5 +1,6 @@
 package de.tobias.intestinalinspector.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Table(name = "food_table")
 @Getter
 @Setter
+@Builder
 public class FoodEntity {
 
     @Id
