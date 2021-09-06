@@ -2,7 +2,7 @@ spring:
   profiles:
     active: local
   application:
-    name: IntestinalInspector
+    name: intinspec
   datasource:
     url: jdbc:${profile.datasource.url}
     username: ${profile.datasource.user}
@@ -15,4 +15,3 @@ spring:
     properties:
       hibernate:
         format_sql: false
-

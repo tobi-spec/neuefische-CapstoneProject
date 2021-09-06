@@ -9,14 +9,14 @@ version: "2.1"
 #
 
 services:
-  IntestInspec-postgres:
+  intinspec-postgres:
     image: postgres:12.4
-    container_name: IntestInspec-postgres
+    container_name: intinspec-postgres
     mem_limit: 50m
     environment:
       POSTGRES_PASSWORD: "12345"
       POSTGRES_USER: "admin"
-      POSTGRES_DB: "IntestInspec"
+      POSTGRES_DB: "intinspec"
     restart: always
     ports:
       - "5432:5432"
