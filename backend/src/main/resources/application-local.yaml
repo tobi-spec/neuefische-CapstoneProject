@@ -1,0 +1,6 @@
+profile:
+  datasource:
+    url: postgresql://localhost:5432/intinspec
+    user: admin
+    pass: 12345
+
