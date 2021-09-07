@@ -21,9 +21,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @CrossOrigin
 public class LoginController {
 
+    public static final String ACCESS_TOKEN_URL = "/auth/access_token";
+
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final AppUserRepository appUserRepository;
+
 
     public LoginController(AuthenticationManager authenticationManager, JwtService jwtService, AppUserRepository appUserRepository) {
         this.authenticationManager = authenticationManager;
@@ -39,7 +42,7 @@ public class LoginController {
                 .build());
     }
 
-    @PostMapping("/auth/access_token")
+    @PostMapping(ACCESS_TOKEN_URL)
     public ResponseEntity<AccessToken> getAccessToken(@RequestBody CredentialsDto credentials) {
         String username = credentials.getUserName();
         String password = credentials.getUserPassword();
