@@ -1,13 +1,13 @@
 package de.tobias.intestinalinspector.controller;
 
 
-import de.tobias.intestinalinspector.dto.AccessToken;
-import de.tobias.intestinalinspector.dto.AppUserDto;
-import de.tobias.intestinalinspector.dto.CredentialsDto;
+import de.tobias.intestinalinspector.api.AccessTokenDto;
+import de.tobias.intestinalinspector.api.AppUserDto;
+import de.tobias.intestinalinspector.api.CredentialsDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
-import de.tobias.intestinalinspector.repository.AppUserRepository;
-import de.tobias.intestinalinspector.service.AppUserService;
+import de.tobias.intestinalinspector.service.AppUserDetailsService;
 import de.tobias.intestinalinspector.service.JwtService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,12 +26,13 @@ public class LoginController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    private final AppUserService appUserService;
+    private final AppUserDetailsService appUserDetailsService;
 
-    public LoginController(AuthenticationManager authenticationManager, JwtService jwtService, AppUserService appUserService) {
+    @Autowired
+    public LoginController(AuthenticationManager authenticationManager, JwtService jwtService, AppUserDetailsService appUserDetailsService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
-        this.appUserService = appUserService;
+        this.appUserDetailsService = appUserDetailsService;
     }
 
     @GetMapping("auth/me")
@@ -43,7 +44,7 @@ public class LoginController {
     }
 
     @PostMapping(ACCESS_TOKEN_URL)
-    public ResponseEntity<AccessToken> getAccessToken(@RequestBody CredentialsDto credentials) {
+    public ResponseEntity<AccessTokenDto> getAccessToken(@RequestBody CredentialsDto credentials) {
         String username = credentials.getUserName();
         String password = credentials.getUserPassword();
 
@@ -52,10 +53,10 @@ public class LoginController {
         try{
             authenticationManager.authenticate(authToken);
 
-            AppUserEntity appUser = appUserService.findUser(username).orElseThrow();
+            AppUserEntity appUser = appUserDetailsService.findUser(username).orElseThrow();
             String token = jwtService.createJwtToken(appUser);
 
-            AccessToken accessToken = new AccessToken(token);
+            AccessTokenDto accessToken = new AccessTokenDto(token);
             return ok(accessToken);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
