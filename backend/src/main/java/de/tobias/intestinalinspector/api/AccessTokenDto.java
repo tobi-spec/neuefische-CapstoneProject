@@ -1,4 +1,4 @@
-package de.tobias.intestinalinspector.dto;
+package de.tobias.intestinalinspector.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AccessToken {
+public class AccessTokenDto {
 
     private String token;
 }
