@@ -2,6 +2,7 @@ package de.tobias.intestinalinspector.config;
 
 import de.tobias.intestinalinspector.filter.JwtAuthFilter;
 import de.tobias.intestinalinspector.service.AppUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -26,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AppUserDetailsService appUserDetailsService;
     private final JwtAuthFilter jwtAuthFilter;
 
+    @Autowired
     public SecurityConfig(AppUserDetailsService appUserDetailsService, JwtAuthFilter jwtAuthFilter) {
         this.appUserDetailsService = appUserDetailsService;
         this.jwtAuthFilter = jwtAuthFilter;
