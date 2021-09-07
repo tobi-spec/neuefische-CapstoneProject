@@ -1,5 +1,6 @@
 package de.tobias.intestinalinspector.config;
 
+import de.tobias.intestinalinspector.service.AppUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,15 +20,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final String[] SWAGGER_URLS = {"/v2/api-docs/**", "/swagger-ui/**", "/swagger-resources/**"};
 
-    UserDetailsService userDetailsService;
+    AppUserDetailsService appUserDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    public SecurityConfig(AppUserDetailsService appUserDetailsService) {
+        this.appUserDetailsService = appUserDetailsService;
     }
 
     @Override
     protected void configure (AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(appUserDetailsService);
     }
 
     @Bean

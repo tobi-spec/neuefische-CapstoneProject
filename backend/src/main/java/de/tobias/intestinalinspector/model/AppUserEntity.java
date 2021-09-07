@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table
+@Table(name="app_user")
 @Getter
 @Setter
 @Builder
@@ -25,6 +25,9 @@ public class AppUserEntity {
 
     @Column(name="user_password", nullable = false)
     private String userPassword;
+
+    @Column(name="user_role")
+    private String userRole;
 
     @Override
     public boolean equals(Object o) {
