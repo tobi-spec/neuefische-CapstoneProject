@@ -11,6 +11,7 @@ export default function AuthProvider({ children }) {
       .post('/auth/accesstoken', credentials)
       .then(reponse => reponse.data)
       .then(dto => dto.token)
+      .then(token => setToken(token))
   }
 
   const logout = () => setToken()
