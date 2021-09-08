@@ -1,4 +1,4 @@
-package de.tobias.intestinalinspector.dto;
+package de.tobias.intestinalinspector.api;
 
 import lombok.Builder;
 import lombok.Data;
