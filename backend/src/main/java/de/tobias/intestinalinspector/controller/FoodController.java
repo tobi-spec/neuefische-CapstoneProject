@@ -1,13 +1,16 @@
 package de.tobias.intestinalinspector.controller;
 
-import de.tobias.intestinalinspector.dto.FrontendFoodDto;
+import de.tobias.intestinalinspector.api.FrontendFoodDto;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("api/food")
@@ -21,7 +24,7 @@ public class FoodController {
     }
 
     @PostMapping
-    public FrontendFoodDto add(@RequestBody FrontendFoodDto frontendFoodDto) {
+    public ResponseEntity<FrontendFoodDto> add(@RequestBody FrontendFoodDto frontendFoodDto) {
 
         FoodEntity foodToPersist = FoodEntity.builder()
                 .foodName(frontendFoodDto.getFoodName())
@@ -33,6 +36,6 @@ public class FoodController {
                 .foodName(persistedFood.getFoodName())
                 .build();
 
-        return foodToReturn;
+        return ok(foodToReturn);
     }
 }
