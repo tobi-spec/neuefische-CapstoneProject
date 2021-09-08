@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import { useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
+import { Redirect } from 'react-router-dom'
+import Main from './Main'
 
 export default function Login() {
-  const { login } = useAuth()
+  const { login, user } = useAuth()
   const [credentials, setCredentials] = useState({
     userName: '',
     userPassword: '',
@@ -15,6 +17,10 @@ export default function Login() {
   const submitHandler = event => {
     event.preventDefault()
     login(credentials).catch(error => console.error(error))
+  }
+
+  if (user) {
+    return <Redirect to="/main" />
   }
 
   return (

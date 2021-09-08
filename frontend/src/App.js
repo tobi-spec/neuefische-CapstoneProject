@@ -9,7 +9,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Switch>
-          <Route path="/" component={Login} />
+          <Route exact path="/" component={Login} />
           <ProtectedRoute path="/main" component={Main} />
         </Switch>
       </Router>
