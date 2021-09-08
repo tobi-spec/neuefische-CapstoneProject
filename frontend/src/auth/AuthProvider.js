@@ -6,13 +6,13 @@ import AuthContext from './AuthContext'
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState()
 
-  const login = credentials => {
+  const login = credentials =>
     axios
-      .post('/auth/accesstoken', credentials)
-      .then(reponse => reponse.data)
+      .post('auth/access_token', credentials)
+      .then(response => response.data)
       .then(dto => dto.token)
       .then(token => setToken(token))
-  }
+      .catch(error => console.error(error))
 
   const logout = () => setToken()
 
