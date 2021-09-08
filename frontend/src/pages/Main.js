@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useState } from 'react'
 
 export default function Main() {
-  const [food, setFood] = useState('')
+  const [food, setFood] = useState({ foodName: '' })
 
   const foodHandler = event =>
     setFood({
@@ -15,6 +15,7 @@ export default function Main() {
       .post('/api/food', food)
       .then(response => console.log(food))
       .catch(error => console.error(error))
+      .finally(() => setFood({ foodName: '' }))
   }
 
   return (
@@ -22,7 +23,7 @@ export default function Main() {
       <Wrapper>
         <h1>How do you feel? :)</h1>
         <p>I have eaten:</p>
-        <input type="text" onChange={foodHandler} />
+        <input type="text" value={food.foodName} onChange={foodHandler} />
         <button onClick={addFood}>send</button>
       </Wrapper>
     </section>
@@ -30,6 +31,7 @@ export default function Main() {
 }
 
 const Wrapper = styled.div`
+  //form
   display: grid;
   height: 100vh;
   grid-template-rows: 4fr 1fr 1fr 1fr 4fr;
