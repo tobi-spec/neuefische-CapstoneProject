@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -6,15 +5,14 @@
             </pattern>
         </encoder>
     </appender>
-    <appender name="DevNull"
-              class="ch.qos.logback.core.helpers.NOPAppender">
-    </appender>
 
     <logger name="org.springframework.security" level="DEBUG"/>
+    <logger name="org.springframework" level="INFO"/>
 
-    <!-- LOG everything at INFO level -->
+    <!-- Set level = DEBUG to get feign http output -->
+    <logger name="de.tobias.intestinalinspector" level="INFO"/>
+
     <root level="INFO">
-        <appender-ref ref="DevNull"/>
+        <appender-ref ref="STDOUT"/>
     </root>
-
 </configuration>
