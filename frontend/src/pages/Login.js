@@ -57,11 +57,11 @@ export default function Login() {
 const Wrapper = styled.div`
   h1 {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1;
   }
 
   form {
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 2;
   }
 `
