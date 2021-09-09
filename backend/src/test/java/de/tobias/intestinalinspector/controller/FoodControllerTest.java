@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FoodControllerTest {
 
     @LocalServerPort
-    int port;
+    private int port;
 
     private String url(){
         return "http://localhost:"+port+"/api/food";
@@ -39,8 +39,7 @@ class FoodControllerTest {
 
     @AfterEach
     public void clear(){
-        FoodEntity toDelete = foodRepository.findFirstByOrderByIdDesc();
-        foodRepository.deleteById(toDelete.getId());
+        foodRepository.deleteAll();
     }
 
 
@@ -58,6 +57,7 @@ class FoodControllerTest {
                                                                             FrontendFoodDto.class);
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertNotNull(actualResponse.getBody());
         assertEquals("Testtrauben", actualResponse.getBody().getFoodName());
     }
 
