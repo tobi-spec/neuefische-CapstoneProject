@@ -5,6 +5,7 @@ import { useAuth } from '../auth/AuthProvider'
 import Content from '../components/Content'
 import InputField from '../components/InputField'
 import Button from '../components/Button'
+import Header from '../components/Header'
 
 export default function Main() {
   const { token } = useAuth()
@@ -25,6 +26,7 @@ export default function Main() {
 
   return (
     <Wrapper>
+      <Header title="Intestinal Inspector" />
       <Content>
         <h1>How do you feel? :)</h1>
         <form onSubmit={submitHandler}>

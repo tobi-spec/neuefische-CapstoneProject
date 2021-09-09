@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import InputField from '../components/InputField'
 import Button from '../components/Button'
 import Content from '../components/Content'
+import Header from '../components/Header'
 
 export default function Login() {
   const { login, user } = useAuth()
@@ -27,8 +28,8 @@ export default function Login() {
 
   return (
     <Wrapper>
+      <Header title="Login" />
       <Content>
-        <h1> Login </h1>
         <form onSubmit={submitHandler}>
           <InputField
             title="Username"
