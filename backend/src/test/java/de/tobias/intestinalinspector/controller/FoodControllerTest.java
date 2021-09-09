@@ -14,12 +14,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(
+        properties = "spring.profiles.active:h2",
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+)
 class FoodControllerTest {
 
     @LocalServerPort

@@ -13,10 +13,11 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "de.tobias.intestinalinspector")
 @TestConfiguration
+// import JPA config?
 public class SpringTestContextConfiguration {
 
     @Primary
-    @Bean
+    @Bean(name="dataSource", destroyMethod = "shutdown")
     public EmbeddedDatabase database(){
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
