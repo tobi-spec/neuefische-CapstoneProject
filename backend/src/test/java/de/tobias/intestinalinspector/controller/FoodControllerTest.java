@@ -1,7 +1,7 @@
 package de.tobias.intestinalinspector.controller;
 
-import de.tobias.intestinalinspector.dto.FrontendFoodDto;
-import de.tobias.intestinalinspector.model.FoodEntity;
+
+import de.tobias.intestinalinspector.api.FrontendFoodDto;
 import de.tobias.intestinalinspector.repository.FoodRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

@@ -5,6 +5,8 @@ import { useAuth } from '../auth/AuthProvider'
 import Content from '../components/Content'
 import InputField from '../components/InputField'
 import Button from '../components/Button'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 export default function Main() {
   const { token } = useAuth()
@@ -25,6 +27,7 @@ export default function Main() {
 
   return (
     <Wrapper>
+      <Header title="Intestinal Inspector" />
       <Content>
         <h1>How do you feel? :)</h1>
         <form onSubmit={submitHandler}>
@@ -37,6 +40,7 @@ export default function Main() {
           <Button type="submit">send</Button>
         </form>
       </Content>
+      <Footer />
     </Wrapper>
   )
 }
@@ -44,11 +48,11 @@ export default function Main() {
 const Wrapper = styled.div`
   h1 {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 1;
   }
 
   form {
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 2;
   }
 `
