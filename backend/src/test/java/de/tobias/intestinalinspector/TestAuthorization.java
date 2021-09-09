@@ -1,4 +1,4 @@
-package de.tobias.intestinalinspector.service;
+package de.tobias.intestinalinspector;
 
 import de.tobias.intestinalinspector.config.JwtConfig;
 import io.jsonwebtoken.Jwts;
@@ -14,16 +14,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class Authorization {
+public class TestAuthorization {
 
     JwtConfig jwtConfig;
 
     @Autowired
-    public Authorization(JwtConfig jwtConfig) {
+    public TestAuthorization(JwtConfig jwtConfig) {
         this.jwtConfig = jwtConfig;
     }
 
-    private HttpHeaders authorizedHeader(String username, String role){
+    public HttpHeaders Header(String username, String role){
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
         Instant now = Instant.now();
