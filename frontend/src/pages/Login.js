@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 import { Redirect } from 'react-router-dom'
-import Main from './Main'
 
 export default function Login() {
   const { login, user } = useAuth()

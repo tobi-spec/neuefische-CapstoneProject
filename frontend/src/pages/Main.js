@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import axios from 'axios'
 import { useState } from 'react'
 import { addFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
