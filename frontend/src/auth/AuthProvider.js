@@ -2,17 +2,13 @@ import axios from 'axios'
 import { useContext, useState } from 'react'
 import jwt from 'jsonwebtoken'
 import AuthContext from './AuthContext'
+import { getToken } from '../service/AxiosService'
 
 export default function AuthProvider({ children }) {
   const [token, setToken] = useState()
 
   const login = credentials =>
-    axios
-      .post('auth/access_token', credentials)
-      .then(response => response.data)
-      .then(dto => dto.token)
-      .then(token => setToken(token))
-      .catch(error => console.error(error))
+    getToken(credentials).then(token => setToken(token))
 
   const logout = () => setToken()
 
