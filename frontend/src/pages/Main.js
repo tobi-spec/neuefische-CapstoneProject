@@ -2,6 +2,9 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { addFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
+import Content from '../components/Content'
+import InputField from '../components/InputField'
+import Button from '../components/Button'
 
 export default function Main() {
   const { token } = useAuth()
@@ -21,25 +24,31 @@ export default function Main() {
   }
 
   return (
-    <section>
-      <Wrapper onSubmit={submitHandler}>
+    <Wrapper>
+      <Content>
         <h1>How do you feel? :)</h1>
-        <p>I have eaten:</p>
-        <input type="text" value={food.foodName} onChange={foodHandler} />
-        <button type="submit">send</button>
-      </Wrapper>
-    </section>
+        <form onSubmit={submitHandler}>
+          <InputField
+            title="I have eaten"
+            type="text"
+            value={food.foodName}
+            onChange={foodHandler}
+          />
+          <Button type="submit">send</Button>
+        </form>
+      </Content>
+    </Wrapper>
   )
 }
 
-const Wrapper = styled.form`
-  display: grid;
-  height: 100vh;
-  grid-template-rows: 4fr 1fr 1fr 1fr 4fr;
+const Wrapper = styled.div`
+  h1 {
+    grid-column: 2;
+    grid-row: 2;
+  }
 
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-
-  background-color: lightgreen;
+  form {
+    grid-column: 2;
+    grid-row: 3;
+  }
 `
