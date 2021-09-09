@@ -3,6 +3,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FrontendFoodDto;
 import de.tobias.intestinalinspector.repository.FoodRepository;
+import de.tobias.intestinalinspector.TestAuthorization;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ class FoodControllerTest {
     @Autowired
     FoodRepository foodRepository;
 
+    @Autowired
+    TestAuthorization testAuthorization;
+
     @AfterEach
     public void clear(){
         foodRepository.deleteAll();
@@ -50,7 +54,9 @@ class FoodControllerTest {
                 .foodName("Testtrauben")
                 .build();
         //WHEN
-        HttpEntity<FrontendFoodDto> httpEntity = new HttpEntity<>(foodToAdd);
+        HttpEntity<FrontendFoodDto> httpEntity = new HttpEntity<>(foodToAdd,
+                                                                testAuthorization.Header("Frank", "user")
+        );
         ResponseEntity<FrontendFoodDto> actualResponse = testRestTemplate.exchange(url(),
                                                                             HttpMethod.POST,
                                                                             httpEntity,
