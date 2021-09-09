@@ -15,3 +15,8 @@ spring:
     properties:
       hibernate:
         format_sql: false
+
+security:
+  jwt:
+    secret: "super-secret"
+    expiresAfterMinutes: 30
