@@ -1,8 +1,10 @@
 import styled from 'styled-components'
-import axios from 'axios'
 import { useState } from 'react'
+import { addFood } from '../service/AxiosService'
+import { useAuth } from '../auth/AuthProvider'
 
 export default function Main() {
+  const { token } = useAuth()
   const [food, setFood] = useState({ foodName: '' })
 
   const foodHandler = event =>
@@ -12,8 +14,7 @@ export default function Main() {
 
   const submitHandler = event => {
     event.preventDefault()
-    axios
-      .post('/api/food', food)
+    addFood(food, token)
       .then(response => console.log(response))
       .catch(error => console.error(error))
       .finally(() => setFood({ foodName: '' }))
