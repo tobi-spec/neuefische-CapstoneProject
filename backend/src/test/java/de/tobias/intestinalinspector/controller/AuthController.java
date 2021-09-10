@@ -84,7 +84,20 @@ class AuthController {
                                                                                 credentials,
                                                                                 AccessTokenDto.class);
         //THEN
-        HttpStatus expected= HttpStatus.UNAUTHORIZED;
+        HttpStatus expected = HttpStatus.UNAUTHORIZED;
+        assertEquals(expected, responseEntity.getStatusCode());
+    }
+
+    @Test
+    public void testNullCredentials(){
+        //GIVEN
+        CredentialsDto noCredentials = new CredentialsDto();
+        //WHEN
+        ResponseEntity<AccessTokenDto> responseEntity = testRestTemplate.postForEntity(url(),
+                                                                                    noCredentials,
+                                                                                    AccessTokenDto.class);
+        //THEN
+        HttpStatus expected = HttpStatus.BAD_REQUEST;
         assertEquals(expected, responseEntity.getStatusCode());
     }
 }
