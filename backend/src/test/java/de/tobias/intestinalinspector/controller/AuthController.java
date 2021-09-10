@@ -100,4 +100,24 @@ class AuthController {
         HttpStatus expected = HttpStatus.BAD_REQUEST;
         assertEquals(expected, responseEntity.getStatusCode());
     }
+
+    @Test
+    public void testEmptyCredentials(){
+        //GIVEN
+        String username = "";
+        String password = "";
+
+        CredentialsDto emptyCredentials = CredentialsDto.builder()
+                .userName(username)
+                .userPassword(password)
+                .build();
+
+        //WHEN
+        ResponseEntity<AccessTokenDto> responseEntity = testRestTemplate.postForEntity(url(),
+                                                                                        emptyCredentials,
+                                                                                        AccessTokenDto.class);
+        //THEN
+        HttpStatus expected = HttpStatus.BAD_REQUEST;
+        assertEquals(expected, responseEntity.getStatusCode());
+    }
 }
