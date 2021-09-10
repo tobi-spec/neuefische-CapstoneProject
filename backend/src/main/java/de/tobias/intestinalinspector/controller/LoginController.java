@@ -7,6 +7,7 @@ import de.tobias.intestinalinspector.api.CredentialsDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.service.AppUserDetailsService;
 import de.tobias.intestinalinspector.service.JwtService;
+import javassist.tools.web.BadHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,15 @@ public class LoginController {
     public ResponseEntity<AccessTokenDto> getAccessToken(@RequestBody CredentialsDto credentials) {
         String username = credentials.getUserName();
         String password = credentials.getUserPassword();
+
+        if(username == null || username.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if(password == null || password.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
 
