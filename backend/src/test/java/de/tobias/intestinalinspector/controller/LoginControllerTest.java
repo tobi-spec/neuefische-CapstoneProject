@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(
@@ -65,6 +67,7 @@ class LoginControllerTest {
         //THEN
         HttpStatus expected = HttpStatus.OK;
         assertEquals(expected, responseEntity.getStatusCode());
+        assertThat(responseEntity.getBody().getToken(), is(not("")));
     }
 
     @Test
@@ -86,6 +89,7 @@ class LoginControllerTest {
         //THEN
         HttpStatus expected = HttpStatus.UNAUTHORIZED;
         assertEquals(expected, responseEntity.getStatusCode());
+        assertThat(responseEntity.getBody(), nullValue());
     }
 
     @Test
@@ -99,6 +103,7 @@ class LoginControllerTest {
         //THEN
         HttpStatus expected = HttpStatus.BAD_REQUEST;
         assertEquals(expected, responseEntity.getStatusCode());
+        assertThat(responseEntity.getBody(), nullValue());
     }
 
     @Test
@@ -119,5 +124,6 @@ class LoginControllerTest {
         //THEN
         HttpStatus expected = HttpStatus.BAD_REQUEST;
         assertEquals(expected, responseEntity.getStatusCode());
+        assertThat(responseEntity.getBody(), nullValue());
     }
 }
