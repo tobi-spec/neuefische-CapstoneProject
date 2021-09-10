@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
         properties = "spring.profiles.active:h2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-class AuthController {
+class LoginControllerTest {
 
     @LocalServerPort
     private int port;
