@@ -26,6 +26,9 @@ public class FoodEntity {
     @Column(name= "food_name")
     private String foodName;
 
+    @Column(name="user_name")
+    private String userName;
+
 
     @Override
     public boolean equals(Object o) {
