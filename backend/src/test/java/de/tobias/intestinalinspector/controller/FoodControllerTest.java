@@ -2,6 +2,7 @@ package de.tobias.intestinalinspector.controller;
 
 
 import de.tobias.intestinalinspector.api.FrontendFoodDto;
+import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.repository.FoodRepository;
 import de.tobias.intestinalinspector.TestAuthorization;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +16,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,6 +71,37 @@ class FoodControllerTest {
         assertEquals("Testtrauben", actualResponse.getBody().getFoodName());
     }
 
+    @Test
+    public void testGetAll(){
+        //GIVEN
+        Date date = new Date();
+        FoodEntity food1 = FoodEntity.builder()
+                .userName("Tester")
+                .foodName("Gurke")
+                .date(date)
+                .build();
+        FoodEntity food2 = FoodEntity.builder()
+                .userName("Tester")
+                .foodName("Tomato")
+                .date(date)
+                .build();
+        foodRepository.save(food1);
+        foodRepository.save(food2);
+        //WHEN
+        ResponseEntity<FrontendFoodDtoList> actualResponse = testRestTemplate.getForEntity(url(),
+                                                                                            FrontendFoodDtoList.class);
+        //THEN
+        FrontendFoodDto food1Dto= FrontendFoodDto.builder()
+                .foodName("Gurke")
+                .date(date)
+                .build();
+        FrontendFoodDto food2Dto = FrontendFoodDto.builder()
+                .foodName("Tomato")
+                .date(date)
+                .build();
 
+        List expected = (List.of(food1Dto, food2Dto));
+        assertEquals(expected, actualResponse.getBody());
+    }
 
 }
