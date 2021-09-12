@@ -3,6 +3,7 @@ import Main from './pages/Main'
 import Login from './pages/Login'
 import ProtectedRoute from './auth/ProtectedRoute'
 import AuthProvider from './auth/AuthProvider'
+import FoodDiary from './pages/FoodDiary'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <ProtectedRoute path="/main" component={Main} />
+          <ProtectedRoute path="/fooddiary" component={FoodDiary} />
         </Switch>
       </Router>
     </AuthProvider>
