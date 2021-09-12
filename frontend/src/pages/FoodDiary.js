@@ -8,15 +8,20 @@ export default function FoodDiary() {
     <Wrapper>
       <Header title="Food Diary" />
       <Content>
-        <ol>
+        <ul>
           <li>Food1</li>
           <li>Food2</li>
           <li>Food3</li>
-        </ol>
+        </ul>
       </Content>
       <Footer />
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  ul {
+    grid-column: 2;
+    grid-row: 2;
+  }
+`
