@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class FoodService {
@@ -23,5 +24,9 @@ public class FoodService {
         foodEntity.setDate(date);
 
         return foodRepository.save(foodEntity);
+    }
+
+    public List<FoodEntity> getAll(String userName) {
+        return foodRepository.findAllByUserName(userName);
     }
 }

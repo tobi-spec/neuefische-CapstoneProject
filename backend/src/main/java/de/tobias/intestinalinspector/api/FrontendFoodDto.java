@@ -3,6 +3,8 @@ package de.tobias.intestinalinspector.api;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -11,4 +13,6 @@ import lombok.*;
 public class FrontendFoodDto {
 
     String foodName;
+    long id;
+    Date date;
 }
