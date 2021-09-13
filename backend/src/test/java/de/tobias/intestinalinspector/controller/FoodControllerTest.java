@@ -3,7 +3,6 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FrontendFoodDto;
 import de.tobias.intestinalinspector.api.FrontendFoodListDto;
-import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.repository.FoodRepository;
 import de.tobias.intestinalinspector.TestAuthorization;
 import org.junit.jupiter.api.AfterEach;
@@ -72,39 +71,38 @@ class FoodControllerTest {
     @Test
     public void testGetAll(){
         //GIVEN
-        Date date = new Date();
-
-        FoodEntity food1 = FoodEntity.builder()
-                .userName("Tester")
-                .foodName("Gurke")
-                .date(date)
-                .build();
-        FoodEntity food2 = FoodEntity.builder()
-                .userName("Tester")
-                .foodName("Tomato")
-                .date(date)
+        FrontendFoodDto foodToAdd = FrontendFoodDto.builder()
+                .foodName("Testtrauben")
                 .build();
 
-        foodRepository.save(food1);
-        foodRepository.save(food2);
 
         //WHEN
-        ResponseEntity<FrontendFoodListDto> actualResponse = testRestTemplate.getForEntity(url(),
-                                                                                            FrontendFoodListDto.class);
+        HttpEntity<FrontendFoodDto> httpEntityPost = new HttpEntity<>(foodToAdd,
+                testAuthorization.Header("Frank", "user")
+        );
+        testRestTemplate.exchange(url(),
+                HttpMethod.POST,
+                httpEntityPost,
+                FrontendFoodDto.class);
+
+        HttpEntity<FrontendFoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
+
+        ResponseEntity<FrontendFoodListDto> actualResponse = testRestTemplate.exchange(url(),
+                                                                                    HttpMethod.GET,
+                                                                                    httpEntityGet ,
+                                                                                    FrontendFoodListDto.class);
 
         //THEN
+        Date date = new Date();
         FrontendFoodDto food1Dto= FrontendFoodDto.builder()
-                .foodName("Gurke")
-                .date(date)
-                .build();
-        FrontendFoodDto food2Dto = FrontendFoodDto.builder()
-                .foodName("Tomato")
+                .id(1)
+                .foodName("Testtrauben")
                 .date(date)
                 .build();
 
         FrontendFoodListDto expectedList = new FrontendFoodListDto();
         expectedList.addFood(food1Dto);
-        expectedList.addFood(food2Dto);
+
         assertEquals(expectedList, actualResponse.getBody());
     }
 
