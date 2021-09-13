@@ -1,8 +1,11 @@
 import axios from 'axios'
 
+const LoginPath = '/auth/access_token'
+const FoodPath = '/api/food'
+
 export const getToken = credentials =>
   axios
-    .post('auth/access_token', credentials)
+    .post(LoginPath, credentials)
     .then(response => response.data)
     .then(dto => dto.token)
 
@@ -13,6 +16,6 @@ const header = token => ({
 })
 
 export const addFood = (food, token) =>
-  axios.post('/api/food', food, header(token))
+  axios.post(FoodPath, food, header(token))
 
-export const getFood = token => axios.get('/api/food', header(token))
+export const getFood = token => axios.get(FoodPath, header(token))
