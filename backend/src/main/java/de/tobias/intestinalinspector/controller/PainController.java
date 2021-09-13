@@ -21,7 +21,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/api/pain")
 public class PainController {
 
-    PainService painService;
+    private final PainService painService;
 
     @Autowired
     public PainController(PainService painService) {

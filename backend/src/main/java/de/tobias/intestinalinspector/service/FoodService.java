@@ -10,8 +10,8 @@ import java.util.List;
 @Service
 public class FoodService {
 
-    FoodRepository foodRepository;
-    DateService dateService;
+    private final FoodRepository foodRepository;
+    private final DateService dateService;
 
     @Autowired
     public FoodService(FoodRepository foodRepository, DateService dateService) {

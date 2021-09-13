@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PainService {
 
-    PainRepository painRepository;
-    DateService dateService;
+    private final PainRepository painRepository;
+    private final DateService dateService;
 
     @Autowired
     public PainService(PainRepository painRepository, DateService dateService) {

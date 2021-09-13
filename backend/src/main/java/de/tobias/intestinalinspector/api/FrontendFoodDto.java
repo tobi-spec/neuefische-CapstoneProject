@@ -13,9 +13,9 @@ import java.util.Objects;
 @Builder
 public class FrontendFoodDto {
 
-    String foodName;
-    long id;
-    String date;
+    private String foodName;
+    private long id;
+    private String date;
 
     @Override
     public boolean equals(Object o) {

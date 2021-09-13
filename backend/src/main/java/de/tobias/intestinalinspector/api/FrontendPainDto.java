@@ -11,9 +11,9 @@ import java.util.Date;
 @Builder
 public class FrontendPainDto {
 
-    int painLevel;
-    long id;
-    String date;
+    private int painLevel;
+    private long id;
+    private String date;
 
 
 }

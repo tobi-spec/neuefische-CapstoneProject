@@ -19,7 +19,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("api/food")
 public class FoodController {
 
-    FoodService foodService;
+    private final FoodService foodService;
 
     @Autowired
     public FoodController(FoodService foodService) {
