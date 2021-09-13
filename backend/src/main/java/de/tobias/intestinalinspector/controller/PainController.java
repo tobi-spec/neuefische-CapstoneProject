@@ -30,19 +30,27 @@ public class PainController {
     public ResponseEntity<FrontendPainDto> add(@AuthenticationPrincipal AppUserEntity appUser,
                                               @RequestBody FrontendPainDto frontendPainDto){
 
-        PainEntity painToPersist = PainEntity.builder()
-                .painLevel(frontendPainDto.getPainLevel())
-                .userName(appUser.getUserName())
-                .build();
+        PainEntity painToPersist = map(appUser, frontendPainDto);
 
         PainEntity persistedPain = painService.add(painToPersist);
 
-        FrontendPainDto painToReturn = FrontendPainDto.builder()
+        FrontendPainDto painToReturn = map(persistedPain);
+
+        return  ok(painToReturn);
+    }
+
+    private FrontendPainDto map(PainEntity persistedPain) {
+        return FrontendPainDto.builder()
                 .painLevel(persistedPain.getPainLevel())
                 .id(persistedPain.getId())
                 .date(persistedPain.getDate())
                 .build();
+    }
 
-        return  ok(painToReturn);
+    private PainEntity map(AppUserEntity appUser, FrontendPainDto frontendPainDto) {
+        return PainEntity.builder()
+                .painLevel(frontendPainDto.getPainLevel())
+                .userName(appUser.getUserName())
+                .build();
     }
 }
