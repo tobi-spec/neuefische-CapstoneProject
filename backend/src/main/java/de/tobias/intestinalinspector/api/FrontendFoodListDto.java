@@ -19,6 +19,4 @@ public class FrontendFoodListDto {
     public void addFood(FrontendFoodDto frontendFoodDto){
         foodList.add(frontendFoodDto);
     }
-
-
 }

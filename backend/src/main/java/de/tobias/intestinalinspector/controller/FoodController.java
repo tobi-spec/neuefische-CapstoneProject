@@ -1,6 +1,7 @@
 package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FrontendFoodDto;
+import de.tobias.intestinalinspector.api.FrontendFoodListDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.FoodService;
@@ -44,10 +45,10 @@ public class FoodController {
     }
 
     @GetMapping
-    public List<FrontendFoodDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public FrontendFoodListDto getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
 
-        List<FrontendFoodDto> FrontendFoodDtoList= new ArrayList<>();
+        FrontendFoodListDto foodList = new FrontendFoodListDto();
 
         for( FoodEntity foodItem: listOfFood){
             FrontendFoodDto foodDto = FrontendFoodDto.builder()
@@ -55,9 +56,9 @@ public class FoodController {
                     .id(foodItem.getId())
                     .date(foodItem.getDate())
                     .build();
-            FrontendFoodDtoList.add(foodDto);
+            foodList.addFood(foodDto);
         }
-        return FrontendFoodDtoList;
+        return foodList;
     }
 
 
