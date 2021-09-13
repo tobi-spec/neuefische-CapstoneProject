@@ -21,7 +21,7 @@ public class PainEntity {
     private long id;
 
     @Column(name="date", nullable = false)
-    private Date date;
+    private String date;
 
     @Column(name="pain_level", nullable = false)
     private int painLevel;

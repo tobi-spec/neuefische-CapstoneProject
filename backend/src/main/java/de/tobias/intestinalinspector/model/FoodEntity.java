@@ -21,7 +21,7 @@ public class FoodEntity {
     private long id;
 
     @Column(name="date", nullable = false)
-    private Date date;
+    private String date;
 
     @Column(name= "food_name", nullable = false)
     private String foodName;

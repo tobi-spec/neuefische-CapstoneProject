@@ -93,15 +93,14 @@ class FoodControllerTest {
                                                                                     FrontendFoodListDto.class);
 
         //THEN
-        Date date = new Date();
-        FrontendFoodDto food1Dto= FrontendFoodDto.builder()
+        FrontendFoodDto foodDto= FrontendFoodDto.builder()
                 .id(1)
                 .foodName("Testtrauben")
-                .date(date)
+                .date("2021")
                 .build();
 
         FrontendFoodListDto expectedList = new FrontendFoodListDto();
-        expectedList.addFood(food1Dto);
+        expectedList.addFood(foodDto);
 
         assertEquals(expectedList, actualResponse.getBody());
     }

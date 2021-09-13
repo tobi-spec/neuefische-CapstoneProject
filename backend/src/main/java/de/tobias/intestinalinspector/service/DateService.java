@@ -2,12 +2,15 @@ package de.tobias.intestinalinspector.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class DateService {
 
-    public Date getDate(){
-        return new Date();
+    public String getDate(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
     }
 }

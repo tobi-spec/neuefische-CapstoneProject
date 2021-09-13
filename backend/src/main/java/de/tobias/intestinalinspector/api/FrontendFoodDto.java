@@ -15,7 +15,7 @@ public class FrontendFoodDto {
 
     String foodName;
     long id;
-    Date date;
+    String date;
 
     @Override
     public boolean equals(Object o) {
