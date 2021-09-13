@@ -8,12 +8,12 @@ export default function Footer() {
   return (
     <Wrapper>
       {user && (
-        <NavLink class="Link" to="/main">
+        <NavLink className="Link" to="/main">
           Main
         </NavLink>
       )}
       {user && (
-        <NavLink class="Link" to="/fooddiary">
+        <NavLink className="Link" to="/fooddiary">
           {' '}
           Food Diary
         </NavLink>
