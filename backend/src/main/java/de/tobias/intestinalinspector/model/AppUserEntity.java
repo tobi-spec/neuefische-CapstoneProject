@@ -17,16 +17,16 @@ public class AppUserEntity {
 
     @Id
     @GeneratedValue
-    @Column(name="id", nullable = false)
+    @Column(name="id", nullable = false, unique = true)
     private long id;
 
-    @Column(name="user_name", nullable = false)
+    @Column(name="user_name", nullable = false, unique = true)
     private String userName;
 
     @Column(name="user_password", nullable = false)
     private String userPassword;
 
-    @Column(name="user_role")
+    @Column(name="user_role", nullable = false)
     private String userRole;
 
     @Override

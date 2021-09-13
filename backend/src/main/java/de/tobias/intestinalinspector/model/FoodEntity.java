@@ -17,16 +17,16 @@ public class FoodEntity {
 
     @Id
     @GeneratedValue
-    @Column(name="id")
+    @Column(name="id", nullable = false, unique = true)
     private long id;
 
-    @Column(name="date")
+    @Column(name="date", nullable = false)
     private Date date;
 
-    @Column(name= "food_name")
+    @Column(name= "food_name", nullable = false)
     private String foodName;
 
-    @Column(name="user_name")
+    @Column(name="user_name", nullable = false)
     private String userName;
 
 

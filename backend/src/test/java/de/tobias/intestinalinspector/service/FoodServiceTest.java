@@ -2,11 +2,9 @@ package de.tobias.intestinalinspector.service;
 
 import de.tobias.intestinalinspector.SpringBootTests;
 import de.tobias.intestinalinspector.model.FoodEntity;
-import de.tobias.intestinalinspector.repository.FoodRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -25,6 +23,7 @@ class FoodServiceTest extends SpringBootTests {
         //GIVEN
         FoodEntity foodToAdd = FoodEntity.builder()
                 .foodName("Prüfpanacotta")
+                .userName("Frank")
                 .build();
         //WHEN
         FoodEntity addedFood = foodService.add(foodToAdd);
@@ -37,6 +36,7 @@ class FoodServiceTest extends SpringBootTests {
         //GIVEN
         FoodEntity foodToAdd = FoodEntity.builder()
                 .foodName("Platzhalterplätzchen")
+                .userName("Frank")
                 .build();
         //WHEN
         FoodEntity addedFood = foodService.add(foodToAdd);
