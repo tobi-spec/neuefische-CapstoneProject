@@ -5,24 +5,23 @@ import de.tobias.intestinalinspector.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class FoodService {
 
     FoodRepository foodRepository;
+    DateService dateService;
 
     @Autowired
-    public FoodService(FoodRepository foodRepository) {
+    public FoodService(FoodRepository foodRepository, DateService dateService) {
         this.foodRepository = foodRepository;
+        this.dateService = dateService;
     }
 
+
     public FoodEntity add(FoodEntity foodEntity) {
-
-        Date date = new Date();
-        foodEntity.setDate(date);
-
+        foodEntity.setDate(dateService.getDate());
         return foodRepository.save(foodEntity);
     }
 
