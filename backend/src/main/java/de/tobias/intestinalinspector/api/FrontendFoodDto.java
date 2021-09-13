@@ -13,5 +13,6 @@ import java.util.Date;
 public class FrontendFoodDto {
 
     String foodName;
+    long id;
     Date date;
 }

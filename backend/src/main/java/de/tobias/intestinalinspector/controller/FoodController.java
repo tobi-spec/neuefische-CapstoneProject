@@ -52,6 +52,7 @@ public class FoodController {
         for( FoodEntity foodItem: listOfFood){
             FrontendFoodDto foodDto = FrontendFoodDto.builder()
                     .foodName(foodItem.getFoodName())
+                    .id(foodItem.getId())
                     .date(foodItem.getDate())
                     .build();
             FrontendFoodDtoList.add(foodDto);
