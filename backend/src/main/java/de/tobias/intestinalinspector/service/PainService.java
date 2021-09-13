@@ -5,6 +5,8 @@ import de.tobias.intestinalinspector.repository.PainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class PainService {
 
@@ -15,7 +17,11 @@ public class PainService {
         this.painRepository = painRepository;
     }
 
-    public PainEntity add(PainEntity painToPersist) {
-        return painRepository.save(painToPersist);
+    public PainEntity add(PainEntity painEntity) {
+
+        Date date = new Date();
+        painEntity.setDate(date);
+
+        return painRepository.save(painEntity);
     }
 }

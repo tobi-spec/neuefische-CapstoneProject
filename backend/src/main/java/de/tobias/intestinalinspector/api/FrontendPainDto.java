@@ -14,4 +14,6 @@ public class FrontendPainDto {
     int painLevel;
     long id;
     Date date;
+
+
 }
