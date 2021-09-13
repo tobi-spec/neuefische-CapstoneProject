@@ -14,3 +14,5 @@ const header = token => ({
 
 export const addFood = (food, token) =>
   axios.post('/api/food', food, header(token))
+
+export const getFood = token => axios.get('/api/food', header(token))

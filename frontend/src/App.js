@@ -2,8 +2,9 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Main from './pages/Main'
 import Login from './pages/Login'
 import ProtectedRoute from './auth/ProtectedRoute'
-import AuthProvider from './auth/AuthProvider'
+import AuthProvider, { useAuth } from './auth/AuthProvider'
 import FoodDiary from './pages/FoodDiary'
+import { getFood } from './service/AxiosService'
 
 function App() {
   return (
