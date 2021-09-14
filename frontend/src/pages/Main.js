@@ -30,14 +30,23 @@ export default function Main() {
       <Header title="Intestinal Inspector" />
       <Content>
         <h1>How do you feel? :)</h1>
-        <form onSubmit={submitHandler}>
+        <form className="form1" onSubmit={submitHandler}>
           <InputField
-            title="I have eaten"
             type="text"
             value={food.foodName}
             onChange={foodHandler}
+            placeholder="eaten food"
           />
-          <Button type="submit">send</Button>
+          <Button type="submit">save</Button>
+        </form>
+        <form className="form2">
+          <InputField
+            type="text"
+            value=""
+            onChange=""
+            placeholder="experienced pain"
+          />
+          <Button type="submit">save</Button>
         </form>
       </Content>
       <Footer />
@@ -51,8 +60,15 @@ const Wrapper = styled.div`
     grid-row: 1;
   }
 
-  form {
+  .form1 {
     grid-column: 2;
     grid-row: 2;
+    display: flex;
+  }
+
+  .form2 {
+    grid-column: 2;
+    grid-row: 3;
+    display: flex;
   }
 `
