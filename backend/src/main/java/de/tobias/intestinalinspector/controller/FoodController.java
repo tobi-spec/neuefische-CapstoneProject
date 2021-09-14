@@ -44,6 +44,13 @@ public class FoodController {
         return foodList;
     }
 
+    @PutMapping
+    public void update(@RequestBody String newName, long id){
+        // Only Food that is already returned by getAll() can in frontend chosen to be changed
+        foodService.update(id, newName);
+    }
+
+
     private void map(List<FoodEntity> listOfFood, FrontendFoodListDto frontendFoodListDto) {
         for( FoodEntity foodItem: listOfFood){
             FrontendFoodDto foodDto = FrontendFoodDto.builder()

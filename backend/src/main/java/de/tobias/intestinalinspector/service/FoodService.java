@@ -28,4 +28,8 @@ public class FoodService {
     public List<FoodEntity> getAll(String userName) {
         return foodRepository.findAllByUserName(userName);
     }
+
+    public void update(long id, String newName) {
+        foodRepository.updateFoodFromUser(id, newName);
+    }
 }
