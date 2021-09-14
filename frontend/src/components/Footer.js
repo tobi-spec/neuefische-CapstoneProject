@@ -14,8 +14,12 @@ export default function Footer() {
       )}
       {user && (
         <NavLink className="Link" to="/fooddiary">
-          {' '}
           Food Diary
+        </NavLink>
+      )}
+      {user && (
+        <NavLink className="Link" to="/paindiary">
+          Pain Diary
         </NavLink>
       )}
     </Wrapper>
