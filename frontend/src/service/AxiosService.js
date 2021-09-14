@@ -23,3 +23,5 @@ export const getFood = token => axios.get(FoodPath, header(token))
 
 export const addPain = (pain, token) =>
   axios.post(PainPath, pain, header(token))
+
+export const getPain = token => axios.get(PainPath, header(token))
