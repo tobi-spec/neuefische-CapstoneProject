@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useState } from 'react'
-import { addFood } from '../service/AxiosService'
+import { addFood, addPain } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
 import Content from '../components/Content'
 import InputField from '../components/InputField'
@@ -11,13 +11,19 @@ import Footer from '../components/Footer'
 export default function Main() {
   const { token } = useAuth()
   const [food, setFood] = useState({ foodName: '' })
+  const [pain, setPain] = useState({ painLevel: '' })
 
   const foodHandler = event =>
     setFood({
       foodName: event.target.value,
     })
 
-  const submitHandler = event => {
+  const painHandler = event =>
+    setPain({
+      painLevel: event.target.value,
+    })
+
+  const foodSubmitHandler = event => {
     event.preventDefault()
     addFood(food, token)
       .then(response => console.log(response))
@@ -25,12 +31,20 @@ export default function Main() {
       .finally(() => setFood({ foodName: '' }))
   }
 
+  const painSubmitHandler = event => {
+    event.preventDefault()
+    addPain(pain, token)
+      .then(response => console.log(response))
+      .catch(error => console.error(error))
+      .finally(() => setPain({ painLevel: '' }))
+  }
+
   return (
     <Wrapper>
       <Header title="Intestinal Inspector" />
       <Content>
         <h1>How do you feel? :)</h1>
-        <form className="form1" onSubmit={submitHandler}>
+        <form className="form1" onSubmit={foodSubmitHandler}>
           <InputField
             type="text"
             value={food.foodName}
@@ -39,11 +53,11 @@ export default function Main() {
           />
           <Button type="submit">save</Button>
         </form>
-        <form className="form2">
+        <form className="form2" onSubmit={painSubmitHandler}>
           <InputField
             type="text"
-            value=""
-            onChange=""
+            value={pain.painLevel}
+            onChange={painHandler}
             placeholder="experienced pain"
           />
           <Button type="submit">save</Button>
