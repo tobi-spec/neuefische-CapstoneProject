@@ -7,7 +7,6 @@ import de.tobias.intestinalinspector.api.CredentialsDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.service.AppUserDetailsService;
 import de.tobias.intestinalinspector.service.JwtService;
-import javassist.tools.web.BadHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

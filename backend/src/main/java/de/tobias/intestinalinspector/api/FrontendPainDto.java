@@ -2,8 +2,6 @@ package de.tobias.intestinalinspector.api;
 
 import lombok.*;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -11,7 +9,9 @@ import java.util.Date;
 @Builder
 public class FrontendPainDto {
 
-    int painLevel;
-    long id;
-    Date date;
+    private int painLevel;
+    private long id;
+    private String date;
+
+
 }

@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class FrontendFoodListDto {
 
-    List<FrontendFoodDto> foodList = new ArrayList<>();
+    private List<FrontendFoodDto> foodList = new ArrayList<>();
 
     public void addFood(FrontendFoodDto frontendFoodDto){
         foodList.add(frontendFoodDto);

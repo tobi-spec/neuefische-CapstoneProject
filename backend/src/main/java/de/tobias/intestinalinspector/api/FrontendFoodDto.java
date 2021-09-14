@@ -2,8 +2,6 @@ package de.tobias.intestinalinspector.api;
 
 
 import lombok.*;
-
-import java.util.Date;
 import java.util.Objects;
 
 @Getter
@@ -13,9 +11,9 @@ import java.util.Objects;
 @Builder
 public class FrontendFoodDto {
 
-    String foodName;
-    long id;
-    Date date;
+    private String foodName;
+    private long id;
+    private String date;
 
     @Override
     public boolean equals(Object o) {

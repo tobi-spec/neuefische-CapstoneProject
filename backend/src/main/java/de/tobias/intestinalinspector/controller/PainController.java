@@ -2,20 +2,24 @@ package de.tobias.intestinalinspector.controller;
 
 
 import de.tobias.intestinalinspector.api.FrontendPainDto;
+import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
-import de.tobias.intestinalinspector.repository.PainRepository;
 import de.tobias.intestinalinspector.service.PainService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 @RequestMapping("/api/pain")
 public class PainController {
 
-    PainService painService;
+    private final PainService painService;
 
     @Autowired
     public PainController(PainService painService) {
@@ -23,18 +27,30 @@ public class PainController {
     }
 
     @PostMapping
-    public FrontendPainDto add(@RequestBody FrontendPainDto frontendPainDto){
-        PainEntity painToPersist = PainEntity.builder()
-                .painLevel(frontendPainDto.getPainLevel())
-                .build();
+    public ResponseEntity<FrontendPainDto> add(@AuthenticationPrincipal AppUserEntity appUser,
+                                              @RequestBody FrontendPainDto frontendPainDto){
+
+        PainEntity painToPersist = map(appUser, frontendPainDto);
 
         PainEntity persistedPain = painService.add(painToPersist);
 
-        FrontendPainDto painToReturn = FrontendPainDto.builder()
+        FrontendPainDto painToReturn = map(persistedPain);
+
+        return  ok(painToReturn);
+    }
+
+    private FrontendPainDto map(PainEntity persistedPain) {
+        return FrontendPainDto.builder()
                 .painLevel(persistedPain.getPainLevel())
                 .id(persistedPain.getId())
                 .date(persistedPain.getDate())
                 .build();
-        return  painToReturn;
+    }
+
+    private PainEntity map(AppUserEntity appUser, FrontendPainDto frontendPainDto) {
+        return PainEntity.builder()
+                .painLevel(frontendPainDto.getPainLevel())
+                .userName(appUser.getUserName())
+                .build();
     }
 }

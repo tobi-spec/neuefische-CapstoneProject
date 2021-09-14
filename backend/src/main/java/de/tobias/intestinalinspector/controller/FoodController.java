@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -19,7 +17,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("api/food")
 public class FoodController {
 
-    FoodService foodService;
+    private final FoodService foodService;
 
     @Autowired
     public FoodController(FoodService foodService) {
@@ -30,35 +28,44 @@ public class FoodController {
     public ResponseEntity<FrontendFoodDto> add(@AuthenticationPrincipal AppUserEntity appUser,
                                                @RequestBody FrontendFoodDto frontendFoodDto) {
 
-        FoodEntity foodToPersist = FoodEntity.builder()
-                .foodName(frontendFoodDto.getFoodName())
-                .userName(appUser.getUserName())
-                .build();
-
+        FoodEntity foodToPersist = map(appUser, frontendFoodDto);
         FoodEntity persistedFood = foodService.add(foodToPersist);
-
-        FrontendFoodDto foodToReturn = FrontendFoodDto.builder()
-                .foodName(persistedFood.getFoodName())
-                .build();
+        FrontendFoodDto foodToReturn = map(persistedFood);
 
         return ok(foodToReturn);
     }
 
     @GetMapping
     public FrontendFoodListDto getAll(@AuthenticationPrincipal AppUserEntity appUser){
+
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
-
         FrontendFoodListDto foodList = new FrontendFoodListDto();
+        map(listOfFood, foodList);
+        return foodList;
+    }
 
+    private void map(List<FoodEntity> listOfFood, FrontendFoodListDto frontendFoodListDto) {
         for( FoodEntity foodItem: listOfFood){
             FrontendFoodDto foodDto = FrontendFoodDto.builder()
                     .foodName(foodItem.getFoodName())
                     .id(foodItem.getId())
                     .date(foodItem.getDate())
                     .build();
-            foodList.addFood(foodDto);
+            frontendFoodListDto.addFood(foodDto);
         }
-        return foodList;
+    }
+
+    private FrontendFoodDto map(FoodEntity foodEntity) {
+        return FrontendFoodDto.builder()
+                .foodName(foodEntity.getFoodName())
+                .build();
+    }
+
+    private FoodEntity map(AppUserEntity appUser, FrontendFoodDto frontendFoodDto) {
+        return FoodEntity.builder()
+                .foodName(frontendFoodDto.getFoodName())
+                .userName(appUser.getUserName())
+                .build();
     }
 
 

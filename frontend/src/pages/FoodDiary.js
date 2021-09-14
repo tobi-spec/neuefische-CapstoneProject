@@ -14,7 +14,7 @@ export default function FoodDiary() {
   useEffect(() => {
     getFood(token)
       .then(response => response.data)
-      .then(data => setFoodList(data))
+      .then(data => setFoodList(data.foodList))
   }, [])
 
   const foodItems = foodList.map(foodItem => (

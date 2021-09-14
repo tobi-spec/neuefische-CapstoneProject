@@ -1,47 +1,45 @@
 package de.tobias.intestinalinspector.service;
 
 import de.tobias.intestinalinspector.SpringBootTests;
-import de.tobias.intestinalinspector.model.FoodEntity;
+import de.tobias.intestinalinspector.model.PainEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.*;
 
-
-
-class FoodServiceTest extends SpringBootTests {
+class PainServiceTest extends SpringBootTests {
 
     @Autowired
-    FoodService foodService;
+    PainService painService;
 
     @Test
-    public void testAddName(){
+    public void testAddPain(){
         //GIVEN
-        FoodEntity foodToAdd = FoodEntity.builder()
-                .foodName("Prüfpanacotta")
+        PainEntity painToAdd = PainEntity.builder()
+                .painLevel(7)
                 .userName("Frank")
                 .build();
         //WHEN
-        FoodEntity addedFood = foodService.add(foodToAdd);
+        PainEntity addedPain = painService.add(painToAdd);
         //THEN
-        assertEquals("Prüfpanacotta", addedFood.getFoodName());
+        assertEquals(7, addedPain.getPainLevel());
     }
 
     @Test
     public void testAddDate(){
         //GIVEN
-        FoodEntity foodToAdd = FoodEntity.builder()
-                .foodName("Platzhalterplätzchen")
+        PainEntity painToAdd = PainEntity.builder()
+                .painLevel(7)
                 .userName("Frank")
                 .build();
         //WHEN
-        FoodEntity addedFood = foodService.add(foodToAdd);
+        PainEntity addedPain = painService.add(painToAdd);
         //THEN
-        assertThat(addedFood.getDate(), is(not("")));
+        assertThat(addedPain.getDate(), is(not("")));
     }
+
 
 }
