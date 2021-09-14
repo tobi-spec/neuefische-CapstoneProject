@@ -45,7 +45,7 @@ public class FoodController {
     }
 
     @PutMapping
-    public void update(@RequestBody String newName, long id){
+    public void update(@RequestBody long id, String newName){
         // Only Food that is already returned by getAll() can in frontend chosen to be changed
         foodService.update(id, newName);
     }
