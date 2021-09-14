@@ -2,6 +2,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.TestAuthorization;
 import de.tobias.intestinalinspector.api.FrontendPainDto;
+import de.tobias.intestinalinspector.api.FrontendPainListDto;
 import de.tobias.intestinalinspector.repository.PainRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -63,5 +64,39 @@ class PainControllerTest {
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());
         assertEquals(4, actualResponse.getBody().getPainLevel());
+    }
+
+    @Test
+    public void testGetAll(){
+        //GIVEN
+        FrontendPainDto painToAdd = FrontendPainDto.builder()
+                .painLevel(7)
+                .build();
+        //WHEN
+        HttpEntity<FrontendPainDto> httpEntityPost = new HttpEntity<>(painToAdd,
+                testAuthorization.Header("Frank", "user")
+        );
+        testRestTemplate.exchange(url(),
+                                HttpMethod.POST,
+                                httpEntityPost,
+                                FrontendPainDto.class);
+
+        HttpEntity<FrontendPainDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
+
+        ResponseEntity<FrontendPainListDto> actualResponse = testRestTemplate.exchange(url(),
+                                                                                        HttpMethod.GET,
+                                                                                        httpEntityGet,
+                                                                                        FrontendPainListDto.class);
+        //THEN
+        FrontendPainDto painDto = FrontendPainDto.builder()
+                .id(1)
+                .painLevel(7)
+                .date("2021")
+                .build();
+
+        FrontendPainListDto expectedList = new FrontendPainListDto();
+        expectedList.addPain(painDto);
+
+        assertEquals(expectedList, actualResponse.getBody());
     }
 }
