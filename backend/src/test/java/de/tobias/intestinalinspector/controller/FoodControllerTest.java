@@ -73,8 +73,6 @@ class FoodControllerTest {
         FrontendFoodDto foodToAdd = FrontendFoodDto.builder()
                 .foodName("Testtrauben")
                 .build();
-
-
         //WHEN
         HttpEntity<FrontendFoodDto> httpEntityPost = new HttpEntity<>(foodToAdd,
                 testAuthorization.Header("Frank", "user")
