@@ -15,7 +15,7 @@ export default function FoodDiary() {
     getFood(token)
       .then(response => response.data)
       .then(data => setFoodList(data.foodList))
-  }, [])
+  }, [token])
 
   const foodItems = foodList.map(foodItem => (
     <FoodCard
