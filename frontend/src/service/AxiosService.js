@@ -21,8 +21,8 @@ export const addFood = (food, token) =>
 
 export const getFood = token => axios.get(FoodPath, header(token))
 
-export const updateFood = (newName, token) =>
-  axios.put(FoodPath, newName, header(token))
+export const updateFood = (id, newName, token) =>
+  axios.put(FoodPath + `/update=${id}`, newName, header(token))
 
 export const addPain = (pain, token) =>
   axios.post(PainPath, pain, header(token))
