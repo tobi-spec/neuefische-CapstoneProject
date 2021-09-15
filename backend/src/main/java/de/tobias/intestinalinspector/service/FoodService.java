@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class FoodService {
@@ -30,7 +32,12 @@ public class FoodService {
     }
 
     public FoodEntity update(FoodEntity foodEntity) {
-        foodRepository.updateFood(foodEntity.getId(), foodEntity.getFoodName());
-        return foodRepository.findById(foodEntity.getId());
+        Optional<FoodEntity> entityToOverwrite = foodRepository.findById(foodEntity.getId());
+        if(entityToOverwrite.isPresent()) {
+            entityToOverwrite.get().setFoodName(foodEntity.getFoodName());
+            return foodRepository.save(entityToOverwrite.get());
+        } else {
+            throw new NoSuchElementException("No such entry found");
+        }
     }
 }

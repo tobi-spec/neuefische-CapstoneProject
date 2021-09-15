@@ -51,12 +51,9 @@ public class FoodController {
     public ResponseEntity<FoodDto> update(@RequestBody UpdateDto updateDto){
         FoodEntity foodEntity = map(updateDto);
         FoodEntity changedEntity = foodService.update(foodEntity);
-        if(changedEntity != null){
-            FoodDto returnDto = map(changedEntity);
-            return ok(returnDto);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        FoodDto returnDto = map(changedEntity);
+        return ok(returnDto);
+
 
     }
 
