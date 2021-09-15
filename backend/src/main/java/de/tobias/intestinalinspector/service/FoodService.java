@@ -30,10 +30,10 @@ public class FoodService {
         return foodRepository.findAllByUserName(userName);
     }
 
-    public FoodEntity update(FoodEntity foodEntity) {
-        Optional<FoodEntity> entityToOverwrite = foodRepository.findById(foodEntity.getId());
+    public FoodEntity update(Long id, String newName) {
+        Optional<FoodEntity> entityToOverwrite = foodRepository.findById(id);
         if(entityToOverwrite.isPresent()) {
-            entityToOverwrite.get().setFoodName(foodEntity.getFoodName());
+            entityToOverwrite.get().setFoodName(newName);
             return foodRepository.save(entityToOverwrite.get());
         } else {
             throw new EntityNotFoundException("No such entry found");
