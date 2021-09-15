@@ -21,6 +21,7 @@ export default function FoodDiary() {
     <FoodCard
       foodName={foodItem.foodName}
       date={foodItem.date}
+      id={foodItem.id}
       key={foodItem.id}
     />
   ))
