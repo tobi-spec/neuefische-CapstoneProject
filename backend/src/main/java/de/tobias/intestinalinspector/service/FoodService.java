@@ -29,7 +29,7 @@ public class FoodService {
         return foodRepository.findAllByUserName(userName);
     }
 
-    public int update(long id, String newName) {
-        return foodRepository.updateFoodFromUser(id, newName);
+    public int update(FoodEntity foodEntity) {
+        return foodRepository.updateFoodFromUser(foodEntity.getId(), foodEntity.getFoodName());
     }
 }
