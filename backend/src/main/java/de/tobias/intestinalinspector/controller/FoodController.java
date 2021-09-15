@@ -47,14 +47,12 @@ public class FoodController {
         return ok(foodListDto);
     }
 
-    @PutMapping
+    @PutMapping//id als teil der url
     public ResponseEntity<FoodDto> update(@RequestBody UpdateDto updateDto){
         FoodEntity foodEntity = map(updateDto);
-        FoodEntity changedEntity = foodService.update(foodEntity);
-        FoodDto returnDto = map(changedEntity);
-        return ok(returnDto);
-
-
+            FoodEntity changedEntity = foodService.update(foodEntity);
+            FoodDto returnDto = map(changedEntity);
+            return ok(returnDto);
     }
 
     private FoodEntity map(UpdateDto updateDto) {
