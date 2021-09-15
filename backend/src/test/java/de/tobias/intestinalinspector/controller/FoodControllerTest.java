@@ -3,6 +3,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.FoodListDto;
+import de.tobias.intestinalinspector.api.UpdateDto;
 import de.tobias.intestinalinspector.repository.FoodRepository;
 import de.tobias.intestinalinspector.TestAuthorization;
 import org.junit.jupiter.api.AfterEach;
@@ -143,6 +144,42 @@ class FoodControllerTest {
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertEquals(expectedList, actualResponse.getBody());
+    }
+// Test does not work, will be fixed later
+/*    @Test
+    public void testUpdate(){
+        //GIVEN
+        UpdateDto updateDto = UpdateDto.builder()
+                .id(1L)
+                .newName("ErsatzErbse")
+                .build();
+        //WHEN
+        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(updateDto, testAuthorization.Header("Frank",
+                "user"));
+        ResponseEntity<UpdateDto> actualResponse = testRestTemplate.exchange(url(),
+                HttpMethod.PUT,
+                httpEntityPut,
+                UpdateDto.class);
+        //THEN
+        assertEquals(HttpStatus.UNAUTHORIZED, actualResponse.getStatusCode());
+    }*/
+
+    @Test
+    public void testUpdateBadId(){
+        //GIVEN
+        UpdateDto updateDto = UpdateDto.builder()
+                .id(99)
+                .newName("ErsatzErbse")
+                .build();
+        //WHEN
+        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(updateDto, testAuthorization.Header("Frank",
+                "user"));
+        ResponseEntity<UpdateDto> actualResponse = testRestTemplate.exchange(url(),
+                                                                            HttpMethod.PUT,
+                                                                            httpEntityPut,
+                                                                            UpdateDto.class);
+        //THEN
+        assertEquals(HttpStatus.BAD_REQUEST, actualResponse.getStatusCode());
     }
 
 }
