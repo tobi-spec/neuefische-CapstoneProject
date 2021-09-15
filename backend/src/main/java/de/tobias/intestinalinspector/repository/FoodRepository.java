@@ -13,6 +13,8 @@ public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 
     List<FoodEntity> findAllByUserName(String userName);
 
+    FoodEntity findById(long id);
+
     @Modifying
     @Transactional
     @Query("UPDATE FoodEntity f SET f.foodName = :foodName WHERE f.id = :id")
