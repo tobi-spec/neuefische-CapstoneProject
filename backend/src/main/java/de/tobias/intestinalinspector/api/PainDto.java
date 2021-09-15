@@ -9,7 +9,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FrontendPainDto {
+public class PainDto {
 
     private int painLevel;
     private long id;
@@ -19,7 +19,7 @@ public class FrontendPainDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FrontendPainDto painDto = (FrontendPainDto) o;
+        PainDto painDto = (PainDto) o;
         return painLevel == painDto.painLevel;
     }
 

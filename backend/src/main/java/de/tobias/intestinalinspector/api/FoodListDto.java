@@ -13,11 +13,11 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FrontendFoodListDto {
+public class FoodListDto {
 
-    private List<FrontendFoodDto> foodList = new ArrayList<>();
+    private List<FoodDto> foodList = new ArrayList<>();
 
-    public void addFood(FrontendFoodDto frontendFoodDto){
+    public void addFood(FoodDto frontendFoodDto){
         foodList.add(frontendFoodDto);
     }
 
@@ -25,7 +25,7 @@ public class FrontendFoodListDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FrontendFoodListDto that = (FrontendFoodListDto) o;
+        FoodListDto that = (FoodListDto) o;
         return Objects.equals(foodList, that.foodList);
     }
 
