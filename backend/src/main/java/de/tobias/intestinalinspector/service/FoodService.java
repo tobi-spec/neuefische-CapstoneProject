@@ -29,7 +29,8 @@ public class FoodService {
         return foodRepository.findAllByUserName(userName);
     }
 
-    public int update(FoodEntity foodEntity) {
-        return foodRepository.updateFood(foodEntity.getId(), foodEntity.getFoodName());
+    public FoodEntity update(FoodEntity foodEntity) {
+        foodRepository.updateFood(foodEntity.getId(), foodEntity.getFoodName());
+        return foodRepository.findById(foodEntity.getId());
     }
 }
