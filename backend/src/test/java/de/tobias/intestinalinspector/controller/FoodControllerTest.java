@@ -3,7 +3,6 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.FoodListDto;
-import de.tobias.intestinalinspector.api.UpdateDto;
 import de.tobias.intestinalinspector.repository.FoodRepository;
 import de.tobias.intestinalinspector.TestAuthorization;
 import org.junit.jupiter.api.AfterEach;
@@ -149,14 +148,11 @@ class FoodControllerTest {
     @Test
     public void testUpdate(){
         //GIVEN
-        UpdateDto updateDto = UpdateDto.builder()
-                .id(1)
-                .newName("ErsatzErbse")
-                .build();
+        String newName = "ErsatzErbse";
         //WHEN
-        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(updateDto, testAuthorization.Header("Frank",
+        HttpEntity<String> httpEntityPut = new HttpEntity<>(newName, testAuthorization.Header("Frank",
                 "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update=1",
                 HttpMethod.PUT,
                 httpEntityPut,
                 FoodDto.class);
@@ -169,19 +165,16 @@ class FoodControllerTest {
     @Test
     public void testUpdateBadId(){
         //GIVEN
-        UpdateDto updateDto = UpdateDto.builder()
-                .id(99)
-                .newName("ErsatzErbse")
-                .build();
+        String newName = "UpdateErbse";
         //WHEN
-        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(updateDto, testAuthorization.Header("Frank",
+        HttpEntity<String> httpEntityPut = new HttpEntity<>(newName, testAuthorization.Header("Frank",
                 "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update=99",
                                                                             HttpMethod.PUT,
                                                                             httpEntityPut,
                                                                             FoodDto.class);
         //THEN
-        assertEquals(HttpStatus.BAD_REQUEST, actualResponse.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }
 
 }
