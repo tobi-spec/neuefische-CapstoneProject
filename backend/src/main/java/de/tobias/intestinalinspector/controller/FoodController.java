@@ -48,14 +48,16 @@ public class FoodController {
     }
 
     @PutMapping
-    public ResponseEntity<Integer> update(@RequestBody UpdateDto updateDto){
+    public ResponseEntity<FoodDto> update(@RequestBody UpdateDto updateDto){
         FoodEntity foodEntity = map(updateDto);
-        int numberOfChangedRows = foodService.update(foodEntity);
-        if(numberOfChangedRows == 1){
-            return ok(numberOfChangedRows);
+        FoodEntity changedEntity = foodService.update(foodEntity);
+        if(changedEntity != null){
+            FoodDto returnDto = map(changedEntity);
+            return ok(returnDto);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
     }
 
     private FoodEntity map(UpdateDto updateDto) {
@@ -79,6 +81,8 @@ public class FoodController {
     private FoodDto map(FoodEntity foodEntity) {
         return FoodDto.builder()
                 .foodName(foodEntity.getFoodName())
+                .id(foodEntity.getId())
+                .date(foodEntity.getDate())
                 .build();
     }
 
