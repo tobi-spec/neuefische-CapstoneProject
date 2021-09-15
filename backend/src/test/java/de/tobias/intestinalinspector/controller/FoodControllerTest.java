@@ -85,6 +85,44 @@ class FoodControllerTest {
     }
 
     @Test
+    public void testAddFoodWithoutText(){
+        // This test can not use beforeEach() and must add Object to database by itself
+        //GIVEN
+        FrontendFoodDto foodToAdd = FrontendFoodDto.builder()
+                .foodName("")
+                .build();
+        //WHEN
+        HttpEntity<FrontendFoodDto> httpEntity = new HttpEntity<>(foodToAdd,
+                testAuthorization.Header("Frank", "user")
+        );
+        ResponseEntity<FrontendFoodDto> actualResponse = testRestTemplate.exchange(url(),
+                HttpMethod.POST,
+                httpEntity,
+                FrontendFoodDto.class);
+        //THEN
+        assertEquals(HttpStatus.BAD_REQUEST, actualResponse.getStatusCode());
+    }
+
+    @Test
+    public void testAddFoodTextIsNull(){
+        // This test can not use beforeEach() and must add Object to database by itself
+        //GIVEN
+        FrontendFoodDto foodToAdd = FrontendFoodDto.builder()
+                .foodName(null)
+                .build();
+        //WHEN
+        HttpEntity<FrontendFoodDto> httpEntity = new HttpEntity<>(foodToAdd,
+                testAuthorization.Header("Frank", "user")
+        );
+        ResponseEntity<FrontendFoodDto> actualResponse = testRestTemplate.exchange(url(),
+                HttpMethod.POST,
+                httpEntity,
+                FrontendFoodDto.class);
+        //THEN
+        assertEquals(HttpStatus.BAD_REQUEST, actualResponse.getStatusCode());
+    }
+
+    @Test
     public void testGetAll(){
         //WHEN
         HttpEntity<FrontendFoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank",
@@ -103,6 +141,7 @@ class FoodControllerTest {
         FrontendFoodListDto expectedList = new FrontendFoodListDto();
         expectedList.addFood(foodDto);
 
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertEquals(expectedList, actualResponse.getBody());
     }
 

@@ -28,6 +28,11 @@ public class FoodController {
     @PostMapping
     public ResponseEntity<FrontendFoodDto> add(@AuthenticationPrincipal AppUserEntity appUser,
                                                @RequestBody FrontendFoodDto frontendFoodDto) {
+
+        String foodName = frontendFoodDto.getFoodName();
+        if(foodName == null || foodName.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         FoodEntity foodToPersist = map(appUser, frontendFoodDto);
         FoodEntity persistedFood = foodService.add(foodToPersist);
         FrontendFoodDto foodToReturn = map(persistedFood);
@@ -48,7 +53,7 @@ public class FoodController {
         if(numberOfChangedRows == 1){
             return ok(numberOfChangedRows);
         } else {
-            throw new IllegalArgumentException("No Element with this ID in database");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

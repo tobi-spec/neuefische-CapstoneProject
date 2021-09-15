@@ -31,9 +31,7 @@ public class PainController {
                                               @RequestBody FrontendPainDto frontendPainDto){
 
         PainEntity painToPersist = map(appUser, frontendPainDto);
-
         PainEntity persistedPain = painService.add(painToPersist);
-
         FrontendPainDto painToReturn = map(persistedPain);
 
         return  ok(painToReturn);
