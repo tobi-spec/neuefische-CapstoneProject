@@ -1,7 +1,7 @@
 package de.tobias.intestinalinspector.controller;
 
-import de.tobias.intestinalinspector.api.FrontendFoodDto;
-import de.tobias.intestinalinspector.api.FrontendFoodListDto;
+import de.tobias.intestinalinspector.api.FoodDto;
+import de.tobias.intestinalinspector.api.FoodListDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.FoodService;
@@ -26,25 +26,25 @@ public class FoodController {
     }
 
     @PostMapping
-    public ResponseEntity<FrontendFoodDto> add(@AuthenticationPrincipal AppUserEntity appUser,
-                                               @RequestBody FrontendFoodDto frontendFoodDto) {
+    public ResponseEntity<FoodDto> add(@AuthenticationPrincipal AppUserEntity appUser,
+                                       @RequestBody FoodDto foodDto) {
 
-        String foodName = frontendFoodDto.getFoodName();
+        String foodName = foodDto.getFoodName();
         if(foodName == null || foodName.isEmpty()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        FoodEntity foodToPersist = map(appUser, frontendFoodDto);
+        FoodEntity foodToPersist = map(appUser, foodDto);
         FoodEntity persistedFood = foodService.add(foodToPersist);
-        FrontendFoodDto foodToReturn = map(persistedFood);
+        FoodDto foodToReturn = map(persistedFood);
         return ok(foodToReturn);
     }
 
     @GetMapping
-    public ResponseEntity<FrontendFoodListDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<FoodListDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
-        FrontendFoodListDto foodList = new FrontendFoodListDto();
-        map(listOfFood, foodList);
-        return ok(foodList);
+        FoodListDto foodListDto = new FoodListDto();
+        map(listOfFood, foodListDto);
+        return ok(foodListDto);
     }
 
     @PutMapping
@@ -58,26 +58,26 @@ public class FoodController {
     }
 
 
-    private void map(List<FoodEntity> listOfFood, FrontendFoodListDto frontendFoodListDto) {
+    private void map(List<FoodEntity> listOfFood, FoodListDto foodListDto) {
         for( FoodEntity foodItem: listOfFood){
-            FrontendFoodDto foodDto = FrontendFoodDto.builder()
+            FoodDto foodDto = FoodDto.builder()
                     .foodName(foodItem.getFoodName())
                     .id(foodItem.getId())
                     .date(foodItem.getDate())
                     .build();
-            frontendFoodListDto.addFood(foodDto);
+            foodListDto.addFood(foodDto);
         }
     }
 
-    private FrontendFoodDto map(FoodEntity foodEntity) {
-        return FrontendFoodDto.builder()
+    private FoodDto map(FoodEntity foodEntity) {
+        return FoodDto.builder()
                 .foodName(foodEntity.getFoodName())
                 .build();
     }
 
-    private FoodEntity map(AppUserEntity appUser, FrontendFoodDto frontendFoodDto) {
+    private FoodEntity map(AppUserEntity appUser, FoodDto foodDto) {
         return FoodEntity.builder()
-                .foodName(frontendFoodDto.getFoodName())
+                .foodName(foodDto.getFoodName())
                 .userName(appUser.getUserName())
                 .build();
     }

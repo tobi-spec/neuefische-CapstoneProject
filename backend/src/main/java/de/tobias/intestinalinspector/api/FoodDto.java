@@ -9,7 +9,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FrontendFoodDto {
+public class FoodDto {
 
     private String foodName;
     private long id;
@@ -19,7 +19,7 @@ public class FrontendFoodDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FrontendFoodDto foodDto = (FrontendFoodDto) o;
+        FoodDto foodDto = (FoodDto) o;
         return Objects.equals(foodName, foodDto.foodName);
     }
 

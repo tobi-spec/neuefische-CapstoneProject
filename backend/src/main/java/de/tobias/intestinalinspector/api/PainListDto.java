@@ -11,19 +11,19 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FrontendPainListDto {
+public class PainListDto {
 
-    List<FrontendPainDto> painList= new ArrayList();
+    List<PainDto> painList= new ArrayList();
 
-    public void addPain(FrontendPainDto frontendPainDto){
-        painList.add(frontendPainDto);
+    public void addPain(PainDto painDto){
+        painList.add(painDto);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FrontendPainListDto that = (FrontendPainListDto) o;
+        PainListDto that = (PainListDto) o;
         return Objects.equals(painList, that.painList);
     }
 

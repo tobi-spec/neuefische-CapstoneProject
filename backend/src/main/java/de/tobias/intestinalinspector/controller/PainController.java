@@ -1,8 +1,8 @@
 package de.tobias.intestinalinspector.controller;
 
 
-import de.tobias.intestinalinspector.api.FrontendPainDto;
-import de.tobias.intestinalinspector.api.FrontendPainListDto;
+import de.tobias.intestinalinspector.api.PainDto;
+import de.tobias.intestinalinspector.api.PainListDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.service.PainService;
@@ -27,43 +27,43 @@ public class PainController {
     }
 
     @PostMapping
-    public ResponseEntity<FrontendPainDto> add(@AuthenticationPrincipal AppUserEntity appUser,
-                                              @RequestBody FrontendPainDto frontendPainDto){
+    public ResponseEntity<PainDto> add(@AuthenticationPrincipal AppUserEntity appUser,
+                                       @RequestBody PainDto painDto){
 
-        PainEntity painToPersist = map(appUser, frontendPainDto);
+        PainEntity painToPersist = map(appUser, painDto);
         PainEntity persistedPain = painService.add(painToPersist);
-        FrontendPainDto painToReturn = map(persistedPain);
+        PainDto painToReturn = map(persistedPain);
 
         return  ok(painToReturn);
     }
 
     @GetMapping
-    public ResponseEntity<FrontendPainListDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<PainListDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
 
         List<PainEntity> listOfPain = painService.getAll(appUser.getUserName());
-        FrontendPainListDto painList = new FrontendPainListDto();
+        PainListDto painListDto = new PainListDto();
         for(PainEntity painItem: listOfPain){
-            FrontendPainDto painDto = FrontendPainDto.builder()
+            PainDto painDto = PainDto.builder()
                     .painLevel(painItem.getPainLevel())
                     .id(painItem.getId())
                     .date(painItem.getDate())
                     .build();
-            painList.addPain(painDto);
+            painListDto.addPain(painDto);
         }
-        return ok(painList);
+        return ok(painListDto);
     }
 
-    private FrontendPainDto map(PainEntity persistedPain) {
-        return FrontendPainDto.builder()
+    private PainDto map(PainEntity persistedPain) {
+        return PainDto.builder()
                 .painLevel(persistedPain.getPainLevel())
                 .id(persistedPain.getId())
                 .date(persistedPain.getDate())
                 .build();
     }
 
-    private PainEntity map(AppUserEntity appUser, FrontendPainDto frontendPainDto) {
+    private PainEntity map(AppUserEntity appUser, PainDto painDto) {
         return PainEntity.builder()
-                .painLevel(frontendPainDto.getPainLevel())
+                .painLevel(painDto.getPainLevel())
                 .userName(appUser.getUserName())
                 .build();
     }

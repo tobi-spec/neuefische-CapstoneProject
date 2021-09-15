@@ -1,8 +1,8 @@
 package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.TestAuthorization;
-import de.tobias.intestinalinspector.api.FrontendPainDto;
-import de.tobias.intestinalinspector.api.FrontendPainListDto;
+import de.tobias.intestinalinspector.api.PainDto;
+import de.tobias.intestinalinspector.api.PainListDto;
 import de.tobias.intestinalinspector.repository.PainRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -49,17 +49,17 @@ class PainControllerTest {
     @Test
     public void testAddPain(){
         //GIVEN
-        FrontendPainDto painToAdd = FrontendPainDto.builder()
+        PainDto painToAdd = PainDto.builder()
                 .painLevel(4)
                 .build();
         //WHEN
-        HttpEntity<FrontendPainDto> httpEntity = new HttpEntity<>(painToAdd,
+        HttpEntity<PainDto> httpEntity = new HttpEntity<>(painToAdd,
                                                                     testAuthorization.Header("Frank", "user")
         );
-        ResponseEntity<FrontendPainDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<PainDto> actualResponse = testRestTemplate.exchange(url(),
                                                                                     HttpMethod.POST,
                                                                                     httpEntity,
-                                                                                    FrontendPainDto.class);
+                                                                                    PainDto.class);
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());
@@ -69,32 +69,32 @@ class PainControllerTest {
     @Test
     public void testGetAll(){
         //GIVEN
-        FrontendPainDto painToAdd = FrontendPainDto.builder()
+        PainDto painToAdd = PainDto.builder()
                 .painLevel(7)
                 .build();
         //WHEN
-        HttpEntity<FrontendPainDto> httpEntityPost = new HttpEntity<>(painToAdd,
+        HttpEntity<PainDto> httpEntityPost = new HttpEntity<>(painToAdd,
                 testAuthorization.Header("Frank", "user")
         );
         testRestTemplate.exchange(url(),
                                 HttpMethod.POST,
                                 httpEntityPost,
-                                FrontendPainDto.class);
+                                PainDto.class);
 
-        HttpEntity<FrontendPainDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
+        HttpEntity<PainDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
 
-        ResponseEntity<FrontendPainListDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<PainListDto> actualResponse = testRestTemplate.exchange(url(),
                                                                                         HttpMethod.GET,
                                                                                         httpEntityGet,
-                                                                                        FrontendPainListDto.class);
+                                                                                        PainListDto.class);
         //THEN
-        FrontendPainDto painDto = FrontendPainDto.builder()
+        PainDto painDto = PainDto.builder()
                 .id(1)
                 .painLevel(7)
                 .date("2021")
                 .build();
 
-        FrontendPainListDto expectedList = new FrontendPainListDto();
+        PainListDto expectedList = new PainListDto();
         expectedList.addPain(painDto);
 
         assertEquals(expectedList, actualResponse.getBody());
