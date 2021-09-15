@@ -145,24 +145,26 @@ class FoodControllerTest {
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertEquals(expectedList, actualResponse.getBody());
     }
-// Test does not work, will be fixed later
-/*    @Test
+
+    @Test
     public void testUpdate(){
         //GIVEN
         UpdateDto updateDto = UpdateDto.builder()
-                .id(1L)
+                .id(1)
                 .newName("ErsatzErbse")
                 .build();
         //WHEN
         HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(updateDto, testAuthorization.Header("Frank",
                 "user"));
-        ResponseEntity<UpdateDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url(),
                 HttpMethod.PUT,
                 httpEntityPut,
-                UpdateDto.class);
+                FoodDto.class);
         //THEN
-        assertEquals(HttpStatus.UNAUTHORIZED, actualResponse.getStatusCode());
-    }*/
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertNotNull(actualResponse.getBody());
+        assertEquals("ErsatzErbse", actualResponse.getBody().getFoodName());
+    }
 
     @Test
     public void testUpdateBadId(){
@@ -174,10 +176,10 @@ class FoodControllerTest {
         //WHEN
         HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(updateDto, testAuthorization.Header("Frank",
                 "user"));
-        ResponseEntity<UpdateDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url(),
                                                                             HttpMethod.PUT,
                                                                             httpEntityPut,
-                                                                            UpdateDto.class);
+                                                                            FoodDto.class);
         //THEN
         assertEquals(HttpStatus.BAD_REQUEST, actualResponse.getStatusCode());
     }
