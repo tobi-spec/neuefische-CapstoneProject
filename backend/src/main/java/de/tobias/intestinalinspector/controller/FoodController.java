@@ -6,6 +6,7 @@ import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -27,22 +28,30 @@ public class FoodController {
     @PostMapping
     public ResponseEntity<FrontendFoodDto> add(@AuthenticationPrincipal AppUserEntity appUser,
                                                @RequestBody FrontendFoodDto frontendFoodDto) {
-
         FoodEntity foodToPersist = map(appUser, frontendFoodDto);
         FoodEntity persistedFood = foodService.add(foodToPersist);
         FrontendFoodDto foodToReturn = map(persistedFood);
-
         return ok(foodToReturn);
     }
 
     @GetMapping
-    public FrontendFoodListDto getAll(@AuthenticationPrincipal AppUserEntity appUser){
-
+    public ResponseEntity<FrontendFoodListDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
         FrontendFoodListDto foodList = new FrontendFoodListDto();
         map(listOfFood, foodList);
-        return foodList;
+        return ok(foodList);
     }
+
+    @PutMapping
+    public ResponseEntity<Integer> update(@RequestBody long id, String newName){
+        int numberOfChangedRows = foodService.update(id, newName);
+        if(numberOfChangedRows == 1){
+            return ok(numberOfChangedRows);
+        } else {
+            throw new IllegalArgumentException("No Element with this ID in database");
+        }
+    }
+
 
     private void map(List<FoodEntity> listOfFood, FrontendFoodListDto frontendFoodListDto) {
         for( FoodEntity foodItem: listOfFood){
