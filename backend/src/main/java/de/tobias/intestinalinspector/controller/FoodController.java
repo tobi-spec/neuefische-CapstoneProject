@@ -2,6 +2,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.FoodListDto;
+import de.tobias.intestinalinspector.api.UpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.FoodService;
@@ -28,7 +29,6 @@ public class FoodController {
     @PostMapping
     public ResponseEntity<FoodDto> add(@AuthenticationPrincipal AppUserEntity appUser,
                                        @RequestBody FoodDto foodDto) {
-
         String foodName = foodDto.getFoodName();
         if(foodName == null || foodName.isEmpty()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -48,8 +48,9 @@ public class FoodController {
     }
 
     @PutMapping
-    public ResponseEntity<Integer> update(@RequestBody long id, String newName){
-        int numberOfChangedRows = foodService.update(id, newName);
+    public ResponseEntity<Integer> update(@RequestBody UpdateDto updateDto){
+        FoodEntity foodEntity = map(updateDto);
+        int numberOfChangedRows = foodService.update(foodEntity);
         if(numberOfChangedRows == 1){
             return ok(numberOfChangedRows);
         } else {
@@ -57,6 +58,12 @@ public class FoodController {
         }
     }
 
+    private FoodEntity map(UpdateDto updateDto) {
+        return FoodEntity.builder()
+                .id(updateDto.getId())
+                .foodName(updateDto.getNewName())
+                .build();
+    }
 
     private void map(List<FoodEntity> listOfFood, FoodListDto foodListDto) {
         for( FoodEntity foodItem: listOfFood){
