@@ -6,6 +6,7 @@ import de.tobias.intestinalinspector.api.FrontendFoodListDto;
 import de.tobias.intestinalinspector.repository.FoodRepository;
 import de.tobias.intestinalinspector.TestAuthorization;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,6 +42,21 @@ class FoodControllerTest {
     @Autowired
     TestAuthorization testAuthorization;
 
+    @BeforeEach
+    public void fill() {
+        FrontendFoodDto foodToAdd = FrontendFoodDto.builder()
+                .foodName("Testtrauben")
+                .build();
+
+        HttpEntity<FrontendFoodDto> httpEntity = new HttpEntity<>(foodToAdd,
+                testAuthorization.Header("Frank", "user")
+        );
+        testRestTemplate.exchange(url(),
+                HttpMethod.POST,
+                httpEntity,
+                FrontendFoodDto.class);
+    }
+
     @AfterEach
     public void clear(){
         foodRepository.deleteAll();
@@ -49,6 +65,7 @@ class FoodControllerTest {
 
     @Test
     public void testAddFood(){
+        // This test can not use beforeEach() and must add Object to database by itself
         //GIVEN
         FrontendFoodDto foodToAdd = FrontendFoodDto.builder()
                 .foodName("Testtrauben")
@@ -69,26 +86,13 @@ class FoodControllerTest {
 
     @Test
     public void testGetAll(){
-        //GIVEN
-        FrontendFoodDto foodToAdd = FrontendFoodDto.builder()
-                .foodName("Testtrauben")
-                .build();
         //WHEN
-        HttpEntity<FrontendFoodDto> httpEntityPost = new HttpEntity<>(foodToAdd,
-                testAuthorization.Header("Frank", "user")
-        );
-        testRestTemplate.exchange(url(),
-                HttpMethod.POST,
-                httpEntityPost,
-                FrontendFoodDto.class);
-
-        HttpEntity<FrontendFoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-
+        HttpEntity<FrontendFoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank",
+                                                                                                    "user"));
         ResponseEntity<FrontendFoodListDto> actualResponse = testRestTemplate.exchange(url(),
                                                                                     HttpMethod.GET,
                                                                                     httpEntityGet ,
                                                                                     FrontendFoodListDto.class);
-
         //THEN
         FrontendFoodDto foodDto= FrontendFoodDto.builder()
                 .id(1)
