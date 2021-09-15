@@ -30,6 +30,6 @@ public class FoodService {
     }
 
     public int update(FoodEntity foodEntity) {
-        return foodRepository.updateFoodFromUser(foodEntity.getId(), foodEntity.getFoodName());
+        return foodRepository.updateFood(foodEntity.getId(), foodEntity.getFoodName());
     }
 }

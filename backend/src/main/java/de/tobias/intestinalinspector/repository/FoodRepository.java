@@ -16,7 +16,7 @@ public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
     @Modifying
     @Transactional
     @Query("UPDATE FoodEntity f SET f.foodName = :foodName WHERE f.id = :id")
-    int updateFoodFromUser(@Param("id") long id, @Param("foodName") String foodName);
+    int updateFood(@Param("id") long id, @Param("foodName") String foodName);
 
 }
 
