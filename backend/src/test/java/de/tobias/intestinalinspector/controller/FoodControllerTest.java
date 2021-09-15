@@ -145,4 +145,36 @@ class FoodControllerTest {
         assertEquals(expectedList, actualResponse.getBody());
     }
 
+    @Test
+    public void testUpdate(){
+        //GIVEN
+        String newName = "ErsatzErbse";
+        //WHEN
+        HttpEntity<String> httpEntityPut = new HttpEntity<>(newName, testAuthorization.Header("Frank",
+                "user"));
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update=1",
+                HttpMethod.PUT,
+                httpEntityPut,
+                FoodDto.class);
+        //THEN
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertNotNull(actualResponse.getBody());
+        assertEquals("ErsatzErbse", actualResponse.getBody().getFoodName());
+    }
+
+    @Test
+    public void testUpdateBadId(){
+        //GIVEN
+        String newName = "UpdateErbse";
+        //WHEN
+        HttpEntity<String> httpEntityPut = new HttpEntity<>(newName, testAuthorization.Header("Frank",
+                "user"));
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update=99",
+                                                                            HttpMethod.PUT,
+                                                                            httpEntityPut,
+                                                                            FoodDto.class);
+        //THEN
+        assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
+    }
+
 }

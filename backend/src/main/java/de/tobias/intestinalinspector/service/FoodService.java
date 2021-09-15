@@ -4,8 +4,9 @@ import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FoodService {
@@ -29,7 +30,13 @@ public class FoodService {
         return foodRepository.findAllByUserName(userName);
     }
 
-    public int update(long id, String newName) {
-        return foodRepository.updateFoodFromUser(id, newName);
+    public FoodEntity update(Long id, String newName) {
+        Optional<FoodEntity> entityToOverwrite = foodRepository.findById(id);
+        if(entityToOverwrite.isPresent()) {
+            entityToOverwrite.get().setFoodName(newName);
+            return foodRepository.save(entityToOverwrite.get());
+        } else {
+            throw new EntityNotFoundException("No such entry found");
+        }
     }
 }

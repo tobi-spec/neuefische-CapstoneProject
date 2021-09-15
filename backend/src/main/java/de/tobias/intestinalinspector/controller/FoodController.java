@@ -28,7 +28,6 @@ public class FoodController {
     @PostMapping
     public ResponseEntity<FoodDto> add(@AuthenticationPrincipal AppUserEntity appUser,
                                        @RequestBody FoodDto foodDto) {
-
         String foodName = foodDto.getFoodName();
         if(foodName == null || foodName.isEmpty()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -47,16 +46,12 @@ public class FoodController {
         return ok(foodListDto);
     }
 
-    @PutMapping
-    public ResponseEntity<Integer> update(@RequestBody long id, String newName){
-        int numberOfChangedRows = foodService.update(id, newName);
-        if(numberOfChangedRows == 1){
-            return ok(numberOfChangedRows);
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @PutMapping("/update={id}") // Dto needed?
+    public ResponseEntity<FoodDto> update(@PathVariable Long id, @RequestBody String newName){
+            FoodEntity changedEntity = foodService.update(id, newName);
+            FoodDto returnDto = map(changedEntity);
+            return ok(returnDto);
     }
-
 
     private void map(List<FoodEntity> listOfFood, FoodListDto foodListDto) {
         for( FoodEntity foodItem: listOfFood){
@@ -72,6 +67,8 @@ public class FoodController {
     private FoodDto map(FoodEntity foodEntity) {
         return FoodDto.builder()
                 .foodName(foodEntity.getFoodName())
+                .id(foodEntity.getId())
+                .date(foodEntity.getDate())
                 .build();
     }
 
