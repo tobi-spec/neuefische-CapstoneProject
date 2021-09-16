@@ -2,7 +2,7 @@ import Button from './Button'
 import { removeFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
 
-export default function Remove({ id }) {
+export default function Remove({ id, renderHandler }) {
   const { token } = useAuth()
 
   const yesHandler = () => {
@@ -15,7 +15,7 @@ export default function Remove({ id }) {
     <section>
       <p>Sure?</p>
       <Button onClick={yesHandler}>Yes</Button>
-      <Button>No</Button>
+      <Button onClick={renderHandler}>No</Button>
     </section>
   )
 }

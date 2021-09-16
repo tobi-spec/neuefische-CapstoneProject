@@ -4,7 +4,13 @@ import Edit from './Edit'
 import { useState } from 'react'
 import Remove from './Remove'
 
-export default function ItemCard({ valueTitle, mainValue, date, id }) {
+export default function ItemCard({
+  valueTitle,
+  mainValue,
+  date,
+  id,
+  renderHandler,
+}) {
   const [edit, setEdit] = useState(false)
   const [remove, setRemove] = useState(false)
 
@@ -29,7 +35,7 @@ export default function ItemCard({ valueTitle, mainValue, date, id }) {
         </p>
         <p>date: {date}</p>
         {edit && <Edit id={id} />}
-        {remove && <Remove id={id} />}
+        {remove && <Remove id={id} renderHandler={renderHandler} />}
         {!edit && !remove && <Button onClick={editHandler}>edit</Button>}
         {!edit && !remove && <Button onClick={removeHandler}>remove</Button>}
         {(edit || remove) && <Button onClick={cancelHandler}>Cancel</Button>}

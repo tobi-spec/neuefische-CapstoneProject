@@ -19,7 +19,7 @@ export default function PainDiary() {
 
   const Items = painList.map(Item => (
     <ItemCard
-      valueTitle={'Food'}
+      valueTitle={'Pain'}
       mainValue={Item.painLevel}
       date={Item.date}
       id={Item.id}
