@@ -25,7 +25,7 @@ export const updateFood = (id, newName, token) =>
   axios.put(FoodPath + `/update=${id}`, newName, header(token))
 
 export const removeFood = (id, token) =>
-  axios.delete(FoodPath + `delete=${id}`, header(token))
+  axios.delete(FoodPath + `/delete=${id}`, header(token))
 
 export const addPain = (pain, token) =>
   axios.post(PainPath, pain, header(token))
