@@ -1,6 +1,6 @@
 import Button from './Button'
 
-export default function Delete() {
+export default function Remove() {
   return (
     <section>
       <p>Sure?</p>
