@@ -39,4 +39,14 @@ public class FoodService {
             throw new EntityNotFoundException("No such entry found");
         }
     }
+
+    public FoodEntity delete(Long id) {
+        Optional<FoodEntity> entityToDelete = foodRepository.findById(id);
+        if(entityToDelete.isPresent()) {
+            foodRepository.delete(entityToDelete.get());
+            return entityToDelete.get();
+        } else {
+            throw new EntityNotFoundException("No such entry found");
+        }
+    }
 }
