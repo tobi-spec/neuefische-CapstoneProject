@@ -47,7 +47,7 @@ public class FoodController {
         return ok(foodListDto);
     }
 
-    @PutMapping("/update={id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<FoodDto> update(@PathVariable Long id, @RequestBody UpdateDto updateDto){
             String newName = updateDto.getNewName();
             FoodEntity changedEntity = foodService.update(id, newName);
@@ -55,7 +55,7 @@ public class FoodController {
             return ok(returnDto);
     }
 
-    @DeleteMapping("/delete={id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<FoodDto> delete(@PathVariable Long id) {
         FoodEntity deleteEntity = foodService.delete(id);
         FoodDto returnDto = map(deleteEntity);

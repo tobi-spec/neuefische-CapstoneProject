@@ -4,11 +4,11 @@ package de.tobias.intestinalinspector.controller;
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.FoodListDto;
 import de.tobias.intestinalinspector.api.UpdateDto;
-import de.tobias.intestinalinspector.repository.FoodRepository;
 import de.tobias.intestinalinspector.TestAuthorization;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -25,7 +25,10 @@ import static org.junit.jupiter.api.Assertions.*;
         properties = "spring.profiles.active:h2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FoodControllerTest {
+
+    // Runs as combined test, methods are chained together
 
     @LocalServerPort
     private int port;
@@ -35,36 +38,14 @@ class FoodControllerTest {
     }
 
     @Autowired
-    TestRestTemplate testRestTemplate;
+    private TestRestTemplate testRestTemplate;
 
     @Autowired
-    FoodRepository foodRepository;
-
-    @Autowired
-    TestAuthorization testAuthorization;
-
-    @BeforeEach
-    public void fill() {
-        FoodDto foodToAdd = FoodDto.builder()
-                .foodName("Testtrauben")
-                .build();
-
-        HttpEntity<FoodDto> httpEntity = new HttpEntity<>(foodToAdd,
-                testAuthorization.Header("Frank", "user")
-        );
-        testRestTemplate.exchange(url(),
-                HttpMethod.POST,
-                httpEntity,
-                FoodDto.class);
-    }
-
-    @AfterEach
-    public void clear(){
-        foodRepository.deleteAll();
-    }
+    private TestAuthorization testAuthorization;
 
 
     @Test
+    @Order(1)
     public void testAddFood(){
         // This test can not use beforeEach() and must add Object to database by itself
         //GIVEN
@@ -86,6 +67,7 @@ class FoodControllerTest {
     }
 
     @Test
+    @Order(2)
     public void testAddFoodWithoutText(){
         // This test can not use beforeEach() and must add Object to database by itself
         //GIVEN
@@ -105,8 +87,8 @@ class FoodControllerTest {
     }
 
     @Test
+    @Order(3)
     public void testAddFoodTextIsNull(){
-        // This test can not use beforeEach() and must add Object to database by itself
         //GIVEN
         FoodDto foodToAdd = FoodDto.builder()
                 .foodName(null)
@@ -124,6 +106,7 @@ class FoodControllerTest {
     }
 
     @Test
+    @Order(4)
     public void testGetAll(){
         //WHEN
         HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank",
@@ -147,14 +130,16 @@ class FoodControllerTest {
     }
 
     @Test
+    @Order(5)
     public void testUpdate(){
         //GIVEN
+        String id = "1";
         UpdateDto update = UpdateDto.builder()
                 .newName("ErsatzErbse").build();
         //WHEN
         HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update=1",
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
                 HttpMethod.PUT,
                 httpEntityPut,
                 FoodDto.class);
@@ -165,14 +150,16 @@ class FoodControllerTest {
     }
 
     @Test
+    @Order(6)
     public void testUpdateBadId(){
         //GIVEN
+        String id = "99";
         UpdateDto update = UpdateDto.builder()
                 .newName("ErsatzErbse").build();
         //WHEN
         HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update=99",
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
                                                                             HttpMethod.PUT,
                                                                             httpEntityPut,
                                                                             FoodDto.class);
@@ -181,26 +168,30 @@ class FoodControllerTest {
     }
 
     @Test
+    @Order(7)
     public void testDelete(){
         //GIVEN
+        String id = "1";
         //WHEN
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete=1",
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete/" + id,
                                                                                         HttpMethod.DELETE,
                                                                                         httpEntityDelete,
                                                                                         FoodDto.class) ;
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());
-        assertEquals("Testtrauben", actualResponse.getBody().getFoodName());
+        assertEquals("ErsatzErbse", actualResponse.getBody().getFoodName());
     }
 
     @Test
+    @Order(8)
     public void testDeleteBadId(){
         //GIVEN
+        String id = "99";
         //WHEN
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete=99",
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete/" + id,
                 HttpMethod.DELETE,
                 httpEntityDelete,
                 FoodDto.class) ;
