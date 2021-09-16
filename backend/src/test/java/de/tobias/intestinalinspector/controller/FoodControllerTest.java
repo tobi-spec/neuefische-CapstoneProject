@@ -89,7 +89,6 @@ class FoodControllerTest {
     @Test
     @Order(3)
     public void testAddFoodTextIsNull(){
-        // This test can not use beforeEach() and must add Object to database by itself
         //GIVEN
         FoodDto foodToAdd = FoodDto.builder()
                 .foodName(null)
