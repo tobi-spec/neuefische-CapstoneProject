@@ -2,16 +2,23 @@ import styled from 'styled-components'
 import Button from './Button'
 import Edit from './Edit'
 import { useState } from 'react'
+import Remove from './Remove'
 
 export default function FoodCard({ foodName, date, id }) {
   const [edit, setEdit] = useState(false)
+  const [remove, setRemove] = useState(false)
 
   const editHandler = () => {
     setEdit(true)
   }
 
+  const removeHandler = () => {
+    setRemove(true)
+  }
+
   const cancelHandler = () => {
     setEdit(false)
+    setRemove(false)
   }
 
   return (
@@ -20,9 +27,10 @@ export default function FoodCard({ foodName, date, id }) {
         <p>food: {foodName}</p>
         <p>date: {date}</p>
         {edit && <Edit id={id} />}
-        <Button onClick={editHandler}>Edit</Button>
-        {!edit && <Button>Delete</Button>}
-        {edit && <Button onClick={cancelHandler}>Cancel</Button>}
+        {remove && <Remove id={id} />}
+        {!edit && !remove && <Button onClick={editHandler}>edit</Button>}
+        {!edit && !remove && <Button onClick={removeHandler}>remove</Button>}
+        {(edit || remove) && <Button onClick={cancelHandler}>Cancel</Button>}
       </li>
     </Wrapper>
   )
