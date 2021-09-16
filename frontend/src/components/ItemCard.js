@@ -4,7 +4,7 @@ import Edit from './Edit'
 import { useState } from 'react'
 import Remove from './Remove'
 
-export default function FoodCard({ foodName, date, id }) {
+export default function ItemCard({ valueTitle, mainValue, date, id }) {
   const [edit, setEdit] = useState(false)
   const [remove, setRemove] = useState(false)
 
@@ -24,7 +24,9 @@ export default function FoodCard({ foodName, date, id }) {
   return (
     <Wrapper>
       <li>
-        <p>food: {foodName}</p>
+        <p>
+          {valueTitle}: {mainValue}
+        </p>
         <p>date: {date}</p>
         {edit && <Edit id={id} />}
         {remove && <Remove id={id} />}
