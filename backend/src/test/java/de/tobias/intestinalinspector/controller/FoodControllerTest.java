@@ -3,6 +3,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.FoodListDto;
+import de.tobias.intestinalinspector.api.UpdateDto;
 import de.tobias.intestinalinspector.repository.FoodRepository;
 import de.tobias.intestinalinspector.TestAuthorization;
 import org.junit.jupiter.api.AfterEach;
@@ -148,9 +149,10 @@ class FoodControllerTest {
     @Test
     public void testUpdate(){
         //GIVEN
-        String newName = "ErsatzErbse";
+        UpdateDto update = UpdateDto.builder()
+                .newName("ErsatzErbse").build();
         //WHEN
-        HttpEntity<String> httpEntityPut = new HttpEntity<>(newName, testAuthorization.Header("Frank",
+        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update=1",
                 HttpMethod.PUT,
@@ -165,14 +167,43 @@ class FoodControllerTest {
     @Test
     public void testUpdateBadId(){
         //GIVEN
-        String newName = "UpdateErbse";
+        UpdateDto update = UpdateDto.builder()
+                .newName("ErsatzErbse").build();
         //WHEN
-        HttpEntity<String> httpEntityPut = new HttpEntity<>(newName, testAuthorization.Header("Frank",
+        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update=99",
                                                                             HttpMethod.PUT,
                                                                             httpEntityPut,
                                                                             FoodDto.class);
+        //THEN
+        assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
+    }
+
+    @Test
+    public void testDelete(){
+        //GIVEN
+        //WHEN
+        HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete=1",
+                                                                                        HttpMethod.DELETE,
+                                                                                        httpEntityDelete,
+                                                                                        FoodDto.class) ;
+        //THEN
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertNotNull(actualResponse.getBody());
+        assertEquals("Testtrauben", actualResponse.getBody().getFoodName());
+    }
+
+    @Test
+    public void testDeleteBadId(){
+        //GIVEN
+        //WHEN
+        HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete=99",
+                HttpMethod.DELETE,
+                httpEntityDelete,
+                FoodDto.class) ;
         //THEN
         assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }

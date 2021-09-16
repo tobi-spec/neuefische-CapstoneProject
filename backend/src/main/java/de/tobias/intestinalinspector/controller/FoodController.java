@@ -55,6 +55,14 @@ public class FoodController {
             return ok(returnDto);
     }
 
+    @DeleteMapping("/delete={id}")
+    public ResponseEntity<FoodDto> delete(@PathVariable Long id) {
+        FoodEntity deleteEntity = foodService.delete(id);
+        FoodDto returnDto = map(deleteEntity);
+        return ok(returnDto);
+    }
+
+
     private void map(List<FoodEntity> listOfFood, FoodListDto foodListDto) {
         for( FoodEntity foodItem: listOfFood){
             FoodDto foodDto = FoodDto.builder()

@@ -3,7 +3,7 @@ import Button from './Button'
 import styled from 'styled-components'
 import { useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
-import { getFood, updateFood } from '../service/AxiosService'
+import { updateFood } from '../service/AxiosService'
 
 export default function Edit({ id }) {
   const { token } = useAuth()
