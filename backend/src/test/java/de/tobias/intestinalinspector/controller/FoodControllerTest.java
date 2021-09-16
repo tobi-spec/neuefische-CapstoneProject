@@ -192,4 +192,17 @@ class FoodControllerTest {
         assertEquals("Testtraube", actualResponse.getBody().getFoodName());
     }
 
+    @Test
+    public void testDeleteBadId(){
+        //GIVEN
+        //WHEN
+        HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete=99",
+                HttpMethod.DELETE,
+                httpEntityDelete,
+                FoodDto.class) ;
+        //THEN
+        assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
+    }
+
 }
