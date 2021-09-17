@@ -11,4 +11,5 @@ import lombok.*;
 public class UpdateDto {
 
     private String newName;
+    private int newNumber;
 }

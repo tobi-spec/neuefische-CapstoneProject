@@ -20,12 +20,12 @@ public class FoodDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FoodDto foodDto = (FoodDto) o;
-        return Objects.equals(foodName, foodDto.foodName);
+        return id == foodDto.id && Objects.equals(foodName, foodDto.foodName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(foodName);
+        return Objects.hash(foodName, id);
     }
 
     @Override

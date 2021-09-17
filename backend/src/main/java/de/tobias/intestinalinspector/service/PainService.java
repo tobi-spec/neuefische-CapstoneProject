@@ -1,11 +1,14 @@
 package de.tobias.intestinalinspector.service;
 
+import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.repository.PainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -28,5 +31,25 @@ public class PainService {
 
     public List<PainEntity> getAll(String username) {
         return painRepository.findAllByUserName(username);
+    }
+
+    public PainEntity update(Long id, int newNumber) {
+        painRepository.updateFoodFromUser(id, newNumber);
+        Optional<PainEntity> changedEntity= painRepository.findById(id);
+        if(changedEntity.isPresent()) {
+            return changedEntity.get();
+        } else {
+            throw new EntityNotFoundException("No such entry found");
+        }
+    }
+
+    public PainEntity delete(Long id) {
+        Optional<PainEntity> entityToDelete = painRepository.findById(id);
+        if(entityToDelete.isPresent()) {
+            painRepository.delete(entityToDelete.get());
+            return entityToDelete.get();
+        } else {
+            throw new EntityNotFoundException("No such entry found");
+        }
     }
 }

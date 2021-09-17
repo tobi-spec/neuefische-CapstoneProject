@@ -20,11 +20,20 @@ public class PainDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PainDto painDto = (PainDto) o;
-        return painLevel == painDto.painLevel;
+        return painLevel == painDto.painLevel && id == painDto.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(painLevel);
+        return Objects.hash(painLevel, id);
+    }
+
+    @Override
+    public String toString() {
+        return "PainDto{" +
+                "painLevel=" + painLevel +
+                ", id=" + id +
+                ", date='" + date + '\'' +
+                '}';
     }
 }
