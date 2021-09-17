@@ -35,7 +35,13 @@ export default function ItemCard({
         </p>
         <p>date: {date}</p>
         {edit && <Edit id={id} />}
-        {remove && <Remove id={id} reloadList={reloadList} />}
+        {remove && (
+          <Remove
+            id={id}
+            reloadList={reloadList}
+            cancelHandler={cancelHandler}
+          />
+        )}
         {!edit && !remove && <Button onClick={editHandler}>edit</Button>}
         {!edit && !remove && <Button onClick={removeHandler}>remove</Button>}
         {(edit || remove) && <Button onClick={cancelHandler}>Cancel</Button>}
