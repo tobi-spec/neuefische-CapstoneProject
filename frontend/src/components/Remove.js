@@ -1,8 +1,6 @@
 import Button from './Button'
 import { removeFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
-import { Redirect } from 'react-router-dom'
-import { useEffect } from 'react'
 
 export default function Remove({ id, reloadList, cancelHandler }) {
   const { token } = useAuth()
@@ -20,7 +18,7 @@ export default function Remove({ id, reloadList, cancelHandler }) {
 
   return (
     <section>
-      <p>Sure?</p>
+      <p>Are you Sure?</p>
       <Button onClick={yesHandler}> Yes </Button>
       <Button onClick={noHandler}> No </Button>
     </section>
