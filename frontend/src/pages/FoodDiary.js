@@ -17,7 +17,7 @@ export default function FoodDiary() {
       .then(data => setFoodList(data.foodList))
   }, [token])
 
-  const reloadList = () => {
+  const reloadFoodList = token => {
     getFood(token)
       .then(response => response.data)
       .then(data => setFoodList(data.foodList))
@@ -30,7 +30,7 @@ export default function FoodDiary() {
       date={Item.date}
       id={Item.id}
       key={Item.id}
-      reloadList={reloadList}
+      reloadList={reloadFoodList}
     />
   ))
 
