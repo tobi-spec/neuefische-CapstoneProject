@@ -143,7 +143,7 @@ class PainControllerTest {
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());
-        assertEquals(7, actualResponse.getBody().getPainLevel());
+        assertEquals(1, actualResponse.getBody().getPainLevel());
     }
 
     @Test
