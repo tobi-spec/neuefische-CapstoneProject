@@ -2,7 +2,7 @@ import Button from './Button'
 import { removeFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
 
-export default function Remove({ id, renderHandler }) {
+export default function Remove({ id, reloadList }) {
   const { token } = useAuth()
 
   const yesHandler = () => {
@@ -11,11 +11,19 @@ export default function Remove({ id, renderHandler }) {
       .catch(error => console.log(error))
   }
 
+  const noHandler = () => {
+    reloadList()
+  }
+
   return (
     <section>
       <p>Sure?</p>
-      <Button onClick={yesHandler}>Yes</Button>
-      <Button onClick={renderHandler}>No</Button>
+      <form onSubmit={yesHandler}>
+        <Button>Yes</Button>
+      </form>
+      <form onSubmit={noHandler}>
+        <Button>No</Button>
+      </form>
     </section>
   )
 }

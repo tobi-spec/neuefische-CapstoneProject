@@ -10,7 +10,6 @@ import ItemCard from '../components/ItemCard'
 export default function FoodDiary() {
   const { token } = useAuth()
   const [foodList, setFoodList] = useState([])
-  const [render, setRender] = useState(false)
 
   useEffect(() => {
     getFood(token)
@@ -18,10 +17,10 @@ export default function FoodDiary() {
       .then(data => setFoodList(data.foodList))
   }, [token])
 
-  const renderHandler = () => {
-    setRender(true)
-    console.log(render)
-    setRender(false)
+  const reloadList = () => {
+    getFood(token)
+      .then(response => response.data)
+      .then(data => setFoodList(data.foodList))
   }
 
   const Items = foodList.map(Item => (
@@ -31,7 +30,7 @@ export default function FoodDiary() {
       date={Item.date}
       id={Item.id}
       key={Item.id}
-      renderHandler={renderHandler}
+      reloadList={reloadList}
     />
   ))
 

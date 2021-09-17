@@ -9,7 +9,7 @@ export default function ItemCard({
   mainValue,
   date,
   id,
-  renderHandler,
+  reloadList,
 }) {
   const [edit, setEdit] = useState(false)
   const [remove, setRemove] = useState(false)
@@ -35,7 +35,7 @@ export default function ItemCard({
         </p>
         <p>date: {date}</p>
         {edit && <Edit id={id} />}
-        {remove && <Remove id={id} renderHandler={renderHandler} />}
+        {remove && <Remove id={id} reloadList={reloadList} />}
         {!edit && !remove && <Button onClick={editHandler}>edit</Button>}
         {!edit && !remove && <Button onClick={removeHandler}>remove</Button>}
         {(edit || remove) && <Button onClick={cancelHandler}>Cancel</Button>}
