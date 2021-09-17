@@ -47,8 +47,6 @@ class FoodControllerTest {
     @Test
     @Order(1)
     public void testAddFood(){
-        // This test can not use beforeEach() and must add Object to database by itself
-        //GIVEN
         FoodDto foodToAdd = FoodDto.builder()
                 .foodName("Testtrauben")
                 .build();
@@ -69,8 +67,6 @@ class FoodControllerTest {
     @Test
     @Order(2)
     public void testAddFoodWithoutText(){
-        // This test can not use beforeEach() and must add Object to database by itself
-        //GIVEN
         FoodDto foodToAdd = FoodDto.builder()
                 .foodName("")
                 .build();
@@ -109,8 +105,7 @@ class FoodControllerTest {
     @Order(4)
     public void testGetAll(){
         //WHEN
-        HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank",
-                                                                                                    "user"));
+        HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<FoodListDto> actualResponse = testRestTemplate.exchange(url(),
                                                                                     HttpMethod.GET,
                                                                                     httpEntityGet ,
@@ -119,7 +114,7 @@ class FoodControllerTest {
         FoodDto foodDto= FoodDto.builder()
                 .id(1)
                 .foodName("Testtrauben")
-                .date("2021")
+                .date("Placeholder")
                 .build();
 
         FoodListDto expectedList = new FoodListDto();
