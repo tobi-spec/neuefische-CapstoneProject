@@ -5,7 +5,7 @@ export default function ProtectedRoute({ ...props }) {
   const { user } = useAuth()
 
   if (!user) {
-    return <Redirect to="/login" />
+    return <Redirect to="/" />
   }
   return <Route {...props} />
 }
