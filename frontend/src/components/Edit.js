@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 import { updateFood } from '../service/AxiosService'
 
-export default function Edit({ id }) {
+export default function Edit({ id, reloadList, cancelHandler }) {
   const { token } = useAuth()
   const [newName, setNewName] = useState({ newName: '' })
 
@@ -18,6 +18,7 @@ export default function Edit({ id }) {
     event.preventDefault()
     updateFood(id, newName, token)
       .then(response => console.log(response))
+      .then(() => reloadList(token))
       .then(error => console.error(error))
       .finally(() => setNewName(''))
   }

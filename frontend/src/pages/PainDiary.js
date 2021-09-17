@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useState } from 'react'
 import { getPain } from '../service/AxiosService'
-import PainCard from '../components/PainCard'
+import ItemCard from '../components/ItemCard'
 
 export default function PainDiary() {
   const { token } = useAuth()
@@ -17,11 +17,13 @@ export default function PainDiary() {
       .then(data => setPainList(data.painList))
   }, [token])
 
-  const painItems = painList.map(painItem => (
-    <PainCard
-      painLevel={painItem.painLevel}
-      date={painItem.date}
-      key={painItem.id}
+  const Items = painList.map(Item => (
+    <ItemCard
+      valueTitle={'Pain'}
+      mainValue={Item.painLevel}
+      date={Item.date}
+      id={Item.id}
+      key={Item.id}
     />
   ))
 
@@ -29,7 +31,7 @@ export default function PainDiary() {
     <Wrapper>
       <Header title="Pain Diary" />
       <Content>
-        <ul>{painItems}</ul>
+        <ul>{Items}</ul>
       </Content>
       <Footer />
     </Wrapper>
