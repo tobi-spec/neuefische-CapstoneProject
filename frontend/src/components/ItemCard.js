@@ -34,7 +34,9 @@ export default function ItemCard({
           {valueTitle}: {mainValue}
         </p>
         <p>date: {date}</p>
-        {edit && <Edit id={id} />}
+        {edit && (
+          <Edit id={id} reloadList={reloadList} cancelHandler={cancelHandler} />
+        )}
         {remove && (
           <Remove
             id={id}
@@ -44,7 +46,7 @@ export default function ItemCard({
         )}
         {!edit && !remove && <Button onClick={editHandler}>edit</Button>}
         {!edit && !remove && <Button onClick={removeHandler}>remove</Button>}
-        {(edit || remove) && <Button onClick={cancelHandler}>Cancel</Button>}
+        {edit && <Button onClick={cancelHandler}>Cancel</Button>}
       </li>
     </Wrapper>
   )
