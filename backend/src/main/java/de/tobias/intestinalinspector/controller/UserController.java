@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityExistsException;
+import java.util.Optional;
+
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
@@ -27,10 +30,15 @@ public class UserController {
     @PostMapping(CREATE_USER)
     public ResponseEntity<UserDto> create(@RequestBody UserDto userDto) {
         AppUserEntity newUser = map(userDto);
-        AppUserEntity createdUser = appUserService.create(newUser);
-        UserDto userToReturn = map(createdUser);
+        Optional<AppUserEntity> checkForEntity = appUserService.findUser(userDto.getUserName());
+        if(checkForEntity.isEmpty()){
+            AppUserEntity createdUser = appUserService.create(newUser);
+            UserDto userToReturn = map(createdUser);
+            return ok(userToReturn);
+        } else {
+            throw new EntityExistsException("Username already exists");
+        }
 
-        return ok(userToReturn);
     }
 
     private AppUserEntity map(UserDto userDto) {

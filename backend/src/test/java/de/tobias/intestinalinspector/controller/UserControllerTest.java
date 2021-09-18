@@ -55,4 +55,23 @@ class UserControllerTest {
         assertEquals("Frank", actualResponse.getBody().getUserName());
     }
 
+    @Test
+    @Order(2)
+    public void testCreateUserAlreadyExists(){
+        //GIVEN
+        UserDto userToCreate = UserDto.builder()
+                .userName("Frank")
+                .userPassword("Frank123")
+                .build();
+        //WHEN
+        HttpEntity<UserDto> httpEntity = new HttpEntity<>(userToCreate);
+        ResponseEntity<UserDto> actualResponse = testRestTemplate.exchange(url(),
+                HttpMethod.POST,
+                httpEntity,
+                UserDto.class);
+        //THEN
+        assertEquals(HttpStatus.CONFLICT, actualResponse.getStatusCode());
+
+    }
+
 }
