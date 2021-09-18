@@ -29,8 +29,8 @@ public class UserController {
     @PostMapping(CREATE_USER)
     public ResponseEntity<UserDto> create(@RequestBody UserDto userDto) {
         AppUserEntity newUser = map(userDto);
-        Optional<AppUserEntity> checkForEntity = appUserService.findUser(userDto.getUserName());
-        if(checkForEntity.isEmpty()){
+        Optional<AppUserEntity> foundUser = appUserService.findUser(userDto.getUserName());
+        if(foundUser.isEmpty()){
             AppUserEntity createdUser = appUserService.create(newUser);
             UserDto userToReturn = map(createdUser);
             return ok(userToReturn);
