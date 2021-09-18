@@ -14,7 +14,6 @@ import java.util.Optional;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping()
 public class UserController {
 
     public static final String CREATE_USER = "/api/user";

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PainListDto {
 
     List<PainDto> painList= new ArrayList();

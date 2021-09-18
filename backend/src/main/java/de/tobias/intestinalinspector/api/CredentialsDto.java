@@ -1,9 +1,10 @@
 package de.tobias.intestinalinspector.api;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class CredentialsDto {
 

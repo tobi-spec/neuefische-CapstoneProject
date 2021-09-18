@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class FoodListDto {
 
     private List<FoodDto> foodList = new ArrayList<>();
