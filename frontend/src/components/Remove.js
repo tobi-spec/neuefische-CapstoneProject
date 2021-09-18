@@ -1,5 +1,4 @@
 import Button from './Button'
-import { removeFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
 
 export default function Remove({
