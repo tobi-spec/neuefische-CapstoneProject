@@ -15,6 +15,10 @@ export default function PainDiary() {
     getPain(token).then(data => setPainList(data.painList))
   }, [token])
 
+  const reloadPainList = token => {
+    getPain(token).then(data => setPainList(data.painLevel))
+  }
+
   const Items = painList.map(Item => (
     <ItemCard
       valueTitle={'Pain'}
@@ -22,6 +26,7 @@ export default function PainDiary() {
       date={Item.date}
       id={Item.id}
       key={Item.id}
+      reloadList={reloadPainList()}
     />
   ))
 
