@@ -1,18 +1,12 @@
 package de.tobias.intestinalinspector.api;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class FoodListDto {
 
     private List<FoodDto> foodList = new ArrayList<>();

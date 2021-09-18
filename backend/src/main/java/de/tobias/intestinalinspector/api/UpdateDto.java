@@ -3,10 +3,7 @@ package de.tobias.intestinalinspector.api;
 
 import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
 public class UpdateDto {
 
