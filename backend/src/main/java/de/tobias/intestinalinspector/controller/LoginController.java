@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -60,7 +61,9 @@ public class LoginController {
         try{
             authenticationManager.authenticate(authToken);
 
-            AppUserEntity appUser = appUserService.findUser(username).orElseThrow();
+            AppUserEntity appUser = appUserService.findUser(username)
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
             String token = jwtService.createJwtToken(appUser);
 
             AccessTokenDto accessToken = AccessTokenDto.builder()
