@@ -3,9 +3,8 @@ import Button from './Button'
 import styled from 'styled-components'
 import { useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
-import { updateFood } from '../service/AxiosService'
 
-export default function Edit({ id, reloadList, cancelHandler }) {
+export default function Edit({ id, reloadList, cancelHandler, editService }) {
   const { token } = useAuth()
   const [newName, setNewName] = useState({ newName: '' })
 
@@ -16,7 +15,7 @@ export default function Edit({ id, reloadList, cancelHandler }) {
 
   const nameSubmitHandler = event => {
     event.preventDefault()
-    updateFood(id, newName, token)
+    editService(id, newName, token)
       .then(response => console.log(response))
       .then(() => reloadList(token))
       .then(error => console.error(error))

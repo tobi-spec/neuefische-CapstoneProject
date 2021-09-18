@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import Content from '../components/Content'
 import Footer from '../components/Footer'
 import { useEffect, useState } from 'react'
-import { getFood } from '../service/AxiosService'
+import { getFood, removeFood, updateFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
 import ItemCard from '../components/ItemCard'
 
@@ -27,6 +27,8 @@ export default function FoodDiary() {
       id={Item.id}
       key={Item.id}
       reloadList={reloadFoodList}
+      editService={updateFood}
+      removeService={removeFood}
     />
   ))
 

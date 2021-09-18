@@ -2,11 +2,16 @@ import Button from './Button'
 import { removeFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
 
-export default function Remove({ id, reloadList, cancelHandler }) {
+export default function Remove({
+  id,
+  reloadList,
+  cancelHandler,
+  removeService,
+}) {
   const { token } = useAuth()
 
   const yesHandler = () => {
-    removeFood(id, token)
+    removeService(id, token)
       .then(response => console.log(response))
       .then(() => reloadList(token))
       .catch(error => console.log(error))
