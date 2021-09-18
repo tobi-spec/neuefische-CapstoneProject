@@ -13,7 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class PainListDto {
 
-    List<PainDto> painList= new ArrayList();
+    List<PainDto> painList= new ArrayList<>();
 
     public void addPain(PainDto painDto){
         painList.add(painDto);
