@@ -47,7 +47,7 @@ public class FoodController {
         return ok(foodListDto);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<FoodDto> update(@PathVariable Long id, @RequestBody FoodUpdateDto updateDto){
             String newName = updateDto.getNewValue();
             FoodEntity changedEntity = foodService.update(id, newName);
