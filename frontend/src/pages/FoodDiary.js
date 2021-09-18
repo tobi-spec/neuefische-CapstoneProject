@@ -3,9 +3,16 @@ import Header from '../components/Header'
 import Content from '../components/Content'
 import Footer from '../components/Footer'
 import { useEffect, useState } from 'react'
-import { getFood, removeFood, updateFood } from '../service/AxiosService'
+import {
+  getFood,
+  removeFood,
+  removePain,
+  updateFood,
+  updatePain,
+} from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
 import ItemCard from '../components/ItemCard'
+import ItemGallery from '../components/ItemGallery'
 
 export default function FoodDiary() {
   const { token } = useAuth()
@@ -19,24 +26,21 @@ export default function FoodDiary() {
     getFood(token).then(data => setFoodList(data.foodList))
   }
 
-  const Items = foodList.map(Item => (
-    <ItemCard
-      valueTitle={'Food'}
-      mainValue={Item.foodName}
-      date={Item.date}
-      id={Item.id}
-      key={Item.id}
-      reloadList={reloadFoodList}
-      editService={updateFood}
-      removeService={removeFood}
-    />
-  ))
-
   return (
     <Wrapper>
       <Header title="Food Diary" />
       <Content>
-        <ul>{Items}</ul>
+        <ul>
+          {
+            <ItemGallery
+              List={foodList}
+              valueTitle={'Food'}
+              reloadList={reloadFoodList}
+              editService={updateFood}
+              removeService={removeFood}
+            />
+          }
+        </ul>
       </Content>
       <Footer />
     </Wrapper>
