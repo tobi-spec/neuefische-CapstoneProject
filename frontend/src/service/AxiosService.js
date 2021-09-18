@@ -19,7 +19,8 @@ const header = token => ({
 export const addFood = (food, token) =>
   axios.post(FoodPath, food, header(token))
 
-export const getFood = token => axios.get(FoodPath, header(token))
+export const getFood = token =>
+  axios.get(FoodPath, header(token)).then(response => response.data)
 
 export const updateFood = (id, newName, token) =>
   axios.put(FoodPath + `/update=${id}`, newName, header(token))

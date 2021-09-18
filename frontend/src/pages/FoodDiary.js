@@ -12,15 +12,11 @@ export default function FoodDiary() {
   const [foodList, setFoodList] = useState([])
 
   useEffect(() => {
-    getFood(token)
-      .then(response => response.data)
-      .then(data => setFoodList(data.foodList))
+    getFood(token).then(data => setFoodList(data.foodList))
   }, [token])
 
   const reloadFoodList = token => {
-    getFood(token)
-      .then(response => response.data)
-      .then(data => setFoodList(data.foodList))
+    getFood(token).then(data => setFoodList(data.foodList))
   }
 
   const Items = foodList.map(Item => (
