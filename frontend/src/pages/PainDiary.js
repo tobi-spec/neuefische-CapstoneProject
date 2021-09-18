@@ -4,7 +4,7 @@ import Content from '../components/Content'
 import Footer from '../components/Footer'
 import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useState } from 'react'
-import { getPain } from '../service/AxiosService'
+import { getPain, removePain, updatePain } from '../service/AxiosService'
 import ItemCard from '../components/ItemCard'
 
 export default function PainDiary() {
@@ -16,7 +16,7 @@ export default function PainDiary() {
   }, [token])
 
   const reloadPainList = token => {
-    getPain(token).then(data => setPainList(data.painLevel))
+    getPain(token).then(data => setPainList(data.painList))
   }
 
   const Items = painList.map(Item => (
@@ -26,7 +26,9 @@ export default function PainDiary() {
       date={Item.date}
       id={Item.id}
       key={Item.id}
-      reloadList={reloadPainList()}
+      reloadList={reloadPainList}
+      editService={updatePain}
+      removeService={removePain}
     />
   ))
 
