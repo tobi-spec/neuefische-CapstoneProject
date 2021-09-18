@@ -4,10 +4,7 @@ package de.tobias.intestinalinspector.api;
 import lombok.*;
 import java.util.Objects;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
 public class FoodDto {
 

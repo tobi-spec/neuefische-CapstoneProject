@@ -4,10 +4,7 @@ import lombok.*;
 
 import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
 public class PainDto {
 
