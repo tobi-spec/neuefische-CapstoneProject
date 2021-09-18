@@ -8,8 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateDto {
+public class FoodUpdateDto {
 
-    private String newName;
-    private int newNumber;
+    private String newValue;
 }
