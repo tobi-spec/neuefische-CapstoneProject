@@ -6,6 +6,7 @@ import de.tobias.intestinalinspector.api.AppUserDto;
 import de.tobias.intestinalinspector.api.CredentialsDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.service.AppUserDetailsService;
+import de.tobias.intestinalinspector.service.AppUserService;
 import de.tobias.intestinalinspector.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,12 +28,14 @@ public class LoginController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final AppUserDetailsService appUserDetailsService;
+    private final AppUserService appUserService;
 
     @Autowired
-    public LoginController(AuthenticationManager authenticationManager, JwtService jwtService, AppUserDetailsService appUserDetailsService) {
+    public LoginController(AuthenticationManager authenticationManager, JwtService jwtService, AppUserDetailsService appUserDetailsService, AppUserService appUserService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
         this.appUserDetailsService = appUserDetailsService;
+        this.appUserService = appUserService;
     }
 
     @GetMapping("auth/me")
@@ -62,7 +65,7 @@ public class LoginController {
         try{
             authenticationManager.authenticate(authToken);
 
-            AppUserEntity appUser = appUserDetailsService.findUser(username).orElseThrow();
+            AppUserEntity appUser = appUserService.findUser(username).orElseThrow();
             String token = jwtService.createJwtToken(appUser);
 
             AccessTokenDto accessToken = new AccessTokenDto(token);
