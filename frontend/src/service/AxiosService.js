@@ -31,4 +31,5 @@ export const removeFood = (id, token) =>
 export const addPain = (pain, token) =>
   axios.post(PainPath, pain, header(token))
 
-export const getPain = token => axios.get(PainPath, header(token))
+export const getPain = token =>
+  axios.get(PainPath, header(token)).then(response => response.data)

@@ -12,9 +12,7 @@ export default function PainDiary() {
   const [painList, setPainList] = useState([])
 
   useEffect(() => {
-    getPain(token)
-      .then(response => response.data)
-      .then(data => setPainList(data.painList))
+    getPain(token).then(data => setPainList(data.painList))
   }, [token])
 
   const Items = painList.map(Item => (
