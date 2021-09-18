@@ -3,7 +3,7 @@ package de.tobias.intestinalinspector.controller;
 import de.tobias.intestinalinspector.TestAuthorization;
 import de.tobias.intestinalinspector.api.PainDto;
 import de.tobias.intestinalinspector.api.PainListDto;
-import de.tobias.intestinalinspector.api.UpdateDto;
+import de.tobias.intestinalinspector.api.PainUpdateDto;
 import de.tobias.intestinalinspector.repository.PainRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,10 +94,10 @@ class PainControllerTest {
     public void testUpdate(){
         //GIVEN
         String id = "1";
-        UpdateDto update = UpdateDto.builder()
-                .newNumber(1).build();
+        PainUpdateDto update = PainUpdateDto.builder()
+                .newValue(1).build();
         //WHEN
-        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
+        HttpEntity<PainUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<PainDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
                 HttpMethod.PUT,
@@ -115,10 +115,10 @@ class PainControllerTest {
     public void testUpdateBadId(){
         //GIVEN
         String id = "99";
-        UpdateDto update = UpdateDto.builder()
-                .newNumber(1).build();
+        PainUpdateDto update = PainUpdateDto.builder()
+                .newValue(1).build();
         //WHEN
-        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
+        HttpEntity<PainUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<PainDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
                 HttpMethod.PUT,

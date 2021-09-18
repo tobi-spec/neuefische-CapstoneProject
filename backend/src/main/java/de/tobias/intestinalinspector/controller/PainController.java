@@ -1,16 +1,14 @@
 package de.tobias.intestinalinspector.controller;
 
 
-import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.PainDto;
 import de.tobias.intestinalinspector.api.PainListDto;
-import de.tobias.intestinalinspector.api.UpdateDto;
+import de.tobias.intestinalinspector.api.FoodUpdateDto;
+import de.tobias.intestinalinspector.api.PainUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
-import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.service.PainService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -49,8 +47,8 @@ public class PainController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<PainDto> update(@PathVariable Long id, @RequestBody UpdateDto updateDto){
-        int newNumber = updateDto.getNewNumber();
+    public ResponseEntity<PainDto> update(@PathVariable Long id, @RequestBody PainUpdateDto updateDto){
+        int newNumber = updateDto.getNewValue();
         PainEntity changedEntity = painService.update(id, newNumber);
         PainDto returnDto = map(changedEntity);
         return ok(returnDto);
