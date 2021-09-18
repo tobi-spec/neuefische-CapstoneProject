@@ -3,7 +3,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.FoodListDto;
-import de.tobias.intestinalinspector.api.UpdateDto;
+import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.TestAuthorization;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -129,10 +129,10 @@ class FoodControllerTest {
     public void testUpdate(){
         //GIVEN
         String id = "1";
-        UpdateDto update = UpdateDto.builder()
-                .newName("ErsatzErbse").build();
+        FoodUpdateDto update = FoodUpdateDto.builder()
+                .newValue("ErsatzErbse").build();
         //WHEN
-        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
+        HttpEntity<FoodUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
                 HttpMethod.PUT,
@@ -149,10 +149,10 @@ class FoodControllerTest {
     public void testUpdateBadId(){
         //GIVEN
         String id = "99";
-        UpdateDto update = UpdateDto.builder()
-                .newName("ErsatzErbse").build();
+        FoodUpdateDto update = FoodUpdateDto.builder()
+                .newValue("ErsatzErbse").build();
         //WHEN
-        HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
+        HttpEntity<FoodUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
                                                                             HttpMethod.PUT,

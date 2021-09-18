@@ -2,7 +2,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.FoodListDto;
-import de.tobias.intestinalinspector.api.UpdateDto;
+import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.FoodService;
@@ -48,8 +48,8 @@ public class FoodController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<FoodDto> update(@PathVariable Long id, @RequestBody UpdateDto updateDto){
-            String newName = updateDto.getNewName();
+    public ResponseEntity<FoodDto> update(@PathVariable Long id, @RequestBody FoodUpdateDto updateDto){
+            String newName = updateDto.getNewValue();
             FoodEntity changedEntity = foodService.update(id, newName);
             FoodDto returnDto = map(changedEntity);
             return ok(returnDto);
