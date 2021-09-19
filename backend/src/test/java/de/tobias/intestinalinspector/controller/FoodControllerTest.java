@@ -46,17 +46,6 @@ class FoodControllerTest {
     @Autowired
     private FoodRepository foodRepository;
 
-    @BeforeEach
-    public void fill(){
-        FoodEntity filler = FoodEntity.builder()
-                .id(1)
-                .foodName("Testtrauben")
-                .date("Placeholder")
-                .userName("Frank")
-                .build();
-        foodRepository.save(filler);
-    }
-
     @AfterEach
     public void reset(){
         foodRepository.deleteAll();
@@ -118,17 +107,31 @@ class FoodControllerTest {
 
     @Test
     public void testGetAll(){
+        //GIVEN
+        FoodDto foodToAdd = FoodDto.builder()
+                .foodName("Testtrauben")
+                .build();
         //WHEN
+        //setup
+        HttpEntity<FoodDto> httpEntity = new HttpEntity<>(foodToAdd, testAuthorization.Header("Frank", "user"));
+        ResponseEntity<FoodDto> addResponse = testRestTemplate.exchange(url(),
+                HttpMethod.POST,
+                httpEntity,
+                FoodDto.class);
+        //methode to test
         HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<FoodListDto> actualResponse = testRestTemplate.exchange(url(),
                                                                                     HttpMethod.GET,
                                                                                     httpEntityGet ,
                                                                                     FoodListDto.class);
         //THEN
+        long id = addResponse.getBody().getId();
+        String name = addResponse.getBody().getFoodName();
+        String date = addResponse.getBody().getDate();
         FoodDto foodDto= FoodDto.builder()
-                .id(1)
-                .foodName("Testtrauben")
-                .date("Placeholder")
+                .id(id)
+                .foodName(name)
+                .date(date)
                 .build();
 
         FoodListDto expectedList = new FoodListDto();
@@ -141,9 +144,13 @@ class FoodControllerTest {
     @Test
     public void testUpdate(){
         //GIVEN
+        FoodDto foodToAdd = FoodDto.builder()
+                .foodName("Testtrauben")
+                .build();
         String id = "1";
         UpdateDto update = UpdateDto.builder()
-                .newName("ErsatzErbse").build();
+                .newName("ErsatzErbse")
+                .build();
         //WHEN
         HttpEntity<UpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
