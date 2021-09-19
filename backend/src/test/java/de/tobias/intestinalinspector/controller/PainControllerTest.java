@@ -28,8 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class PainControllerTest {
 
-    // Runs as combined test, methods are chained together
-
     @LocalServerPort
     private int port;
 
