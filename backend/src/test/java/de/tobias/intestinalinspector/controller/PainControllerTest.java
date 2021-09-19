@@ -53,12 +53,12 @@ class PainControllerTest {
                 .build();
         //WHEN
         HttpEntity<PainDto> httpEntity = new HttpEntity<>(painToAdd,
-                                                                    testAuthorization.Header("Frank", "user")
+                testAuthorization.Header("Frank", "user")
         );
         ResponseEntity<PainDto> actualResponse = testRestTemplate.exchange(url(),
-                                                                                    HttpMethod.POST,
-                                                                                    httpEntity,
-                                                                                    PainDto.class);
+                HttpMethod.POST,
+                httpEntity,
+                PainDto.class);
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());
@@ -72,9 +72,9 @@ class PainControllerTest {
         //WHEN
         HttpEntity<PainDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<PainListDto> actualResponse = testRestTemplate.exchange(url(),
-                                                                                HttpMethod.GET,
-                                                                                httpEntityGet,
-                                                                                PainListDto.class);
+                HttpMethod.GET,
+                httpEntityGet,
+                PainListDto.class);
         //THEN
         PainDto painDto = PainDto.builder()
                 .id(1)
@@ -137,9 +137,9 @@ class PainControllerTest {
         //WHEN
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<PainDto> actualResponse = testRestTemplate.exchange(url()+"/delete/" + id,
-                                                                                HttpMethod.DELETE,
-                                                                                httpEntityDelete,
-                                                                                PainDto.class) ;
+                HttpMethod.DELETE,
+                httpEntityDelete,
+                PainDto.class) ;
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());

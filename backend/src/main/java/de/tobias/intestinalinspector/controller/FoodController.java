@@ -49,10 +49,10 @@ public class FoodController {
 
     @PutMapping("{id}")
     public ResponseEntity<FoodDto> update(@PathVariable Long id, @RequestBody FoodUpdateDto updateDto){
-            String newName = updateDto.getNewValue();
-            FoodEntity changedEntity = foodService.update(id, newName);
-            FoodDto returnDto = map(changedEntity);
-            return ok(returnDto);
+        String newName = updateDto.getNewValue();
+        FoodEntity changedEntity = foodService.update(id, newName);
+        FoodDto returnDto = map(changedEntity);
+        return ok(returnDto);
     }
 
     @DeleteMapping("/delete/{id}")

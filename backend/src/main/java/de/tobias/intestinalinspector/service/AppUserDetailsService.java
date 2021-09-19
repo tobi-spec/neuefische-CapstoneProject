@@ -34,7 +34,5 @@ public class AppUserDetailsService implements UserDetailsService {
                 .build();
     }
 
-    public Optional<AppUserEntity> findUser(String username){
-        return appUserRepository.findByUserName(username);
-    }
+
 }

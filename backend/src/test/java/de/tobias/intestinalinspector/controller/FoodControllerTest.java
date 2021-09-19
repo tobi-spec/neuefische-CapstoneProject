@@ -52,12 +52,12 @@ class FoodControllerTest {
                 .build();
         //WHEN
         HttpEntity<FoodDto> httpEntity = new HttpEntity<>(foodToAdd,
-                                                                testAuthorization.Header("Frank", "user")
+                testAuthorization.Header("Frank", "user")
         );
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url(),
-                                                                            HttpMethod.POST,
-                                                                            httpEntity,
-                                                                            FoodDto.class);
+                HttpMethod.POST,
+                httpEntity,
+                FoodDto.class);
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());
@@ -107,9 +107,9 @@ class FoodControllerTest {
         //WHEN
         HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<FoodListDto> actualResponse = testRestTemplate.exchange(url(),
-                                                                                    HttpMethod.GET,
-                                                                                    httpEntityGet ,
-                                                                                    FoodListDto.class);
+                HttpMethod.GET,
+                httpEntityGet ,
+                FoodListDto.class);
         //THEN
         FoodDto foodDto= FoodDto.builder()
                 .id(1)
@@ -155,9 +155,9 @@ class FoodControllerTest {
         HttpEntity<FoodUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
-                                                                            HttpMethod.PUT,
-                                                                            httpEntityPut,
-                                                                            FoodDto.class);
+                HttpMethod.PUT,
+                httpEntityPut,
+                FoodDto.class);
         //THEN
         assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }
@@ -170,9 +170,9 @@ class FoodControllerTest {
         //WHEN
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete/" + id,
-                                                                                        HttpMethod.DELETE,
-                                                                                        httpEntityDelete,
-                                                                                        FoodDto.class) ;
+                HttpMethod.DELETE,
+                httpEntityDelete,
+                FoodDto.class) ;
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());

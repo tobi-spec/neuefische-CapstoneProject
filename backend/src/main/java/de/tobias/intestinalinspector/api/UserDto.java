@@ -2,12 +2,14 @@ package de.tobias.intestinalinspector.api;
 
 import lombok.*;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CredentialsDto {
+public class UserDto {
 
     private String userName;
     private String userPassword;
+
 }

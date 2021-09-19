@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import static de.tobias.intestinalinspector.controller.LoginController.ACCESS_TOKEN_URL;
+import static de.tobias.intestinalinspector.controller.UserController.CREATE_USER;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
@@ -54,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(GET, SWAGGER_URLS).permitAll()
                 .antMatchers(POST, ACCESS_TOKEN_URL).permitAll()
+                .antMatchers(POST, CREATE_USER).permitAll()
                 .antMatchers("/**").authenticated()
                 .and()
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
