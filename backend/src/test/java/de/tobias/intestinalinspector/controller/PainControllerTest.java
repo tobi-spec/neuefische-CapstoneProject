@@ -4,6 +4,8 @@ import de.tobias.intestinalinspector.TestAuthorization;
 import de.tobias.intestinalinspector.api.PainDto;
 import de.tobias.intestinalinspector.api.PainListDto;
 import de.tobias.intestinalinspector.api.UpdateDto;
+import de.tobias.intestinalinspector.model.FoodEntity;
+import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.repository.PainRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         properties = "spring.profiles.active:2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class PainControllerTest {
 
     // Runs as combined test, methods are chained together
@@ -44,8 +47,23 @@ class PainControllerTest {
     @Autowired
     PainRepository painRepository;
 
+    @BeforeEach
+    public void fill(){
+        PainEntity filler = PainEntity.builder()
+                .id(1)
+                .painLevel(7)
+                .date("Placeholder")
+                .userName("Frank")
+                .build();
+        painRepository.save(filler);
+    }
+
+    @AfterEach
+    public void reset(){
+        painRepository.deleteAll();
+    }
+
     @Test
-    @Order(1)
     public void testAddPain(){
         //GIVEN
         PainDto painToAdd = PainDto.builder()
@@ -67,7 +85,6 @@ class PainControllerTest {
 
 
     @Test
-    @Order(2)
     public void testGetAll(){
         //WHEN
         HttpEntity<PainDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
@@ -90,7 +107,6 @@ class PainControllerTest {
     }
 
     @Test
-    @Order(3)
     public void testUpdate(){
         //GIVEN
         String id = "1";
@@ -111,7 +127,6 @@ class PainControllerTest {
     }
 
     @Test
-    @Order(4)
     public void testUpdateBadId(){
         //GIVEN
         String id = "99";
@@ -130,7 +145,6 @@ class PainControllerTest {
     }
 
     @Test
-    @Order(5)
     public void testDelete(){
         //GIVEN
         String id = "1";
@@ -143,11 +157,10 @@ class PainControllerTest {
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());
-        assertEquals(1, actualResponse.getBody().getPainLevel());
+        assertEquals(7, actualResponse.getBody().getPainLevel());
     }
 
     @Test
-    @Order(8)
     public void testDeleteBadId(){
         //GIVEN
         String id = "99";
