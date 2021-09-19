@@ -5,10 +5,11 @@ import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.FoodListDto;
 import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.TestAuthorization;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
+import de.tobias.intestinalinspector.model.FoodEntity;
+import de.tobias.intestinalinspector.repository.FoodRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,10 +27,8 @@ import static org.junit.jupiter.api.Assertions.*;
         properties = "spring.profiles.active:h2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class FoodControllerTest {
-
-    // Runs as combined test, methods are chained together
 
     @LocalServerPort
     private int port;
@@ -43,9 +43,26 @@ class FoodControllerTest {
     @Autowired
     private TestAuthorization testAuthorization;
 
+    @Autowired
+    private FoodRepository foodRepository;
+
+    @BeforeEach
+    public void fill(){
+        FoodEntity filler = FoodEntity.builder()
+                .id(1)
+                .foodName("Testtrauben")
+                .date("Placeholder")
+                .userName("Frank")
+                .build();
+        foodRepository.save(filler);
+    }
+
+    @AfterEach
+    public void reset(){
+        foodRepository.deleteAll();
+    }
 
     @Test
-    @Order(1)
     public void testAddFood(){
         FoodDto foodToAdd = FoodDto.builder()
                 .foodName("Testtrauben")
@@ -65,7 +82,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(2)
     public void testAddFoodWithoutText(){
         FoodDto foodToAdd = FoodDto.builder()
                 .foodName("")
@@ -83,7 +99,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(3)
     public void testAddFoodTextIsNull(){
         //GIVEN
         FoodDto foodToAdd = FoodDto.builder()
@@ -102,7 +117,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(4)
     public void testGetAll(){
         //WHEN
         HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
@@ -125,7 +139,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(5)
     public void testUpdate(){
         //GIVEN
         String id = "1";
@@ -134,7 +147,7 @@ class FoodControllerTest {
         //WHEN
         HttpEntity<FoodUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
                 HttpMethod.PUT,
                 httpEntityPut,
                 FoodDto.class);
@@ -145,7 +158,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(6)
     public void testUpdateBadId(){
         //GIVEN
         String id = "99";
@@ -154,7 +166,7 @@ class FoodControllerTest {
         //WHEN
         HttpEntity<FoodUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/update/" + id,
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
                 HttpMethod.PUT,
                 httpEntityPut,
                 FoodDto.class);
@@ -163,30 +175,28 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(7)
     public void testDelete(){
         //GIVEN
         String id = "1";
         //WHEN
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete/" + id,
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
                 HttpMethod.DELETE,
                 httpEntityDelete,
                 FoodDto.class) ;
         //THEN
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertNotNull(actualResponse.getBody());
-        assertEquals("ErsatzErbse", actualResponse.getBody().getFoodName());
+        assertEquals("Testtrauben", actualResponse.getBody().getFoodName());
     }
 
     @Test
-    @Order(8)
     public void testDeleteBadId(){
         //GIVEN
         String id = "99";
         //WHEN
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/delete/" + id,
+        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
                 HttpMethod.DELETE,
                 httpEntityDelete,
                 FoodDto.class) ;

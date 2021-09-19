@@ -46,7 +46,7 @@ public class PainController {
         return ok(painListDto);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("{id}")
     public ResponseEntity<PainDto> update(@PathVariable Long id, @RequestBody PainUpdateDto updateDto){
         int newNumber = updateDto.getNewValue();
         PainEntity changedEntity = painService.update(id, newNumber);
@@ -54,7 +54,7 @@ public class PainController {
         return ok(returnDto);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<PainDto> delete(@PathVariable Long id) {
         PainEntity deleteEntity = painService.delete(id);
         PainDto returnDto = map(deleteEntity);

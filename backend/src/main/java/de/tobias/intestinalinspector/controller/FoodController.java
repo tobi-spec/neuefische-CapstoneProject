@@ -55,7 +55,7 @@ public class FoodController {
         return ok(returnDto);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<FoodDto> delete(@PathVariable Long id) {
         FoodEntity deleteEntity = foodService.delete(id);
         FoodDto returnDto = map(deleteEntity);
