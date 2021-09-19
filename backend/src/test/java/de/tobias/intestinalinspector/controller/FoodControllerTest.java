@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
         properties = "spring.profiles.active:h2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class FoodControllerTest {
 
@@ -64,7 +63,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(1)
     public void testAddFood(){
         FoodDto foodToAdd = FoodDto.builder()
                 .foodName("Testtrauben")
@@ -84,7 +82,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(2)
     public void testAddFoodWithoutText(){
         FoodDto foodToAdd = FoodDto.builder()
                 .foodName("")
@@ -102,7 +99,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(3)
     public void testAddFoodTextIsNull(){
         //GIVEN
         FoodDto foodToAdd = FoodDto.builder()
@@ -121,7 +117,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(4)
     public void testGetAll(){
         //WHEN
         HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
@@ -144,7 +139,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(5)
     public void testUpdate(){
         //GIVEN
         String id = "1";
@@ -164,7 +158,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(6)
     public void testUpdateBadId(){
         //GIVEN
         String id = "99";
@@ -182,7 +175,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(7)
     public void testDelete(){
         //GIVEN
         String id = "1";
@@ -199,7 +191,6 @@ class FoodControllerTest {
     }
 
     @Test
-    @Order(8)
     public void testDeleteBadId(){
         //GIVEN
         String id = "99";
