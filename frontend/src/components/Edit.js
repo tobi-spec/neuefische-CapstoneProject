@@ -4,13 +4,13 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 
-export default function Edit({ id, reloadList, cancelHandler, editService }) {
+export default function Edit({ id, reloadList, editService }) {
   const { token } = useAuth()
-  const [newName, setNewName] = useState({ newName: '' })
+  const [newName, setNewName] = useState({ newValue: '' })
 
   const nameHandler = event =>
     setNewName({
-      newName: event.target.value,
+      newValue: event.target.value,
     })
 
   const nameSubmitHandler = event => {
@@ -24,7 +24,7 @@ export default function Edit({ id, reloadList, cancelHandler, editService }) {
 
   return (
     <Wrapper onSubmit={nameSubmitHandler}>
-      <InputField placeholder="new name" onChange={nameHandler} />
+      <InputField placeholder="new" onChange={nameHandler} />
       <Button>send</Button>
     </Wrapper>
   )
