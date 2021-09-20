@@ -31,6 +31,7 @@ export default function Registration() {
     return <Wrapper onSubmit={signSubmitHandler}>
             <Header title="Registration"/>
             <Content>
+                <div className = "input">
                 <InputField
                     title="Username"
                     type="Text"
@@ -43,11 +44,24 @@ export default function Registration() {
                     name="userPassword"
                     value={credentials.userPassword}
                     onChange={credentialsHandler }/>
-                <Button>sign-in</Button>
+                </div>
+                <Button>sign</Button>
+
             </Content>
         </Wrapper>
 
 }
 
-const Wrapper = styled.form``
+const Wrapper = styled.form`
+  
+  Button {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  
+  .input {
+    grid-column: 2;
+    grid-row: 2;
+  }
+`
 
