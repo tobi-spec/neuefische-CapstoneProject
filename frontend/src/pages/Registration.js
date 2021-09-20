@@ -27,11 +27,13 @@ export default function Registration() {
                 <InputField
                     title="Username"
                     type="Text"
+                    name="userName"
                     value={credentials.userName}
                     onChange={credentialsHandler }/>
                 <InputField
                     title="Password"
                     type="Text"
+                    name="userPassword"
                     value={credentials.userPassword}
                     onChange={credentialsHandler }/>
                 <Button>sign-in</Button>
