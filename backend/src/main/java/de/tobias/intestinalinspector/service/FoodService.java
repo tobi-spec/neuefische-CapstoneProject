@@ -27,7 +27,7 @@ public class FoodService {
     }
 
     public List<FoodEntity> getAll(String userName) {
-        return foodRepository.findAllByUserName(userName);
+        return foodRepository.findAllByUserNameOrderByDate(userName);
     }
 
     public FoodEntity update(Long id, String newName) {
