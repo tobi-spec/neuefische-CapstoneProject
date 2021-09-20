@@ -6,7 +6,7 @@ export default function Welcome() {
             <h1 className="main-title">Intestinal Inspector</h1>
             <h1 className="sub-title">Welcome</h1>
             <Link className="link" to="/login">Login</Link>
-            <Link className="link" to="/registration">Register</Link>
+            <Link className="link" to="/registration">Registration</Link>
     </Wrapper>
 }
 
