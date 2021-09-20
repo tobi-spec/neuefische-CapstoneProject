@@ -41,7 +41,7 @@ export default function Main() {
 
   return (
     <Wrapper>
-      <Header title="Intestinal Inspector" />
+      <Header title="Inspector´s Notes" />
       <Content>
         <h1>How do you feel? :)</h1>
         <form className="form1" onSubmit={foodSubmitHandler}>
