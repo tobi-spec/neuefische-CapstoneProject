@@ -18,7 +18,14 @@ export default function Registration() {
 
     const signSubmitHandler = event => {
         event.preventDefault()
-        createUser(credentials).catch(error => console.error(error))
+        createUser(credentials)
+            .then(response => console.log(response))
+            .catch(error => console.error(error))
+            .finally(() => setCredentials({
+                userName: "",
+                userPassword: "",
+            }))
+
     }
 
     return <Wrapper onSubmit={signSubmitHandler}>
