@@ -12,8 +12,8 @@ export const getToken = credentials =>
     .then(response => response.data)
     .then(dto => dto.token)
 
-export const createUser = userDto =>
-    axios.post(createUserPath, userDto)
+export const createUser = credentials =>
+    axios.post(createUserPath, credentials)
 
 const header = token => ({
   headers: {
