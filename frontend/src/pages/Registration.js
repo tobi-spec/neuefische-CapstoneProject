@@ -5,7 +5,7 @@ import InputField from "../components/InputField";
 
 export default function Registration() {
     return <Wrapper>
-            <Header title={Registration}/>
+            <Header title="Registration"/>
             <Content>
                 <InputField title="Username"/>
                 <InputField title="Password"/>
