@@ -1,8 +1,10 @@
 import styled from 'styled-components'
+import BackButton from "./BackButton";
 
 export default function Header({ title }) {
   return (
     <Wrapper>
+        <BackButton/>
       <h1>{title}</h1>
     </Wrapper>
   )
@@ -10,7 +12,10 @@ export default function Header({ title }) {
 
 const Wrapper = styled.header`
   background-color: #138808;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
   align-items: center;
+  
+  
 `
