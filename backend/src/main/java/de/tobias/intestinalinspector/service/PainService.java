@@ -30,7 +30,7 @@ public class PainService {
     }
 
     public List<PainEntity> getAll(String username) {
-        return painRepository.findAllByUserName(username);
+        return painRepository.findAllByUserNameOrderByDate(username);
     }
 
     public PainEntity update(Long id, int newNumber) {

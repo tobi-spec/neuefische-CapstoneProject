@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface PainRepository extends JpaRepository<PainEntity, Long> {
 
-    List<PainEntity> findAllByUserName(String username);
+    List<PainEntity> findAllByUserNameOrderByDate(String username);
 
     // .save() can not be used to overwrite, because date would be also overwritten with current date.
     @Modifying
