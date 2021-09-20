@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import { useAuth } from '../auth/AuthProvider'
 
-export default function Edit({ id, reloadList, editService }) {
+export default function Edit({ id, reloadList, editService, cancelHandler }) {
   const { token } = useAuth()
   const [newName, setNewName] = useState({ newValue: '' })
 
@@ -18,6 +18,7 @@ export default function Edit({ id, reloadList, editService }) {
     editService(id, newName, token)
       .then(response => console.log(response))
       .then(() => reloadList(token))
+      .then(() => cancelHandler())
       .then(error => console.error(error))
       .finally(() => setNewName(''))
   }

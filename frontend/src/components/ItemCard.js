@@ -37,7 +37,7 @@ export default function ItemCard({
         </p>
         <p>date: {date}</p>
         {edit && (
-          <Edit id={id} reloadList={reloadList} editService={editService} />
+          <Edit id={id} reloadList={reloadList} editService={editService} cancelHandler={cancelHandler} />
         )}
         {remove && (
           <Remove
