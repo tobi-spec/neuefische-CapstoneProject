@@ -1,5 +1,7 @@
 package de.tobias.intestinalinspector.service;
 
+import de.tobias.intestinalinspector.api.FoodDto;
+import de.tobias.intestinalinspector.api.PainDto;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
 import org.springframework.stereotype.Service;
@@ -18,15 +20,15 @@ public class DateService {
         return now.format(dtf);
     }
 
-    public Map<String, List<FoodEntity>> sortFoodByWeek(List<FoodEntity> list){
-        Map<String, List<FoodEntity>> entriesPerWeek = list.stream()
-                .collect(Collectors.groupingBy(FoodEntity::getDate));
+    public Map<String, List<FoodDto>> sortFoodByWeek(List<FoodDto> list){
+        Map<String, List<FoodDto>> entriesPerWeek = list.stream()
+                .collect(Collectors.groupingBy(FoodDto::getDate));
         return entriesPerWeek;
     }
 
-    public Map<String, List<PainEntity>> sortPainByWeek(List<PainEntity> list){
-        Map<String, List<PainEntity>> entriesPerWeek = list.stream()
-                .collect(Collectors.groupingBy(PainEntity::getDate));
+    public Map<String, List<PainDto>> sortPainByWeek(List<PainDto> list){
+        Map<String, List<PainDto>> entriesPerWeek = list.stream()
+                .collect(Collectors.groupingBy(PainDto::getDate));
         return entriesPerWeek;
     }
 }

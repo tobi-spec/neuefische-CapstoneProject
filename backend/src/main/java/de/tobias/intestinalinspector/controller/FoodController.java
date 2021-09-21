@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +46,10 @@ public class FoodController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, List<FoodEntity>>> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<Map<String, List<FoodDto>>> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
-        Map<String, List<FoodEntity>> results = dateService.sortFoodByWeek(listOfFood);
+        List<FoodDto> foodListToMap = map(listOfFood);
+        Map<String, List<FoodDto>> results = dateService.sortFoodByWeek(foodListToMap);
         return ok(results);
     }
 
@@ -66,15 +69,17 @@ public class FoodController {
     }
 
 
-    private void map(List<FoodEntity> listOfFood, FoodListDto foodListDto) {
+    private List<FoodDto> map(List<FoodEntity> listOfFood) {
+        List<FoodDto> foodListDto = new ArrayList<>();
         for( FoodEntity foodItem: listOfFood){
             FoodDto foodDto = FoodDto.builder()
                     .foodName(foodItem.getFoodName())
                     .id(foodItem.getId())
                     .date(foodItem.getDate())
                     .build();
-            foodListDto.addFood(foodDto);
+            foodListDto.add(foodDto);
         }
+        return foodListDto;
     }
 
     private FoodDto map(FoodEntity foodEntity) {

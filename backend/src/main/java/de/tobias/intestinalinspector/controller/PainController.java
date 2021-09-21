@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,9 +43,10 @@ public class PainController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, List<PainEntity>>> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<Map<String, List<PainDto>>> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<PainEntity> listOfPain = painService.getAll(appUser.getUserName());
-        Map<String, List<PainEntity>> results = dateService.sortPainByWeek(listOfPain);
+        List<PainDto> listToMap = map(listOfPain);
+        Map<String, List<PainDto>> results = dateService.sortPainByWeek(listToMap);
         return ok(results);
     }
 
@@ -63,15 +65,17 @@ public class PainController {
         return ok(returnDto);
     }
 
-    private void map(List<PainEntity> listOfPain, PainListDto painListDto) {
+    private List<PainDto> map(List<PainEntity> listOfPain) {
+        List<PainDto> painListDto = new ArrayList<>();
         for(PainEntity painItem: listOfPain){
             PainDto painDto = PainDto.builder()
                     .painLevel(painItem.getPainLevel())
                     .id(painItem.getId())
                     .date(painItem.getDate())
                     .build();
-            painListDto.addPain(painDto);
+            painListDto.add(painDto);
         }
+        return painListDto;
     }
 
     private PainDto map(PainEntity persistedPain) {
