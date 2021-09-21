@@ -1,14 +1,14 @@
 import ItemCard from './ItemCard'
 
 export default function ItemGallery({
-  List,
+  map,
   valueTitle,
   reloadList,
   editService,
   removeService,
 }) {
   if (valueTitle === 'Food') {
-    return List.map(Item => (
+    return map.map(Item => (
       <ItemCard
         valueTitle={valueTitle}
         mainValue={Item.foodName}
@@ -22,7 +22,7 @@ export default function ItemGallery({
     ))
   }
   if (valueTitle === 'Pain') {
-    return List.map(Item => (
+    return map.map(Item => (
       <ItemCard
         valueTitle={valueTitle}
         mainValue={Item.painLevel}
