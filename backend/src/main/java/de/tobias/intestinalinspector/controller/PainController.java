@@ -2,7 +2,7 @@ package de.tobias.intestinalinspector.controller;
 
 
 import de.tobias.intestinalinspector.api.PainDto;
-import de.tobias.intestinalinspector.api.PainListDto;
+import de.tobias.intestinalinspector.api.PainMapDto;
 import de.tobias.intestinalinspector.api.PainUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
@@ -43,11 +43,13 @@ public class PainController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, List<PainDto>>> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<PainMapDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<PainEntity> listOfPain = painService.getAll(appUser.getUserName());
         List<PainDto> listToMap = map(listOfPain);
         Map<String, List<PainDto>> results = dateService.sortPainByWeek(listToMap);
-        return ok(results);
+        PainMapDto mapToReturn = new PainMapDto();
+        mapToReturn.putAll(results);
+        return ok(mapToReturn);
     }
 
     @PutMapping("{id}")
