@@ -2,7 +2,7 @@ package de.tobias.intestinalinspector.controller;
 
 
 import de.tobias.intestinalinspector.api.FoodDto;
-import de.tobias.intestinalinspector.api.FoodListDto;
+import de.tobias.intestinalinspector.api.FoodMapDto;
 import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.TestAuthorization;
 import de.tobias.intestinalinspector.model.FoodEntity;
@@ -19,6 +19,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -120,10 +124,10 @@ class FoodControllerTest {
     public void testGetAll(){
         //WHEN
         HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodListDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<FoodMapDto> actualResponse = testRestTemplate.exchange(url(),
                 HttpMethod.GET,
                 httpEntityGet ,
-                FoodListDto.class);
+                FoodMapDto.class);
         //THEN
         FoodDto foodDto= FoodDto.builder()
                 .id(1)
@@ -131,11 +135,14 @@ class FoodControllerTest {
                 .date("Placeholder")
                 .build();
 
-        FoodListDto expectedList = new FoodListDto();
-        expectedList.addFood(foodDto);
+        Map<String, List<FoodDto>> map = new HashMap<>();
+        map.put("Placeholder", List.of(foodDto));
+
+        FoodMapDto expectedMap = new FoodMapDto();
+        expectedMap.putAll(map);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
-        assertEquals(expectedList, actualResponse.getBody());
+        assertEquals(expectedMap, actualResponse.getBody());
     }
 
     @Test
