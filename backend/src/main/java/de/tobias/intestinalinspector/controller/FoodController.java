@@ -1,7 +1,7 @@
 package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FoodDto;
-import de.tobias.intestinalinspector.api.FoodListDto;
+import de.tobias.intestinalinspector.api.FoodMapDto;
 import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
@@ -46,11 +46,13 @@ public class FoodController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, List<FoodDto>>> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<FoodMapDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
         List<FoodDto> foodListToMap = map(listOfFood);
         Map<String, List<FoodDto>> results = dateService.sortFoodByWeek(foodListToMap);
-        return ok(results);
+        FoodMapDto foodMap = new FoodMapDto();
+        foodMap.putAll(results);
+        return ok(foodMap);
     }
 
     @PutMapping("{id}")
