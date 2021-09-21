@@ -20,15 +20,15 @@ public class DateService {
         return now.format(dtf);
     }
 
-    public Map<String, List<FoodDto>> sortFoodByWeek(List<FoodDto> list){
-        Map<String, List<FoodDto>> entriesPerWeek = list.stream()
+    public Map<String, List<FoodDto>> sortFoodByDay(List<FoodDto> list){
+        Map<String, List<FoodDto>> entriesPerDay = list.stream()
                 .collect(Collectors.groupingBy(FoodDto::getDate));
-        return entriesPerWeek;
+        return entriesPerDay;
     }
 
-    public Map<String, List<PainDto>> sortPainByWeek(List<PainDto> list){
-        Map<String, List<PainDto>> entriesPerWeek = list.stream()
+    public Map<String, List<PainDto>> sortPainByDay(List<PainDto> list){
+        Map<String, List<PainDto>> entriesPerDay = list.stream()
                 .collect(Collectors.groupingBy(PainDto::getDate));
-        return entriesPerWeek;
+        return entriesPerDay;
     }
 }

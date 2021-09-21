@@ -49,7 +49,7 @@ public class FoodController {
     public ResponseEntity<FoodMapDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
         List<FoodDto> foodListToMap = map(listOfFood);
-        Map<String, List<FoodDto>> results = dateService.sortFoodByWeek(foodListToMap);
+        Map<String, List<FoodDto>> results = dateService.sortFoodByDay(foodListToMap);
         FoodMapDto foodMap = new FoodMapDto();
         foodMap.putAll(results);
         return ok(foodMap);
