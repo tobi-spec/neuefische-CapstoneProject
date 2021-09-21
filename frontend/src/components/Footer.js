@@ -9,7 +9,7 @@ export default function Footer() {
     <Wrapper>
       {user && (
         <NavLink className="Link" to="/main">
-          Main
+          Notes
         </NavLink>
       )}
       {user && (
