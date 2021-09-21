@@ -5,6 +5,7 @@ import de.tobias.intestinalinspector.api.FoodListDto;
 import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
+import de.tobias.intestinalinspector.service.DateService;
 import de.tobias.intestinalinspector.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -20,10 +22,12 @@ import static org.springframework.http.ResponseEntity.ok;
 public class FoodController {
 
     private final FoodService foodService;
+    private final DateService dateService;
 
     @Autowired
-    public FoodController(FoodService foodService) {
+    public FoodController(FoodService foodService, DateService dateService) {
         this.foodService = foodService;
+        this.dateService = dateService;
     }
 
     @PostMapping
@@ -40,11 +44,10 @@ public class FoodController {
     }
 
     @GetMapping
-    public ResponseEntity<FoodListDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<Map<String, List<FoodEntity>>> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
-        FoodListDto foodListDto = new FoodListDto();
-        map(listOfFood, foodListDto);
-        return ok(foodListDto);
+        Map<String, List<FoodEntity>> results = dateService.sortByWeek(listOfFood);
+        return ok(results);
     }
 
     @PutMapping("{id}")
