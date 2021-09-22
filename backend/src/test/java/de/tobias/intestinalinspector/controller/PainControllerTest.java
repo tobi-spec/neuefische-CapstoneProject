@@ -2,7 +2,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.TestAuthorization;
 import de.tobias.intestinalinspector.api.PainDto;
-import de.tobias.intestinalinspector.api.PainMapDto;
+import de.tobias.intestinalinspector.api.PainListDto;
 import de.tobias.intestinalinspector.api.PainUpdateDto;
 import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.repository.PainRepository;
@@ -16,10 +16,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -89,10 +85,10 @@ class PainControllerTest {
     public void testGetAll(){
         //WHEN
         HttpEntity<PainDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<PainMapDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<PainListDto> actualResponse = testRestTemplate.exchange(url(),
                 HttpMethod.GET,
                 httpEntityGet,
-                PainMapDto.class);
+                PainListDto.class);
         //THEN
         PainDto painDto = PainDto.builder()
                 .id(1)
@@ -100,14 +96,11 @@ class PainControllerTest {
                 .date("Placeholder")
                 .build();
 
-        Map<String, List<PainDto>> map = new HashMap<>();
-        map.put("Placeholder", List.of(painDto));
-
-        PainMapDto expectedMap = new PainMapDto();
-        expectedMap.putAll(map);
+        PainListDto expectedList = new PainListDto();
+        expectedList.addPain(painDto);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
-        assertEquals(expectedMap, actualResponse.getBody());
+        assertEquals(expectedList, actualResponse.getBody());
     }
 
     @Test

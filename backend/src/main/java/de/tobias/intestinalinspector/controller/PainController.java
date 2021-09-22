@@ -2,20 +2,18 @@ package de.tobias.intestinalinspector.controller;
 
 
 import de.tobias.intestinalinspector.api.PainDto;
-import de.tobias.intestinalinspector.api.PainMapDto;
+import de.tobias.intestinalinspector.api.PainListDto;
+import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.api.PainUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
-import de.tobias.intestinalinspector.service.DateService;
 import de.tobias.intestinalinspector.service.PainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -24,12 +22,10 @@ import static org.springframework.http.ResponseEntity.ok;
 public class PainController {
 
     private final PainService painService;
-    private final DateService dateService;
 
     @Autowired
-    public PainController(PainService painService, DateService dateService) {
+    public PainController(PainService painService) {
         this.painService = painService;
-        this.dateService = dateService;
     }
 
     @PostMapping
@@ -43,13 +39,11 @@ public class PainController {
     }
 
     @GetMapping
-    public ResponseEntity<PainMapDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<PainListDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<PainEntity> listOfPain = painService.getAll(appUser.getUserName());
-        List<PainDto> listToMap = map(listOfPain);
-        Map<String, List<PainDto>> results = dateService.sortPainByDay(listToMap);
-        PainMapDto mapToReturn = new PainMapDto();
-        mapToReturn.putAll(results);
-        return ok(mapToReturn);
+        PainListDto painListDto = new PainListDto();
+        map(listOfPain, painListDto);
+        return ok(painListDto);
     }
 
     @PutMapping("{id}")
@@ -67,17 +61,15 @@ public class PainController {
         return ok(returnDto);
     }
 
-    private List<PainDto> map(List<PainEntity> listOfPain) {
-        List<PainDto> painListDto = new ArrayList<>();
+    private void map(List<PainEntity> listOfPain, PainListDto painListDto) {
         for(PainEntity painItem: listOfPain){
             PainDto painDto = PainDto.builder()
                     .painLevel(painItem.getPainLevel())
                     .id(painItem.getId())
                     .date(painItem.getDate())
                     .build();
-            painListDto.add(painDto);
+            painListDto.addPain(painDto);
         }
-        return painListDto;
     }
 
     private PainDto map(PainEntity persistedPain) {
