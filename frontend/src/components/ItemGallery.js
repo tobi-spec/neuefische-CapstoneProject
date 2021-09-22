@@ -1,4 +1,5 @@
 import ItemCardContainer from "./ItemCardContainer";
+import styled from "styled-components";
 
 export default function ItemGallery({
   map,
@@ -7,20 +8,21 @@ export default function ItemGallery({
   editService,
   removeService,
 }) {
-    if( !Object.keys(map).length === null){
-    return map.forEach((date, valueList) => (
+  const Container = map.forEach((date, valueList) => (
       <ItemCardContainer
-        key={date}
-        valueList={valueList}
-        valueTitle={valueTitle}
-        reloadList={reloadList}
-        editService={editService}
-        removeService={removeService}
-      />))}
-    else {
-        return null
-    }
+          key={date}
+          valueList={valueList}
+          valueTitle={valueTitle}
+          reloadList={reloadList}
+          editService={editService}
+          removeService={removeService}
+      />))
 
-
-
+  return(
+    <Wrapper>
+      {Container}
+    </Wrapper>
+  )
 }
+
+const Wrapper = styled.div``
