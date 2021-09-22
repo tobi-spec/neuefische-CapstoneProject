@@ -7,9 +7,10 @@ import { getFood, removeFood, updateFood } from '../service/AxiosService'
 import { useAuth } from '../auth/AuthProvider'
 import ItemGallery from '../components/ItemGallery'
 
+
 export default function FoodDiary() {
   const { token } = useAuth()
-  const [foodMap, setFoodMap] = useState([])
+  const [foodMap, setFoodMap] = useState({})
 
   useEffect(() => {
     getFood(token).then(data => setFoodMap(data.foodMap))
@@ -19,21 +20,21 @@ export default function FoodDiary() {
     getFood(token).then(data => setFoodMap(data.foodMap))
   }
 
+  console.log(foodMap)
+
   return (
     <Wrapper>
       <Header title="Food Diary" />
       <Content>
-        <ul>
           {
             <ItemGallery
-              Map={foodMap}
+              map={foodMap}
               valueTitle={'Food'}
               reloadList={reloadFoodList}
               editService={updateFood}
               removeService={removeFood}
             />
           }
-        </ul>
       </Content>
       <Footer />
     </Wrapper>
@@ -41,9 +42,4 @@ export default function FoodDiary() {
 }
 
 const Wrapper = styled.div`
-  ul {
-    list-style: none;
-    grid-column: 2;
-    grid-row: 2;
-  }
 `
