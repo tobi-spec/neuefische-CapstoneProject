@@ -1,4 +1,4 @@
-import ItemCard from './ItemCard'
+import ItemCardContainer from "./ItemCardContainer";
 
 export default function ItemGallery({
   map,
@@ -7,32 +7,20 @@ export default function ItemGallery({
   editService,
   removeService,
 }) {
-  if (valueTitle === 'Food') {
-    return map.map(Item => (
-      <ItemCard
+    if( !Object.keys(map).length === null){
+    return map.forEach((date, valueList) => (
+      <ItemCardContainer
+        key={date}
+        valueList={valueList}
         valueTitle={valueTitle}
-        mainValue={Item.foodName}
-        date={Item.date}
-        id={Item.id}
-        key={Item.id}
         reloadList={reloadList}
         editService={editService}
         removeService={removeService}
-      />
-    ))
-  }
-  if (valueTitle === 'Pain') {
-    return map.map(Item => (
-      <ItemCard
-        valueTitle={valueTitle}
-        mainValue={Item.painLevel}
-        date={Item.date}
-        id={Item.id}
-        key={Item.id}
-        reloadList={reloadList}
-        editService={editService}
-        removeService={removeService}
-      />
-    ))
-  }
+      />))}
+    else {
+        return null
+    }
+
+
+
 }
