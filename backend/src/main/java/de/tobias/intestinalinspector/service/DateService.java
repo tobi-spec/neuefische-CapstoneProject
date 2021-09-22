@@ -2,8 +2,6 @@ package de.tobias.intestinalinspector.service;
 
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.PainDto;
-import de.tobias.intestinalinspector.model.FoodEntity;
-import de.tobias.intestinalinspector.model.PainEntity;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
