@@ -24,7 +24,6 @@ export default function FoodDiary() {
   return (
     <Wrapper>
       <Header title="Food Diary" />
-      <Content>
           {
             <ItemGallery
               itemMaps={foodMaps}
@@ -34,7 +33,6 @@ export default function FoodDiary() {
               removeService={removeFood}
             />
           }
-      </Content>
       <Footer />
     </Wrapper>
   )
