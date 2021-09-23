@@ -1,5 +1,4 @@
 import ItemCardContainer from "./ItemCardContainer";
-import styled from "styled-components";
 
 export default function ItemGallery({
   itemMaps,
@@ -9,22 +8,32 @@ export default function ItemGallery({
   removeService,
 }) {
 
-  const Container = itemMaps.map(item => (
-      <ItemCardContainer
-          key = {item.date}
-          date={item.date}
-          valueList={item.foods}
-          valueTitle={valueTitle}
-          reloadList={reloadList}
-          editService={editService}
-          removeService={removeService}
-      />))
 
-  return(
-    <Wrapper>
-      {Container}
-    </Wrapper>
-  )
+  if( valueTitle === "Food"){
+    return itemMaps.map(item => (
+        <ItemCardContainer
+            date={item.date}
+            valueList={item.foods}
+            valueTitle={valueTitle}
+            reloadList={reloadList}
+            editService={editService}
+            removeService={removeService}
+            key={item.date}
+        />))
+  }
+
+  if( valueTitle === "Pain"){
+    return itemMaps.map(item => (
+        <ItemCardContainer
+            date={item.date}
+            valueList={item.pains}
+            valueTitle={valueTitle}
+            reloadList={reloadList}
+            editService={editService}
+            removeService={removeService}
+            key={item.date}
+        />))
+  }
+
 }
 
-const Wrapper = styled.div``
