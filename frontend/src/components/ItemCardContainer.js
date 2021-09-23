@@ -42,7 +42,9 @@ export default function ItemCardContainer({
     if( valueTitle === "Pain"){
             return <Wrapper>
                 <h1> Day: {date}</h1>
+                <div className="cards">
                 {painCards}
+                </div>
             </Wrapper>
         }
 }
