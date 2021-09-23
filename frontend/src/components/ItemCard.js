@@ -31,7 +31,7 @@ export default function ItemCard({
   return (
 
     <Wrapper>
-        <p>{valueTitle}: {mainValue}</p>
+        <p className="value">{valueTitle}: {mainValue}</p>
         {edit && (
           <Edit id={id}
                 reloadList={reloadList}
@@ -46,17 +46,27 @@ export default function ItemCard({
             removeService={removeService}
           />
         )}
-        {!edit && !remove && <Button onClick={editHandler}>edit</Button>}
-        {!edit && !remove && <Button onClick={removeHandler}>remove</Button>}
+        {!edit && !remove && <Button onClick={editHandler}><img src="edit-interface-symbol.png" alt="detective"/></Button>}
+        {!edit && !remove && <Button onClick={removeHandler}><img src="cross-remove-sign.png" alt="detective"/></Button>}
         {edit && <Button onClick={cancelHandler}>Cancel</Button>}
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+  grid-template-rows: 1fr 1fr;
   border-style: solid;
   border-radius: 10px;
   margin: 5px;
   padding: 3px;
+  
+  img {
+    height: 20px;
+  }
+  .value {
+    grid-column: span 2;
+    
+  }
 `
