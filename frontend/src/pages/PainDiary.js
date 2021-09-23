@@ -24,16 +24,13 @@ export default function PainDiary() {
   return (
     <Wrapper>
       <Header title="Pain Diary" />
-      <Content>
-          <ItemGallery
-              itemMaps={painMaps}
-              valueTitle={'Pain'}
-              reloadList={reloadPainList}
-              editService={updatePain}
-              removeService={removePain}
-          />
-          }
-      </Content>
+            <ItemGallery
+                itemMaps={painMaps}
+                valueTitle={'Pain'}
+                reloadList={reloadPainList}
+                editService={updatePain}
+                removeService={removePain}
+            />
       <Footer />
     </Wrapper>
   )
