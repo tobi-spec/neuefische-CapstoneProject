@@ -11,10 +11,9 @@ public class FoodMapsDto {
 
     private List<FoodMapDto> foodMaps = new ArrayList<>();
 
-
     @Override
     public String toString() {
-        return "FoodListDto{" +
+        return "FoodMapsDto{" +
                 "foodMaps=" + foodMaps +
                 '}';
     }
