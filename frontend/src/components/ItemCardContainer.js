@@ -40,12 +40,11 @@ export default function ItemCardContainer({
             </Wrapper>
     }
     if( valueTitle === "Pain"){
-        return valueList.map (Item =>
-            <Wrapper>
+            return <Wrapper>
                 <h1> Day: {date}</h1>
                 {painCards}
             </Wrapper>
-        )}
+        }
 }
 
 const Wrapper = styled.div``
