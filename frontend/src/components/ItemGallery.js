@@ -2,16 +2,18 @@ import ItemCardContainer from "./ItemCardContainer";
 import styled from "styled-components";
 
 export default function ItemGallery({
-  map,
+  itemMaps,
   valueTitle,
   reloadList,
   editService,
   removeService,
 }) {
-  const Container = map.forEach((date, valueList) => (
+
+  const Container = itemMaps.map(item => (
       <ItemCardContainer
-          key={date}
-          valueList={valueList}
+          key = {item.date}
+          date={item.date}
+          valueList={item.foods}
           valueTitle={valueTitle}
           reloadList={reloadList}
           editService={editService}
@@ -20,6 +22,7 @@ export default function ItemGallery({
 
   return(
     <Wrapper>
+      <p>Hallo</p>
       {Container}
     </Wrapper>
   )
