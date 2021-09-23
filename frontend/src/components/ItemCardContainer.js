@@ -13,7 +13,6 @@ export default function ItemCardContainer({
         <ItemCard
             mainValue= {value.foodName}
             id = {value.id}
-            valueTitle={valueTitle}
             reloadList={reloadList}
             editService={editService}
             removeService={removeService}
@@ -25,7 +24,6 @@ export default function ItemCardContainer({
         <ItemCard
             mainValue= {value.painLevel}
             id = {value.id}
-            valueTitle={valueTitle}
             reloadList={reloadList}
             editService={editService}
             removeService={removeService}

@@ -7,7 +7,6 @@ import Remove from './Remove'
 export default function ItemCard({
   mainValue,
   id,
-  valueTitle,
   reloadList,
   editService,
   removeService,
@@ -29,9 +28,8 @@ export default function ItemCard({
   }
 
   return (
-
     <Wrapper>
-        <p className="value">{valueTitle}: {mainValue}</p>
+        <p className="value">{mainValue}</p>
         {edit && (
           <Edit id={id}
                 reloadList={reloadList}
@@ -55,18 +53,18 @@ export default function ItemCard({
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr ;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: min-content min-content;
+  grid-template-rows: min-content min-content;
+  justify-items: center;
   border-style: solid;
   border-radius: 10px;
   margin: 5px;
   padding: 3px;
   
   img {
-    height: 20px;
+    height: 15px;
   }
   .value {
     grid-column: span 2;
-    
   }
 `
