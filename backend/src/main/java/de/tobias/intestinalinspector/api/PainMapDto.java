@@ -10,11 +10,14 @@ import java.util.*;
 @AllArgsConstructor
 public class PainMapDto {
 
-    Map<String, List<PainDto>> painMap= new HashMap<>();
+    private String date;
+    private List<PainDto> pains = new ArrayList<>();
 
-    public void putAll(Map<String,List<PainDto>> map){
-        painMap.putAll(map);
+    @Override
+    public String toString() {
+        return "PainMapDto{" +
+                "date='" + date + '\'' +
+                ", pains=" + pains +
+                '}';
     }
-
-
 }
