@@ -9,7 +9,7 @@ export default function ItemCardContainer({
   editService,
   removeService}){
 
-    const cards = valueList.map(value => (
+    const foodCards = valueList.map(value => (
         <ItemCard
             mainValue= {value.foodName}
             id = {value.id}
@@ -17,27 +17,33 @@ export default function ItemCardContainer({
             reloadList={reloadList}
             editService={editService}
             removeService={removeService}
+            key={value.id}
+        />
+    ))
+
+    const painCards = valueList.map(value => (
+        <ItemCard
+            mainValue= {value.painLevel}
+            id = {value.id}
+            valueTitle={valueTitle}
+            reloadList={reloadList}
+            editService={editService}
+            removeService={removeService}
+            key={value.id}
         />
     ))
 
     if( valueTitle === "Food"){
         return <Wrapper>
                 <h1> Day: {date}</h1>
-                {cards}
+                {foodCards}
             </Wrapper>
     }
     if( valueTitle === "Pain"){
         return valueList.map (Item =>
             <Wrapper>
                 <h1> Day: {date}</h1>
-                <ItemCard
-                    mainValue = {Item.painLevel}
-                    id = {Item.id}
-                    valueTitle={valueTitle}
-                    reloadList={reloadList}
-                    editService={editService}
-                    removeService={removeService}
-                />
+                {painCards}
             </Wrapper>
         )}
 }
