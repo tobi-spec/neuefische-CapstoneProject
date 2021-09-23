@@ -46,8 +46,8 @@ public class PainController {
     @GetMapping
     public ResponseEntity<PainMapsDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<PainEntity> listOfPain = painService.getAll(appUser.getUserName());
-        List<PainDto> listToMap = map(listOfPain);
-        Map<String, List<PainDto>> results = dateService.sortPainByDay(listToMap);
+        List<PainDto> painListToMap = map(listOfPain);
+        Map<String, List<PainDto>> results = dateService.sortPainByDay(painListToMap);
         PainMapsDto painMapsDto = new PainMapsDto();
         for(Map.Entry<String, List<PainDto>> entry: results.entrySet()){
             String date = entry.getKey();
