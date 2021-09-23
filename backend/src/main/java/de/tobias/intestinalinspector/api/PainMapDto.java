@@ -8,6 +8,7 @@ import java.util.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PainMapDto {
 
     private String date;
