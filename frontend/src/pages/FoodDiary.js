@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Header from '../components/Header'
-import Content from '../components/Content'
 import Footer from '../components/Footer'
 import { useEffect, useState } from 'react'
 import { getFood, removeFood, updateFood } from '../service/AxiosService'
