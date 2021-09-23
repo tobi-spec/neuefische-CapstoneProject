@@ -36,7 +36,9 @@ export default function ItemCardContainer({
     if( valueTitle === "Food"){
         return <Wrapper>
                 <h1> Day: {date}</h1>
+                <div className="cards">
                 {foodCards}
+                </div>
             </Wrapper>
     }
     if( valueTitle === "Pain"){
@@ -47,4 +49,9 @@ export default function ItemCardContainer({
         }
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+}`
