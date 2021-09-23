@@ -22,7 +22,6 @@ export default function ItemGallery({
 
   return(
     <Wrapper>
-      <p>Hallo</p>
       {Container}
     </Wrapper>
   )
