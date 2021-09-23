@@ -1,24 +1,28 @@
 package de.tobias.intestinalinspector.api;
 
-import lombok.*;
 
-import java.util.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class FoodMapDto {
 
-    private Map<String,List<FoodDto>> foodMap = new HashMap<>();
-
-    public void putAll(Map<String,List<FoodDto>> map){
-        foodMap.putAll(map);
-    }
+    private String date;
+    private List<FoodDto> foods = new ArrayList<>();
 
     @Override
     public String toString() {
-        return "FoodListDto{" +
-                "foodMap=" + foodMap +
+        return "FoodMapDto{" +
+                "date='" + date + '\'' +
+                ", foods=" + foods +
                 '}';
     }
 }
