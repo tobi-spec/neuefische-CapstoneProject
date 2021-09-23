@@ -1,17 +1,22 @@
 package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.FoodDto;
-import de.tobias.intestinalinspector.api.FoodListDto;
+import de.tobias.intestinalinspector.api.FoodMapDto;
+import de.tobias.intestinalinspector.api.FoodMapsDto;
 import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
+import de.tobias.intestinalinspector.service.DateService;
 import de.tobias.intestinalinspector.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -20,10 +25,12 @@ import static org.springframework.http.ResponseEntity.ok;
 public class FoodController {
 
     private final FoodService foodService;
+    private final DateService dateService;
 
     @Autowired
-    public FoodController(FoodService foodService) {
+    public FoodController(FoodService foodService, DateService dateService) {
         this.foodService = foodService;
+        this.dateService = dateService;
     }
 
     @PostMapping
@@ -40,11 +47,20 @@ public class FoodController {
     }
 
     @GetMapping
-    public ResponseEntity<FoodListDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
+    public ResponseEntity<FoodMapsDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
-        FoodListDto foodListDto = new FoodListDto();
-        map(listOfFood, foodListDto);
-        return ok(foodListDto);
+        List<FoodDto> foodListToMap = map(listOfFood);
+        Map<String, List<FoodDto>> results = dateService.sortFoodByDay(foodListToMap);
+        FoodMapsDto foodMapsDto = new FoodMapsDto();
+        for(Map.Entry<String, List<FoodDto>> entry: results.entrySet()){
+            String date = entry.getKey();
+            List<FoodDto> foods = entry.getValue();
+            FoodMapDto foodMapDto = new FoodMapDto();
+            foodMapDto.setDate(date);
+            foodMapDto.setFoods(foods);
+            foodMapsDto.getFoodMaps().add(foodMapDto);
+        }
+        return ok(foodMapsDto);
     }
 
     @PutMapping("{id}")
@@ -63,15 +79,17 @@ public class FoodController {
     }
 
 
-    private void map(List<FoodEntity> listOfFood, FoodListDto foodListDto) {
+    private List<FoodDto> map(List<FoodEntity> listOfFood) {
+        List<FoodDto> foodListDto = new ArrayList<>();
         for( FoodEntity foodItem: listOfFood){
             FoodDto foodDto = FoodDto.builder()
                     .foodName(foodItem.getFoodName())
                     .id(foodItem.getId())
                     .date(foodItem.getDate())
                     .build();
-            foodListDto.addFood(foodDto);
+            foodListDto.add(foodDto);
         }
+        return foodListDto;
     }
 
     private FoodDto map(FoodEntity foodEntity) {

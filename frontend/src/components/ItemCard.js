@@ -5,10 +5,9 @@ import { useState } from 'react'
 import Remove from './Remove'
 
 export default function ItemCard({
-  valueTitle,
   mainValue,
-  date,
   id,
+  valueTitle,
   reloadList,
   editService,
   removeService,
@@ -30,14 +29,14 @@ export default function ItemCard({
   }
 
   return (
+
     <Wrapper>
-      <li>
-        <p>
-          {valueTitle}: {mainValue}
-        </p>
-        <p>date: {date}</p>
+        <p>{valueTitle}: {mainValue}</p>
         {edit && (
-          <Edit id={id} reloadList={reloadList} editService={editService} cancelHandler={cancelHandler} />
+          <Edit id={id}
+                reloadList={reloadList}
+                editService={editService}
+                cancelHandler={cancelHandler} />
         )}
         {remove && (
           <Remove
@@ -50,7 +49,6 @@ export default function ItemCard({
         {!edit && !remove && <Button onClick={editHandler}>edit</Button>}
         {!edit && !remove && <Button onClick={removeHandler}>remove</Button>}
         {edit && <Button onClick={cancelHandler}>Cancel</Button>}
-      </li>
     </Wrapper>
   )
 }

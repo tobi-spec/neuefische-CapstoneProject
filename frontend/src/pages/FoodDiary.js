@@ -9,31 +9,31 @@ import ItemGallery from '../components/ItemGallery'
 
 export default function FoodDiary() {
   const { token } = useAuth()
-  const [foodList, setFoodList] = useState([])
+  const [foodMaps, setFoodMaps] = useState([])
 
   useEffect(() => {
-    getFood(token).then(data => setFoodList(data.foodList))
+    getFood(token)
+        .then(data => setFoodMaps(data.foodMaps))
   }, [token])
 
   const reloadFoodList = token => {
-    getFood(token).then(data => setFoodList(data.foodList))
+    getFood(token)
+        .then(data => setFoodMaps(data.foodMaps))
   }
 
   return (
     <Wrapper>
       <Header title="Food Diary" />
       <Content>
-        <ul>
           {
             <ItemGallery
-              List={foodList}
+              itemMaps={foodMaps}
               valueTitle={'Food'}
               reloadList={reloadFoodList}
               editService={updateFood}
               removeService={removeFood}
             />
           }
-        </ul>
       </Content>
       <Footer />
     </Wrapper>
@@ -41,9 +41,4 @@ export default function FoodDiary() {
 }
 
 const Wrapper = styled.div`
-  ul {
-    list-style: none;
-    grid-column: 2;
-    grid-row: 2;
-  }
 `

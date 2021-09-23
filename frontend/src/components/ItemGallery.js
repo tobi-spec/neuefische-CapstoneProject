@@ -1,38 +1,39 @@
-import ItemCard from './ItemCard'
+import ItemCardContainer from "./ItemCardContainer";
 
 export default function ItemGallery({
-  List,
+  itemMaps,
   valueTitle,
   reloadList,
   editService,
   removeService,
 }) {
-  if (valueTitle === 'Food') {
-    return List.map(Item => (
-      <ItemCard
-        valueTitle={valueTitle}
-        mainValue={Item.foodName}
-        date={Item.date}
-        id={Item.id}
-        key={Item.id}
-        reloadList={reloadList}
-        editService={editService}
-        removeService={removeService}
-      />
-    ))
+
+
+  if( valueTitle === "Food"){
+    return itemMaps.map(item => (
+        <ItemCardContainer
+            date={item.date}
+            valueList={item.foods}
+            valueTitle={valueTitle}
+            reloadList={reloadList}
+            editService={editService}
+            removeService={removeService}
+            key={item.date}
+        />))
   }
-  if (valueTitle === 'Pain') {
-    return List.map(Item => (
-      <ItemCard
-        valueTitle={valueTitle}
-        mainValue={Item.painLevel}
-        date={Item.date}
-        id={Item.id}
-        key={Item.id}
-        reloadList={reloadList}
-        editService={editService}
-        removeService={removeService}
-      />
-    ))
+
+  if( valueTitle === "Pain"){
+    return itemMaps.map(item => (
+        <ItemCardContainer
+            date={item.date}
+            valueList={item.pains}
+            valueTitle={valueTitle}
+            reloadList={reloadList}
+            editService={editService}
+            removeService={removeService}
+            key={item.date}
+        />))
   }
+
 }
+

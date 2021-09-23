@@ -2,7 +2,8 @@ package de.tobias.intestinalinspector.controller;
 
 
 import de.tobias.intestinalinspector.api.FoodDto;
-import de.tobias.intestinalinspector.api.FoodListDto;
+import de.tobias.intestinalinspector.api.FoodMapDto;
+import de.tobias.intestinalinspector.api.FoodMapsDto;
 import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.TestAuthorization;
 import de.tobias.intestinalinspector.model.FoodEntity;
@@ -19,6 +20,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -120,10 +126,10 @@ class FoodControllerTest {
     public void testGetAll(){
         //WHEN
         HttpEntity<FoodDto> httpEntityGet = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodListDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<FoodMapsDto> actualResponse = testRestTemplate.exchange(url(),
                 HttpMethod.GET,
                 httpEntityGet ,
-                FoodListDto.class);
+                FoodMapsDto.class);
         //THEN
         FoodDto foodDto= FoodDto.builder()
                 .id(1)
@@ -131,11 +137,18 @@ class FoodControllerTest {
                 .date("Placeholder")
                 .build();
 
-        FoodListDto expectedList = new FoodListDto();
-        expectedList.addFood(foodDto);
+        List<FoodDto> list = new ArrayList<>();
+        list.add(foodDto);
+
+        FoodMapDto foodMapDto = new FoodMapDto();
+        foodMapDto.setDate(foodDto.getDate());
+        foodMapDto.setFoods(list);
+
+        FoodMapsDto expectedMap = new FoodMapsDto();
+        expectedMap.getFoodMaps().add(foodMapDto);
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
-        assertEquals(expectedList, actualResponse.getBody());
+        assertEquals(expectedMap, actualResponse.getBody());
     }
 
     @Test

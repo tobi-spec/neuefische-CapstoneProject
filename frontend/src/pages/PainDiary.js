@@ -9,31 +9,30 @@ import ItemGallery from '../components/ItemGallery'
 
 export default function PainDiary() {
   const { token } = useAuth()
-  const [painList, setPainList] = useState([])
+  const [painMaps, setPainMaps] = useState([])
 
   useEffect(() => {
-    getPain(token).then(data => setPainList(data.painList))
+    getPain(token)
+        .then(data => setPainMaps(data.painMaps))
   }, [token])
 
   const reloadPainList = token => {
-    getPain(token).then(data => setPainList(data.painList))
+    getPain(token)
+        .then(data => setPainMaps(data.painMaps))
   }
 
   return (
     <Wrapper>
       <Header title="Pain Diary" />
       <Content>
-        <ul>
-          {
-            <ItemGallery
-              List={painList}
+          <ItemGallery
+              itemMaps={painMaps}
               valueTitle={'Pain'}
               reloadList={reloadPainList}
               editService={updatePain}
               removeService={removePain}
-            />
+          />
           }
-        </ul>
       </Content>
       <Footer />
     </Wrapper>
@@ -41,9 +40,4 @@ export default function PainDiary() {
 }
 
 const Wrapper = styled.div`
-  ul {
-    list-style: none;
-    grid-column: 2;
-    grid-row: 2;
-  }
 `

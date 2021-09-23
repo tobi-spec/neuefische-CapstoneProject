@@ -29,7 +29,7 @@ public class FoodDto {
 
     @Override
     public String toString() {
-        return "FrontendFoodDto{" +
+        return "FoodDto{" +
                 "foodName='" + foodName + '\'' +
                 ", id=" + id +
                 ", date=" + date +
