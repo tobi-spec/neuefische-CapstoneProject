@@ -22,6 +22,11 @@ export default function Footer() {
           Pain Diary
         </NavLink>
       )}
+      {user && (
+          <NavLink className="Link" to="/tracker">
+            Culprit Tracker
+          </NavLink>
+      )}
     </Wrapper>
   )
 }
