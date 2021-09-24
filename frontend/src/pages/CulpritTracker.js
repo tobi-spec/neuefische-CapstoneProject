@@ -10,17 +10,45 @@ export default function CulpritTracker(){
     const [painMaps, setPainMaps] = useState([])
 
     useEffect(() => {
-        getPain(token).then(data => setPainMaps(data.painMaps))
+        getPain(token)
+            .then(data => setPainMaps(data.painMaps))
     }, [token])
 
-    const xValues = painMaps.map(map => map.date)
-    const yValues = painMaps.map(map => map.pains)
 
-    console.log(xValues)
-    console.log(yValues)
+    const xValues = painMaps.map(map => map.date)
+
+    const pains = painMaps.map(map => map.pains)
+    //console.log(pains)
+    const yValues = pains => {
+        const yValueArray = []
+        let previousDate = "";
+        let dailyPainLevel = 0;
+        let valuesEachDay = 0
+
+        pains.forEach(list =>
+            list.map(painDto =>
+            {
+                if(painDto.date !== previousDate){
+                    let avr = dailyPainLevel / valuesEachDay
+                    if(avr > 0){
+                        yValueArray.push(avr)
+                        dailyPainLevel = 0
+                        valuesEachDay = 0
+                    }
+                }
+                previousDate = painDto.date
+                dailyPainLevel += painDto.painLevel
+                valuesEachDay += 1
+            }
+            ))
+        return yValueArray
+    }
+
+    console.log(yValues(pains))
 
     return <Wrapper>
         <Header title="Culprit Tracker"/>
+
         <Footer/>
     </Wrapper>
 }
