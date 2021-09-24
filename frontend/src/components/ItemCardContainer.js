@@ -13,7 +13,6 @@ export default function ItemCardContainer({
         <ItemCard
             mainValue= {value.foodName}
             id = {value.id}
-            valueTitle={valueTitle}
             reloadList={reloadList}
             editService={editService}
             removeService={removeService}
@@ -25,7 +24,6 @@ export default function ItemCardContainer({
         <ItemCard
             mainValue= {value.painLevel}
             id = {value.id}
-            valueTitle={valueTitle}
             reloadList={reloadList}
             editService={editService}
             removeService={removeService}
@@ -36,16 +34,24 @@ export default function ItemCardContainer({
     if( valueTitle === "Food"){
         return <Wrapper>
                 <h1> Day: {date}</h1>
+                <div className="cards">
                 {foodCards}
+                </div>
             </Wrapper>
     }
     if( valueTitle === "Pain"){
-        return valueList.map (Item =>
-            <Wrapper>
+            return <Wrapper>
                 <h1> Day: {date}</h1>
+                <div className="cards">
                 {painCards}
+                </div>
             </Wrapper>
-        )}
+        }
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+}`

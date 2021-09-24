@@ -7,7 +7,6 @@ import Remove from './Remove'
 export default function ItemCard({
   mainValue,
   id,
-  valueTitle,
   reloadList,
   editService,
   removeService,
@@ -29,9 +28,8 @@ export default function ItemCard({
   }
 
   return (
-
     <Wrapper>
-        <p>{valueTitle}: {mainValue}</p>
+        <p className="value">{mainValue}</p>
         {edit && (
           <Edit id={id}
                 reloadList={reloadList}
@@ -46,17 +44,27 @@ export default function ItemCard({
             removeService={removeService}
           />
         )}
-        {!edit && !remove && <Button onClick={editHandler}>edit</Button>}
-        {!edit && !remove && <Button onClick={removeHandler}>remove</Button>}
+        {!edit && !remove && <Button onClick={editHandler}><img src="edit-interface-symbol.png" alt="detective"/></Button>}
+        {!edit && !remove && <Button onClick={removeHandler}><img src="cross-remove-sign.png" alt="detective"/></Button>}
         {edit && <Button onClick={cancelHandler}>Cancel</Button>}
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: min-content min-content;
+  grid-template-rows: min-content min-content;
+  justify-items: center;
   border-style: solid;
   border-radius: 10px;
   margin: 5px;
   padding: 3px;
+  
+  img {
+    height: 15px;
+  }
+  .value {
+    grid-column: span 2;
+  }
 `

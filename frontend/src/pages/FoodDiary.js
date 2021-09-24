@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Header from '../components/Header'
-import Content from '../components/Content'
 import Footer from '../components/Footer'
 import { useEffect, useState } from 'react'
 import { getFood, removeFood, updateFood } from '../service/AxiosService'
@@ -24,8 +23,6 @@ export default function FoodDiary() {
   return (
     <Wrapper>
       <Header title="Food Diary" />
-      <Content>
-          {
             <ItemGallery
               itemMaps={foodMaps}
               valueTitle={'Food'}
@@ -33,8 +30,6 @@ export default function FoodDiary() {
               editService={updateFood}
               removeService={removeFood}
             />
-          }
-      </Content>
       <Footer />
     </Wrapper>
   )

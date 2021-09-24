@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Header from '../components/Header'
-import Content from '../components/Content'
 import Footer from '../components/Footer'
 import { useAuth } from '../auth/AuthProvider'
 import { useEffect, useState } from 'react'
@@ -24,16 +23,13 @@ export default function PainDiary() {
   return (
     <Wrapper>
       <Header title="Pain Diary" />
-      <Content>
-          <ItemGallery
-              itemMaps={painMaps}
-              valueTitle={'Pain'}
-              reloadList={reloadPainList}
-              editService={updatePain}
-              removeService={removePain}
-          />
-          }
-      </Content>
+            <ItemGallery
+                itemMaps={painMaps}
+                valueTitle={'Pain'}
+                reloadList={reloadPainList}
+                editService={updatePain}
+                removeService={removePain}
+            />
       <Footer />
     </Wrapper>
   )
