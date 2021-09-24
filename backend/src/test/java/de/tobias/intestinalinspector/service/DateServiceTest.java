@@ -2,6 +2,7 @@ package de.tobias.intestinalinspector.service;
 
 import de.tobias.intestinalinspector.SpringBootTests;
 import de.tobias.intestinalinspector.api.FoodDto;
+import de.tobias.intestinalinspector.api.PainDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,6 +42,31 @@ class DateServiceTest extends SpringBootTests {
         expected.put("2021/09/23", List.of(food1));
         expected.put("2021/09/22", List.of(food2));
 
+        assertEquals(actual, expected);
+    }
+
+    @Test
+    public void testSortPain(){
+        //GIVEN
+        PainDto pain1 = PainDto.builder()
+                .id(1)
+                .painLevel(7)
+                .date("2021/09/23")
+                .build();
+        PainDto pain2 = PainDto.builder()
+                .id(1)
+                .painLevel(3)
+                .date("2021/09/22")
+                .build();
+        List<PainDto> list = new ArrayList<>();
+        list.add(pain1);
+        list.add(pain2);
+        //WHEN
+        Map<String, List<PainDto>> actual = dateService.sortPainByDay(list);
+        //THEN
+        Map<String, List<PainDto>> expected = new HashMap<>();
+        expected.put("2021/09/23", List.of(pain1));
+        expected.put("2021/09/22", List.of(pain2));
 
         assertEquals(actual, expected);
     }
