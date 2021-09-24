@@ -1,10 +1,8 @@
 package de.tobias.intestinalinspector.service;
 
-import de.tobias.intestinalinspector.SpringBootTests;
 import de.tobias.intestinalinspector.api.FoodDto;
 import de.tobias.intestinalinspector.api.PainDto;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,10 +11,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class DateServiceTest extends SpringBootTests {
+class DateServiceTest {
 
-    @Autowired
-    DateService dateService;
+    DateService dateService = new DateService();
 
 
     @Test
