@@ -41,9 +41,12 @@ export default function CulpritTracker(){
                 valuesEachDay += 1
             }
             ))
+        let lastAvr = dailyPainLevel / valuesEachDay
+        yValueArray.push(lastAvr)
         return yValueArray
     }
 
+    console.log(painMaps)
     console.log(xValues())
     console.log(yValues())
 
