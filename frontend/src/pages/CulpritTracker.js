@@ -15,11 +15,11 @@ export default function CulpritTracker(){
     }, [token])
 
 
-    const xValues = painMaps.map(map => map.date)
+    const xValues = () => painMaps.map(map => map.date)
 
-    const pains = painMaps.map(map => map.pains)
-    //console.log(pains)
-    const yValues = pains => {
+    const yValues = () => {
+        const pains = painMaps.map(map => map.pains)
+
         const yValueArray = []
         let previousDate = "";
         let dailyPainLevel = 0;
@@ -44,11 +44,11 @@ export default function CulpritTracker(){
         return yValueArray
     }
 
-    console.log(yValues(pains))
+    console.log(xValues())
+    console.log(yValues())
 
     return <Wrapper>
         <Header title="Culprit Tracker"/>
-
         <Footer/>
     </Wrapper>
 }
