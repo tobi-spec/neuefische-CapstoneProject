@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { useAuth } from '../auth/AuthProvider'
 import { NavLink } from 'react-router-dom'
+import PerpetratorTracker from "../pages/PerpetratorTracker";
 
 export default function Footer() {
   const { user } = useAuth()
@@ -21,6 +22,11 @@ export default function Footer() {
         <NavLink className="Link" to="/paindiary">
           Pain Diary
         </NavLink>
+      )}
+      {user && (
+          <NavLink className="Link" to="/tracker">
+            Perpetrator Tracker
+          </NavLink>
       )}
     </Wrapper>
   )
