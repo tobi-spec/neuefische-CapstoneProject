@@ -13,10 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FoodMapDto {
+public class FoodMapDto implements Comparable<FoodMapDto>{
 
     private String date;
     private List<FoodDto> foods = new ArrayList<>();
+
+    @Override
+    public int compareTo(FoodMapDto foodMapDto){
+        if(getDate() == null || foodMapDto.getDate() == null){
+            return 0;
+        }
+        return getDate().compareTo(foodMapDto.getDate());
+    }
 
     @Override
     public String toString() {

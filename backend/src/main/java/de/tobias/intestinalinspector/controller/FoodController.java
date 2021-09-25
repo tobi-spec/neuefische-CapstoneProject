@@ -14,9 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -52,6 +50,7 @@ public class FoodController {
         List<FoodDto> foodListToMap = map(listOfFood);
         Map<String, List<FoodDto>> results = dateService.sortFoodByDay(foodListToMap);
         FoodMapsDto foodMapsDto = new FoodMapsDto();
+
         for(Map.Entry<String, List<FoodDto>> entry: results.entrySet()){
             String date = entry.getKey();
             List<FoodDto> foods = entry.getValue();
@@ -60,6 +59,7 @@ public class FoodController {
             foodMapDto.setFoods(foods);
             foodMapsDto.getFoodMaps().add(foodMapDto);
         }
+        Collections.sort(foodMapsDto.getFoodMaps());
         return ok(foodMapsDto);
     }
 

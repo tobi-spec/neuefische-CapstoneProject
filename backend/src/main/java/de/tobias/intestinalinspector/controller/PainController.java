@@ -15,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,7 @@ public class PainController {
         List<PainDto> painListToMap = map(listOfPain);
         Map<String, List<PainDto>> results = dateService.sortPainByDay(painListToMap);
         PainMapsDto painMapsDto = new PainMapsDto();
+
         for(Map.Entry<String, List<PainDto>> entry: results.entrySet()){
             String date = entry.getKey();
             List<PainDto> pains = entry.getValue();
@@ -57,6 +59,7 @@ public class PainController {
             painMapDto.setPains(pains);
             painMapsDto.getPainMaps().add(painMapDto);
         }
+        Collections.sort(painMapsDto.getPainMaps());
         return ok(painMapsDto);
     }
 
