@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import {useEffect, useState} from "react";
 import {useAuth} from "../auth/AuthProvider";
 import {getPain} from "../service/AxiosService";
+import LineChart from "../components/LineChart";
 
 export default function CulpritTracker(){
     const {token} = useAuth()
@@ -52,6 +53,7 @@ export default function CulpritTracker(){
 
     return <Wrapper>
         <Header title="Culprit Tracker"/>
+        <LineChart xValues={xValues} yValues={yValues}/>
         <Footer/>
     </Wrapper>
 }
