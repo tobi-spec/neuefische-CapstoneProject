@@ -6,7 +6,7 @@ import {useAuth} from "../auth/AuthProvider";
 import {getPain} from "../service/AxiosService";
 import LineChart from "../components/LineChart";
 
-export default function CulpritTracker(){
+export default function PerpetratorTracker(){
     const {token} = useAuth()
     const [painMaps, setPainMaps] = useState([])
 

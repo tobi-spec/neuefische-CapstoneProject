@@ -7,7 +7,7 @@ import FoodDiary from './pages/FoodDiary'
 import PainDiary from './pages/PainDiary'
 import Welcome from "./pages/Welcome";
 import Registration from "./pages/Registration";
-import CulpritTracker from "./pages/CulpritTracker";
+import PerpetratorTracker from "./pages/PerpetratorTracker";
 function App() {
   return (
     <AuthProvider>
@@ -19,7 +19,7 @@ function App() {
           <ProtectedRoute path="/main" component={Main} />
           <ProtectedRoute path="/fooddiary" component={FoodDiary} />
           <ProtectedRoute path="/paindiary" component={PainDiary} />
-          <ProtectedRoute path="/tracker" component={CulpritTracker} />
+          <ProtectedRoute path="/tracker" component={PerpetratorTracker} />
         </Switch>
       </Router>
     </AuthProvider>
