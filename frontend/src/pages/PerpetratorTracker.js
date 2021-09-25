@@ -27,7 +27,7 @@ export default function PerpetratorTracker(){
         let valuesEachDay = 0
 
         pains.forEach(list =>
-            list.map(painDto =>
+            list.forEach(painDto =>
             {
                 if(painDto.date !== previousDate){
                     let avr = dailyPainLevel / valuesEachDay

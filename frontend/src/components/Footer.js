@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { useAuth } from '../auth/AuthProvider'
 import { NavLink } from 'react-router-dom'
-import PerpetratorTracker from "../pages/PerpetratorTracker";
 
 export default function Footer() {
   const { user } = useAuth()
