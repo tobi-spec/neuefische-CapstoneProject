@@ -47,10 +47,6 @@ export default function CulpritTracker(){
         return yValueArray
     }
 
-    console.log(painMaps)
-    console.log(xValues())
-    console.log(yValues())
-
     return <Wrapper>
         <Header title="Culprit Tracker"/>
         <LineChart xValues={xValues} yValues={yValues}/>

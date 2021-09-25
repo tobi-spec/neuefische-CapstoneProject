@@ -5,7 +5,6 @@ import styled from "styled-components/macro";
 export default function LineChart({yValues, xValues}){
 
     const xAxes = xValues()
-    console.log(xAxes)
     const yAxes = yValues()
 
 const LineChart = () => {
@@ -15,7 +14,7 @@ const LineChart = () => {
                 data={{
                     labels: xAxes,
                     datasets: [{
-                        label: '# of votes',
+                        label: "trace of the perpetrators",
                         data: yAxes,
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
