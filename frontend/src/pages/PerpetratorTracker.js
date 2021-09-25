@@ -48,7 +48,7 @@ export default function PerpetratorTracker(){
     }
 
     return <Wrapper>
-        <Header title="Culprit Tracker"/>
+        <Header title="Perpetrator Tracker"/>
         <LineChart xValues={xValues} yValues={yValues}/>
         <Footer/>
     </Wrapper>
