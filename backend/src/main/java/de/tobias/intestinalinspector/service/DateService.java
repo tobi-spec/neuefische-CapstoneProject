@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class DateService {
 
     public String getDate(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         return now.format(dtf);
     }
