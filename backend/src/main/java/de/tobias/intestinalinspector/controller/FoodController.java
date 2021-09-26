@@ -78,6 +78,19 @@ public class FoodController {
         return ok(returnDto);
     }
 
+    @GetMapping("{date}")
+    public ResponseEntity<FoodMapDto> getAllByDate(@PathVariable String date){
+        List<FoodEntity> foodsOfDate= foodService.getAllByDate(date);
+        List<FoodDto> foodDtosOfDate = map(foodsOfDate);
+
+        FoodMapDto foodMapDto = FoodMapDto.builder()
+                .date(date)
+                .foods(foodDtosOfDate)
+                .build();
+
+        return ok(foodMapDto);
+    }
+
 
     private List<FoodDto> map(List<FoodEntity> listOfFood) {
         List<FoodDto> foodListDto = new ArrayList<>();
