@@ -45,6 +45,7 @@ export default function ItemGallery({
 
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+margin-bottom: 50px`
 
 
