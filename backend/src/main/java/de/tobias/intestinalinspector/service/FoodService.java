@@ -32,8 +32,8 @@ public class FoodService {
 
     public FoodEntity update(Long id, String newName) {
         foodRepository.updateFoodFromUser(id, newName);
-        Optional<FoodEntity> changedEntity= foodRepository.findById(id);
-        if(changedEntity.isPresent()) {
+        Optional<FoodEntity> changedEntity = foodRepository.findById(id);
+        if (changedEntity.isPresent()) {
             return changedEntity.get();
         } else {
             throw new EntityNotFoundException("No such entry found");
@@ -42,9 +42,18 @@ public class FoodService {
 
     public FoodEntity delete(Long id) {
         Optional<FoodEntity> entityToDelete = foodRepository.findById(id);
-        if(entityToDelete.isPresent()) {
+        if (entityToDelete.isPresent()) {
             foodRepository.delete(entityToDelete.get());
             return entityToDelete.get();
+        } else {
+            throw new EntityNotFoundException("No such entry found");
+        }
+    }
+
+    public List<FoodEntity> getAllByDate(String date) {
+        Optional<List<FoodEntity>> entityList = foodRepository.findAllByDate(date);
+        if (entityList.isPresent()) {
+            return entityList.get();
         } else {
             throw new EntityNotFoundException("No such entry found");
         }
