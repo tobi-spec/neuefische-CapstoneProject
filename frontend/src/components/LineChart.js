@@ -3,6 +3,7 @@ import {Line} from 'react-chartjs-2'
 import {useAuth} from "../auth/AuthProvider";
 import {getFood, removeFood, updateFood} from "../service/AxiosService";
 import ItemGallery from "./ItemGallery";
+import styled from "styled-components";
 
 export default function LineChart({yValues, xValues}){
     const {token} = useAuth()
@@ -48,8 +49,8 @@ export default function LineChart({yValues, xValues}){
 
     const LineChart = () => {
         return (
-            <div>
-            <div>
+            <Wrapper>
+            <div className="chart">
             <Line data={data} height={100} width={150} getElementAtEvent={getElementAtEvent}/>
             </div>
                 <ItemGallery
@@ -59,10 +60,19 @@ export default function LineChart({yValues, xValues}){
                     editService={updateFood}
                     removeService={removeFood}
                 />
-            </div>)
+            </Wrapper>)
     }
 
     return LineChart()
 }
+
+const Wrapper = styled.div`
+
+    .chart{
+      padding-top: 10px;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+`
 
 

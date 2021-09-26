@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { useAuth } from '../auth/AuthProvider'
 import { NavLink } from 'react-router-dom'
 
 export default function Footer() {
@@ -28,6 +27,7 @@ const Wrapper = styled.footer`
   justify-content: center;
   align-items: center;
   position: fixed;
+  height: 50px;
   bottom: 0;
   left: 0;
   right: 0;
