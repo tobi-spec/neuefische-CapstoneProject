@@ -215,42 +215,4 @@ class FoodControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }
 
-    @Test
-    public void testGetAllByDate(){
-        //GIVEN
-        String date = "Placeholder";
-        //WHEN
-        HttpEntity<String> httpEntity = new HttpEntity<>(date, testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodMapDto> actualResponse = testRestTemplate.exchange(url()+"/"+date,
-                HttpMethod.GET,
-                httpEntity,
-                FoodMapDto.class);
-        //THEN
-        FoodMapDto expected = new FoodMapDto();
-        expected.setDate("Placeholder");
-        expected.setFoods(List.of(FoodDto.builder()
-                .id(1)
-                .foodName("Testtrauben")
-                .date("Placeholder")
-                .build()));
-
-
-        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
-        assertEquals(expected, actualResponse.getBody());
-    }
-
-    @Test
-    public void testGetAllByDateWrongDate(){
-        //GIVEN
-        String date="1991-01-01";
-        //WHEN
-        HttpEntity<String> httpEntity = new HttpEntity<>(date, testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodMapDto> actualResponse = testRestTemplate.exchange(url()+"/"+date,
-                HttpMethod.GET,
-                httpEntity,
-                FoodMapDto.class);
-        //THEN
-        assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
-    }
-
 }

@@ -14,8 +14,6 @@ public interface FoodRepository extends JpaRepository<FoodEntity, Long> {
 
     List<FoodEntity> findAllByUserNameOrderByDate(String userName);
 
-    List<FoodEntity> findAllByDate(String date);
-
     // .save() can not be used to overwrite, because date would be also overwritten with current date.
     @Modifying
     @Transactional

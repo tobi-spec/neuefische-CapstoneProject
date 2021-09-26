@@ -49,13 +49,4 @@ public class FoodService {
             throw new EntityNotFoundException("No such entry found");
         }
     }
-
-    public List<FoodEntity> getAllByDate(String date) {
-        List<FoodEntity> entityList = foodRepository.findAllByDate(date);
-        if (!entityList.isEmpty() ) {
-            return entityList;
-        } else {
-            throw new EntityNotFoundException("No such entry found");
-        }
-    }
 }
