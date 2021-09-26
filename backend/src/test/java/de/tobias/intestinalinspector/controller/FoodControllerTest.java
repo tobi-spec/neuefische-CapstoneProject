@@ -242,7 +242,7 @@ class FoodControllerTest {
     @Test
     public void testGetAllByDateWrongDate(){
         //GIVEN
-        String date="1991/01/01";
+        String date="1991-01-01";
         //WHEN
         HttpEntity<String> httpEntity = new HttpEntity<>(date, testAuthorization.Header("Frank", "user"));
         ResponseEntity<FoodMapDto> actualResponse = testRestTemplate.exchange(url()+"/"+date,

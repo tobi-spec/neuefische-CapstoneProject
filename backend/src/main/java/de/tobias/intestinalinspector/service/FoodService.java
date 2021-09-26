@@ -51,9 +51,9 @@ public class FoodService {
     }
 
     public List<FoodEntity> getAllByDate(String date) {
-        Optional<List<FoodEntity>> entityList = foodRepository.findAllByDate(date);
-        if (entityList.isPresent()) {
-            return entityList.get();
+        List<FoodEntity> entityList = foodRepository.findAllByDate(date);
+        if (!entityList.isEmpty() ) {
+            return entityList;
         } else {
             throw new EntityNotFoundException("No such entry found");
         }
