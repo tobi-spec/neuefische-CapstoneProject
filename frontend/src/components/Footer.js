@@ -1,22 +1,32 @@
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
+import {useAuth} from "../auth/AuthProvider";
 
 export default function Footer() {
+    const {user} = useAuth()
 
   return (
     <Wrapper>
-        <NavLink className="Link" to="/main">
-          Notes
-        </NavLink>
-        <NavLink className="Link" to="/fooddiary">
-          Food Diary
-        </NavLink>
-        <NavLink className="Link" to="/paindiary">
-          Pain Diary
-        </NavLink>
-          <NavLink className="Link" to="/tracker">
-            Perpetrator Tracker
-          </NavLink>
+        {user && (
+            <NavLink className="Link" to="/main">
+                Notes
+            </NavLink>
+        )}
+        {user && (
+            <NavLink className="Link" to="/fooddiary">
+                Food Diary
+            </NavLink>
+        )}
+        {user && (
+            <NavLink className="Link" to="/paindiary">
+                Pain Diary
+            </NavLink>
+        )}
+        {user && (
+            <NavLink className="Link" to="/tracker">
+                Perpetrator Tracker
+            </NavLink>
+        )}
     </Wrapper>
   )
 }
