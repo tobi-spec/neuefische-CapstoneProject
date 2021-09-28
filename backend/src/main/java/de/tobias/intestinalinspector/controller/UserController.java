@@ -5,6 +5,7 @@ import de.tobias.intestinalinspector.api.NewPassword;
 import de.tobias.intestinalinspector.api.UserDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.service.AppUserService;
+import de.tobias.intestinalinspector.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -50,7 +51,14 @@ public class UserController {
         AppUserEntity userWithNewPassword = appUserService.updatePassword(userName, newPassword);
         UserDto userToReturn = map(userWithNewPassword);
         return ok(userToReturn);
+    }
 
+    @DeleteMapping("api/user/deleteAccount")
+    public ResponseEntity<UserDto> deleteAccount (@AuthenticationPrincipal AppUserEntity appUserEntity){
+        String userName = appUserEntity.getUserName();
+        AppUserEntity userToDelete = appUserService.deleteUser(userName);
+        UserDto deletedUser = map(userToDelete);
+        return ok(deletedUser);
     }
 
     private AppUserEntity map(UserDto userDto) {
