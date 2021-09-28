@@ -33,8 +33,8 @@ public class AppUserService {
         return appUserRepository.findByUserName(username);
     }
 
-    public AppUserEntity updatePassword(String userName, String setNewPassword) {
-        String encodedPassword = passwordEncoder.encode(setNewPassword);
+    public AppUserEntity updatePassword(String userName, String newPassword) {
+        String encodedPassword = passwordEncoder.encode(newPassword);
         appUserRepository.updatePasswordOfUser(userName, encodedPassword);
         Optional<AppUserEntity> changedUser = appUserRepository.findByUserName(userName);
         if (changedUser.isPresent()){

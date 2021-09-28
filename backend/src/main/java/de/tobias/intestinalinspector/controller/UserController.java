@@ -44,10 +44,10 @@ public class UserController {
 
     @PutMapping("/api/user/password")
     public ResponseEntity<UserDto> newPassword (@AuthenticationPrincipal AppUserEntity appUserEntity,
-                                               @RequestBody NewPassword newPassword){
+                                               @RequestBody NewPassword password){
         String userName = appUserEntity.getUserName();
-        String setNewPassword = newPassword.getNewPassword();
-        AppUserEntity userWithNewPassword = appUserService.updatePassword(userName, setNewPassword);
+        String newPassword = password.getNewPassword();
+        AppUserEntity userWithNewPassword = appUserService.updatePassword(userName, newPassword);
         UserDto userToReturn = map(userWithNewPassword);
         return ok(userToReturn);
 
