@@ -8,4 +8,6 @@ public interface AppUserRepository extends JpaRepository<AppUserEntity, Long> {
 
     Optional<AppUserEntity> findByUserName(String name);
 
+    void deleteAppUserEntityByUserName( String name);
+
 }
