@@ -3,7 +3,7 @@ import axios from 'axios'
 const loginPath = '/auth/access_token'
 const foodPath = '/api/food'
 const painPath = '/api/pain'
-const createUserPath = "/api/user"
+const userPath = "/api/user"
 
 
 export const getToken = credentials =>
@@ -13,7 +13,7 @@ export const getToken = credentials =>
     .then(dto => dto.token)
 
 export const createUser = credentials =>
-    axios.post(createUserPath, credentials)
+    axios.post(userPath, credentials)
 
 const header = token => ({
   headers: {
@@ -45,3 +45,5 @@ export const updatePain = (id, newNumber, token) =>
 export const removePain = (id, token) =>
   axios.delete(painPath + `/${id}`, header(token))
 
+export const resetPassword = (newPassword, token) =>
+    axios.put(userPath + "/password", newPassword, header(token))
