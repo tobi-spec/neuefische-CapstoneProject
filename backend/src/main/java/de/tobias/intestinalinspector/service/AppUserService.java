@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -33,12 +34,13 @@ public class AppUserService {
         return appUserRepository.findByUserName(username);
     }
 
+    @Transactional
     public AppUserEntity updatePassword(String userName, String newPassword) {
         String encodedPassword = passwordEncoder.encode(newPassword);
-        appUserRepository.updatePasswordOfUser(userName, encodedPassword);
-        Optional<AppUserEntity> changedUser = appUserRepository.findByUserName(userName);
-        if (changedUser.isPresent()){
-            return changedUser.get();
+        Optional<AppUserEntity> entityToChange = appUserRepository.findByUserName(userName);
+        if (entityToChange.isPresent()){
+            entityToChange.get().setUserPassword(encodedPassword);
+            return appUserRepository.save(entityToChange.get());
         }else {
             throw new EntityNotFoundException("Not such entry found");
         }
