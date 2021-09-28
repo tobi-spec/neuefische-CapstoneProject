@@ -35,10 +35,10 @@ public class AppUserService {
 
     public AppUserEntity updatePassword(String userName, String newPassword) {
         String encodedPassword = passwordEncoder.encode(newPassword);
-        appUserRepository.updatePasswordOfUser(userName, encodedPassword);
-        Optional<AppUserEntity> changedUser = appUserRepository.findByUserName(userName);
-        if (changedUser.isPresent()){
-            return changedUser.get();
+        Optional<AppUserEntity> entityToChange = appUserRepository.findByUserName(userName);
+        if (entityToChange.isPresent()){
+            entityToChange.get().setUserPassword(encodedPassword);
+            return appUserRepository.save(entityToChange.get());
         }else {
             throw new EntityNotFoundException("Not such entry found");
         }

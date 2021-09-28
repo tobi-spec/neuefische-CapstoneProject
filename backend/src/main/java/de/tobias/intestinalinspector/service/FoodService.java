@@ -31,10 +31,10 @@ public class FoodService {
     }
 
     public FoodEntity update(Long id, String newName) {
-        foodRepository.updateFoodFromUser(id, newName);
-        Optional<FoodEntity> changedEntity = foodRepository.findById(id);
-        if (changedEntity.isPresent()) {
-            return changedEntity.get();
+        Optional<FoodEntity> entityToChange = foodRepository.findById(id);
+        if (entityToChange.isPresent()) {
+            entityToChange.get().setFoodName(newName);
+            return foodRepository.save(entityToChange.get());
         } else {
             throw new EntityNotFoundException("No such entry found");
         }

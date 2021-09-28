@@ -34,10 +34,10 @@ public class PainService {
     }
 
     public PainEntity update(Long id, int newNumber) {
-        painRepository.updateFoodFromUser(id, newNumber);
-        Optional<PainEntity> changedEntity= painRepository.findById(id);
-        if(changedEntity.isPresent()) {
-            return changedEntity.get();
+        Optional<PainEntity> entityToChange= painRepository.findById(id);
+        if(entityToChange.isPresent()) {
+            entityToChange.get().setPainLevel(newNumber);
+            return painRepository.save(entityToChange.get());
         } else {
             throw new EntityNotFoundException("No such entry found");
         }
