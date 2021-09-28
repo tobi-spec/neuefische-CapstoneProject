@@ -45,9 +45,6 @@ class UserControllerTest {
     @Autowired
     private TestAuthorization testAuthorization;
 
-    @Autowired
-    private AppUserRepository appUserRepository;
-
 
     @Test
     @Order(1)
@@ -92,27 +89,30 @@ class UserControllerTest {
     @Order(3)
     public void testChangePassword() {
         //GIVEN
-        String username = "Frank";
-        AppUserEntity user = AppUserEntity.builder()
-                .userName(username)
-                .userRole("user")
-                .userPassword("12345")
-                .id(1)
+        UserDto userToCreate = UserDto.builder()
+                .userName("Julia")
+                .userPassword("Julia123")
                 .build();
-        appUserRepository.save(user);
         NewPassword newPassword = new NewPassword("54321");
 
         CredentialsDto credentialsWithNewPassword = CredentialsDto.builder()
-                .userName(username)
+                .userName("Frank")
                 .userPassword(newPassword.getNewPassword())
                 .build();
 
         //WHEN
+        //create User
+        HttpEntity<UserDto> httpEntityCreate = new HttpEntity<>(userToCreate);
+        ResponseEntity<UserDto> actualResponseCreateUser = testRestTemplate.exchange(url()+"/api/user",
+                HttpMethod.POST,
+                httpEntityCreate,
+                UserDto.class);
+
         //change password
-        HttpEntity<NewPassword> httpEntity = new HttpEntity<>(newPassword, testAuthorization.Header("Frank", "user"));
+        HttpEntity<NewPassword> httpEntityUpdate = new HttpEntity<>(newPassword, testAuthorization.Header("Frank", "user"));
         ResponseEntity<UserDto> actualResponseSetPassword = testRestTemplate.exchange(url()+"/api/user/password",
                                                                             HttpMethod.PUT,
-                                                                            httpEntity,
+                                                                            httpEntityUpdate,
                                                                             UserDto.class);
 
         //login in with new password
@@ -122,6 +122,8 @@ class UserControllerTest {
                 AccessTokenDto.class);
 
         //THEN
+        assertEquals(HttpStatus.OK, actualResponseCreateUser.getStatusCode());
+
         assertEquals(HttpStatus.OK, actualResponseSetPassword.getStatusCode());
 
         assertEquals(HttpStatus.OK, actualResponseLogin.getStatusCode());
