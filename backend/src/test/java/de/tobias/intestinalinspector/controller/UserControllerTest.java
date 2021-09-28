@@ -79,7 +79,7 @@ class UserControllerTest {
                 .build();
         //WHEN
         HttpEntity<UserDto> httpEntity = new HttpEntity<>(userToCreate);
-        ResponseEntity<UserDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<UserDto> actualResponse = testRestTemplate.exchange(url()+"/api/user",
                 HttpMethod.POST,
                 httpEntity,
                 UserDto.class);
@@ -89,6 +89,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Order(3)
     public void testChangePassword() {
         //GIVEN
         String username = "Frank";
