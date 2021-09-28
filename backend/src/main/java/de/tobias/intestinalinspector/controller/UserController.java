@@ -1,11 +1,13 @@
 package de.tobias.intestinalinspector.controller;
 
 
+import de.tobias.intestinalinspector.api.NewPassword;
 import de.tobias.intestinalinspector.api.UserDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityExistsException;
@@ -37,6 +39,17 @@ public class UserController {
         } else {
             throw new EntityExistsException("Username already exists");
         }
+
+    }
+
+    @PutMapping("/api/user/password")
+    public ResponseEntity<UserDto> newPassword (@AuthenticationPrincipal AppUserEntity appUserEntity,
+                                               @RequestBody NewPassword password){
+        String userName = appUserEntity.getUserName();
+        String newPassword = password.getNewPassword();
+        AppUserEntity userWithNewPassword = appUserService.updatePassword(userName, newPassword);
+        UserDto userToReturn = map(userWithNewPassword);
+        return ok(userToReturn);
 
     }
 
