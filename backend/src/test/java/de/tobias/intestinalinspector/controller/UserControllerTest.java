@@ -36,7 +36,7 @@ class UserControllerTest {
     private int port;
 
     private String url(){
-        return "http://localhost:"+port+"/api/user";
+        return "http://localhost:"+port;
     }
 
     @Autowired
@@ -59,7 +59,7 @@ class UserControllerTest {
                 .build();
         //WHEN
         HttpEntity<UserDto> httpEntity = new HttpEntity<>(userToCreate);
-        ResponseEntity<UserDto> actualResponse = testRestTemplate.exchange(url(),
+        ResponseEntity<UserDto> actualResponse = testRestTemplate.exchange(url()+"/api/user",
                                                                             HttpMethod.POST,
                                                                             httpEntity,
                                                                             UserDto.class);
@@ -91,35 +91,39 @@ class UserControllerTest {
     @Test
     public void testChangePassword() {
         //GIVEN
+        String username = "Frank";
         AppUserEntity user = AppUserEntity.builder()
-                .userName("Frank")
+                .userName(username)
                 .userRole("user")
                 .userPassword("12345")
                 .id(1)
                 .build();
         appUserRepository.save(user);
         NewPassword newPassword = new NewPassword("54321");
+
+        CredentialsDto credentialsWithNewPassword = CredentialsDto.builder()
+                .userName(username)
+                .userPassword(newPassword.getNewPassword())
+                .build();
+
         //WHEN
+        //change password
         HttpEntity<NewPassword> httpEntity = new HttpEntity<>(newPassword, testAuthorization.Header("Frank", "user"));
-        ResponseEntity<UserDto> actualResponseSetPassword = testRestTemplate.exchange(url()+"/password",
-                                                                            HttpMethod.POST,
+        ResponseEntity<UserDto> actualResponseSetPassword = testRestTemplate.exchange(url()+"/api/user/password",
+                                                                            HttpMethod.PUT,
                                                                             httpEntity,
                                                                             UserDto.class);
 
-        CredentialsDto credentialsWithNewPassword = CredentialsDto.builder()
-                .userPassword("Frank")
-                .userPassword(newPassword.getNewPassword()).build();
-
+        //login in with new password
         ResponseEntity<AccessTokenDto> actualResponseLogin = testRestTemplate.postForEntity(
-                url(),
+                url()+"/auth/access_token",
                 credentialsWithNewPassword,
                 AccessTokenDto.class);
 
         //THEN
         assertEquals(HttpStatus.OK, actualResponseSetPassword.getStatusCode());
 
-        HttpStatus expected = HttpStatus.OK;
-        assertEquals(expected, actualResponseLogin.getStatusCode());
+        assertEquals(HttpStatus.OK, actualResponseLogin.getStatusCode());
         assertThat(actualResponseLogin.getBody().getToken(), is(not("")));
 
     }
