@@ -14,7 +14,7 @@ public interface AppUserRepository extends JpaRepository<AppUserEntity, Long> {
     Optional<AppUserEntity> findByUserName(String name);
 
 
-    @Modifying(clearAutomatically = true)
+    @Modifying
     @Transactional
     @Query("UPDATE AppUserEntity u SET u.userPassword = :encodedPassword WHERE u.userName = :userName")
     void updatePasswordOfUser(@Param("userName") String userName, @Param("encodedPassword") String encodedPassword);
