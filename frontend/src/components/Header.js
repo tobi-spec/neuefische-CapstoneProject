@@ -1,13 +1,20 @@
 import styled from 'styled-components'
 import BackButton from "./BackButton";
 import ProfileButton from "./ProfileButton";
+import {useAuth} from "../auth/AuthProvider";
+import {useLocation} from "react-router-dom";
+import LogoutButton from "./LogoutButton";
 
 export default function Header({ title }) {
+    const {user} = useAuth();
+
+    const location = useLocation()
+
   return (
     <Wrapper>
-        <BackButton/>
+        { location.pathname === "/main" ? <LogoutButton/> : <BackButton/>}
       <h1>{title}</h1>
-        <ProfileButton/>
+        { user && <ProfileButton/>}
     </Wrapper>
   )
 }
