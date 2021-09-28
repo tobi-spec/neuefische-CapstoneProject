@@ -47,3 +47,6 @@ export const removePain = (id, token) =>
 
 export const resetPassword = (newPassword, token) =>
     axios.put(userPath + "/password", newPassword, header(token))
+
+export const deleteUser = token =>
+    axios.delete(userPath + "/deleteAccount", header(token))
