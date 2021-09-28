@@ -5,6 +5,7 @@ import de.tobias.intestinalinspector.repository.FoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class FoodService {
     }
 
 
+
     public FoodEntity add(FoodEntity foodEntity) {
         foodEntity.setDate(dateService.getDate());
         return foodRepository.save(foodEntity);
@@ -30,6 +32,7 @@ public class FoodService {
         return foodRepository.findAllByUserNameOrderByDate(userName);
     }
 
+    @Transactional
     public FoodEntity update(Long id, String newName) {
         Optional<FoodEntity> entityToChange = foodRepository.findById(id);
         if (entityToChange.isPresent()) {
@@ -40,6 +43,7 @@ public class FoodService {
         }
     }
 
+    @Transactional
     public FoodEntity delete(Long id) {
         Optional<FoodEntity> entityToDelete = foodRepository.findById(id);
         if (entityToDelete.isPresent()) {

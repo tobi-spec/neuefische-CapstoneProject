@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,7 @@ public class PainService {
         return painRepository.findAllByUserNameOrderByDate(username);
     }
 
+    @Transactional
     public PainEntity update(Long id, int newNumber) {
         Optional<PainEntity> entityToChange= painRepository.findById(id);
         if(entityToChange.isPresent()) {
@@ -43,6 +45,7 @@ public class PainService {
         }
     }
 
+    @Transactional
     public PainEntity delete(Long id) {
         Optional<PainEntity> entityToDelete = painRepository.findById(id);
         if(entityToDelete.isPresent()) {

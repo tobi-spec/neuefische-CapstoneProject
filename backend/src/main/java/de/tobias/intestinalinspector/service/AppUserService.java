@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,7 @@ public class AppUserService {
         return appUserRepository.findByUserName(username);
     }
 
+    @Transactional
     public AppUserEntity updatePassword(String userName, String newPassword) {
         String encodedPassword = passwordEncoder.encode(newPassword);
         Optional<AppUserEntity> entityToChange = appUserRepository.findByUserName(userName);
