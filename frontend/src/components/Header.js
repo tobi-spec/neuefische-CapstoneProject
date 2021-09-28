@@ -1,13 +1,16 @@
 import styled from 'styled-components'
 import BackButton from "./BackButton";
 import ProfileButton from "./ProfileButton";
+import {useAuth} from "../auth/AuthProvider";
 
 export default function Header({ title }) {
+    const {user} = useAuth();
+
   return (
     <Wrapper>
         <BackButton/>
       <h1>{title}</h1>
-        <ProfileButton/>
+        { user && <ProfileButton/>}
     </Wrapper>
   )
 }
