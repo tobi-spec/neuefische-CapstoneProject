@@ -6,10 +6,10 @@ import InputField from "../components/InputField";
 import {useAuth} from "../auth/AuthProvider";
 import {useState} from "react";
 import Button from "../components/Button";
-import {resetPassword} from "../service/AxiosService";
+import {resetPassword, deleteAccount} from "../service/AxiosService";
 
 export default function Profile(){
-    const {token} = useAuth()
+    const {token, logout} = useAuth()
     const [newPassword, setNewPassword] = useState({ newPassword: ""})
 
     const passwordHandler = event =>
@@ -25,6 +25,13 @@ export default function Profile(){
             .finally(() => setNewPassword({ newPassword: '' }))
     }
 
+    const deleteAccountHandler = () => {
+        deleteAccount(token)
+            .then(response => console.log(response))
+            .then(() => logout())
+            .catch(error => console.error(error))
+    }
+
     return (<Wrapper>
         <Header title="Profile"/>
         <Content>
@@ -37,8 +44,9 @@ export default function Profile(){
                 />
                 <Button onClick={passwordSubmitHandler}>send</Button>
             </form>
-            <p>delete data</p>
-            <p>delete account</p>
+            <div className="delete">
+                <Button onClick={deleteAccountHandler}>delete Account</Button>
+            </div>
         </Content>
         <Footer/>
     </Wrapper>)
@@ -46,8 +54,14 @@ export default function Profile(){
 
 const Wrapper = styled.div`
 
-    .password { 
-      grid-row: 2;
+    .password {
       grid-column: 2;
+      grid-row: 2;
     }
+  
+  .delete {
+    grid-column: 2;
+    grid-row: 3;
+  }
+  
 `
