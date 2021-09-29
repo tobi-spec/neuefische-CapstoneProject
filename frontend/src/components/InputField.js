@@ -1,21 +1,22 @@
+import styled from "styled-components";
+
 export default function InputField({
-  title,
   type,
   name,
   value,
   onChange,
   placeholder,
 }) {
-  return (
-    <div>
-      <p>{title}</p>
-      <input
+  return (<Wrapper
         type={type}
         name={name}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
       />
-    </div>
   )
 }
+
+const Wrapper = styled.input`
+    margin: 5px;
+`

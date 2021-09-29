@@ -20,7 +20,7 @@ export default function Edit({ id, reloadList, editService, cancelHandler }) {
       .then(() => reloadList(token))
       .then(() => cancelHandler())
       .then(error => console.error(error))
-      .finally(() => setNewName(''))
+      .finally(() => setNewName({newValue: ''}))
   }
 
   return (

@@ -9,7 +9,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 
 export default function Main() {
-  const { token } = useAuth()
+  const { token, user } = useAuth()
   const [food, setFood] = useState({ foodName: '' })
   const [pain, setPain] = useState({ painLevel: '' })
 
@@ -43,7 +43,7 @@ export default function Main() {
     <Wrapper>
       <Header title="Inspector´s Notes" />
       <Content>
-        <h1>How do you feel? :)</h1>
+        <h1>Hello {user.username}, how do you feel?</h1>
         <form className="form1" onSubmit={foodSubmitHandler}>
           <InputField
             type="text"
@@ -78,11 +78,13 @@ const Wrapper = styled.div`
     grid-column: 2;
     grid-row: 2;
     display: flex;
+    align-items: center;
   }
 
   .form2 {
     grid-column: 2;
     grid-row: 3;
     display: flex;
+    align-items: center;
   }
 `
