@@ -78,11 +78,13 @@ const Wrapper = styled.div`
     grid-column: 2;
     grid-row: 2;
     display: flex;
+    align-items: center;
   }
 
   .form2 {
     grid-column: 2;
     grid-row: 3;
     display: flex;
+    align-items: center;
   }
 `

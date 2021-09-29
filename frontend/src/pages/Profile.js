@@ -37,7 +37,7 @@ export default function Profile(){
         <Content>
             <form className="password">
                 <InputField
-                    title="Reset Password"
+                    placeholder="Reset Password"
                     type="text"
                     value={newPassword.newPassword}
                     onChange={passwordHandler}

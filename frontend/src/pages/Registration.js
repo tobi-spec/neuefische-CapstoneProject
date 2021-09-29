@@ -7,6 +7,7 @@ import Button from "../components/Button";
 import {createUser} from "../service/AxiosService";
 import {Redirect} from "react-router-dom";
 import {useAuth} from "../auth/AuthProvider";
+import Footer from "../components/Footer";
 
 export default function Registration() {
     const {user, login} = useAuth()
@@ -41,13 +42,13 @@ export default function Registration() {
             <Content>
                 <form onSubmit={signSubmitHandler}>
                     <InputField
-                        title="Username"
+                        placeholder="Username"
                         type="Text"
                         name="userName"
                         value={credentials.userName}
                         onChange={credentialsHandler }/>
                     <InputField
-                        title="Password"
+                        placeholder="Password"
                         type="Text"
                         name="userPassword"
                         value={credentials.userPassword}
@@ -55,6 +56,7 @@ export default function Registration() {
                     <Button>sign</Button>
                 </form>
             </Content>
+            <Footer/>
         </Wrapper>
 }
 

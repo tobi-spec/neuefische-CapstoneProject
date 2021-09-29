@@ -33,14 +33,14 @@ export default function Login() {
       <Content>
         <form onSubmit={submitHandler}>
           <InputField
-            title="Username"
+            placeholder="Username"
             type="Text"
             name="userName"
             value={credentials.userName}
             onChange={credentialsHandler}
           />
           <InputField
-            title="Password"
+            placeholder="Password"
             type="Password"
             name="userPassword"
             value={credentials.userPassword}
