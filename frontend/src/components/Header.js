@@ -14,7 +14,7 @@ export default function Header({ title }) {
     <Wrapper>
         { location.pathname === "/main" ? <LogoutButton/> : <BackButton/>}
       <h1>{title}</h1>
-        { user && <ProfileButton/>}
+        { location.pathname === "/main" ? <ProfileButton/> : null}
     </Wrapper>
   )
 }
