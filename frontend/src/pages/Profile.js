@@ -28,7 +28,7 @@ export default function Profile(){
         <Header title="Profile"/>
         <Content className="content">
             <div className="bnt-1">
-            {reset && <ResetPassword className="bnt-1" cancelHandler={cancelHandler}/>}
+            {reset && <ResetPassword cancelHandler={cancelHandler}/>}
             {remove && <DeleteAccount cancelHandler={cancelHandler}/>}
             </div>
             {!reset && !remove && <Button className="bnt-1" onClick={resetHandler}>reset password</Button>}
