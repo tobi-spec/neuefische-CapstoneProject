@@ -6,8 +6,6 @@ import {useLocation} from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 
 export default function Header({ title }) {
-    const {user} = useAuth();
-
     const location = useLocation()
 
   return (
