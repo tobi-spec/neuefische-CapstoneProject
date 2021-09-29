@@ -24,7 +24,6 @@ export default function Registration() {
         event.preventDefault()
         createUser(credentials)
             .then(response => console.log(response))
-            .catch(error => console.error(error))
             .then(() => login(credentials))
             .catch(error => console.error(error))
             .finally(() => setCredentials({
