@@ -5,8 +5,11 @@ import InputField from "../components/InputField";
 import {useState} from "react";
 import Button from "../components/Button";
 import {createUser} from "../service/AxiosService";
+import {Redirect} from "react-router-dom";
+import {useAuth} from "../auth/AuthProvider";
 
 export default function Registration() {
+    const {user, login} = useAuth()
     const [credentials, setCredentials] = useState({
         userName: "",
         userPassword: "",
@@ -21,10 +24,16 @@ export default function Registration() {
         createUser(credentials)
             .then(response => console.log(response))
             .catch(error => console.error(error))
+            .then(() => login(credentials))
+            .catch(error => console.error(error))
             .finally(() => setCredentials({
                 userName: "",
                 userPassword: "",
             }))
+    }
+
+    if (user) {
+        return <Redirect to="/main" />
     }
 
     return <Wrapper>
