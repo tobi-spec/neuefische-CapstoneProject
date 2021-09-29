@@ -2,51 +2,37 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Content from "../components/Content";
 import Footer from "../components/Footer";
-import InputField from "../components/InputField";
-import {useAuth} from "../auth/AuthProvider";
-import {useState} from "react";
+import ResetPassword from "../components/ResetPassword";
+import DeleteAccount from "../components/DeleteAccount";
 import Button from "../components/Button";
-import {resetPassword, deleteAccount} from "../service/AxiosService";
+import {useState} from "react";
 
 export default function Profile(){
-    const {token, logout} = useAuth()
-    const [newPassword, setNewPassword] = useState({ newPassword: ""})
+    const [reset, setReset] = useState(false)
+    const [remove, setRemove ] = useState(false)
 
-    const passwordHandler = event =>
-        setNewPassword({
-            newPassword: event.target.value
-        })
-
-    const passwordSubmitHandler = event => {
-        event.preventDefault()
-        resetPassword(newPassword, token)
-            .then(response => console.log(response))
-            .catch(error => console.error(error))
-            .finally(() => setNewPassword({ newPassword: '' }))
+    const resetHandler = () => {
+        setReset(true)
     }
 
-    const deleteAccountHandler = () => {
-        deleteAccount(token)
-            .then(response => console.log(response))
-            .then(() => logout())
-            .catch(error => console.error(error))
+    const removeHandler = () => {
+        setRemove(true)
+    }
+
+    const cancelHandler = () => {
+        setReset(false)
+        setRemove(false)
     }
 
     return (<Wrapper>
         <Header title="Profile"/>
-        <Content>
-            <form className="password">
-                <InputField
-                    placeholder="Reset Password"
-                    type="text"
-                    value={newPassword.newPassword}
-                    onChange={passwordHandler}
-                />
-                <Button onClick={passwordSubmitHandler}>send</Button>
-            </form>
-            <div className="delete">
-                <Button onClick={deleteAccountHandler}>delete Account</Button>
+        <Content className="content">
+            <div className="bnt-1">
+            {reset && <ResetPassword className="bnt-1" cancelHandler={cancelHandler}/>}
+            {remove && <DeleteAccount cancelHandler={cancelHandler}/>}
             </div>
+            {!reset && !remove && <Button className="bnt-1" onClick={resetHandler}>reset password</Button>}
+            {!reset && !remove && <Button className="bnt-2" onClick={removeHandler}>remove account</Button>}
         </Content>
         <Footer/>
     </Wrapper>)
@@ -54,14 +40,14 @@ export default function Profile(){
 
 const Wrapper = styled.div`
 
-    .password {
+    .bnt-1{
       grid-column: 2;
       grid-row: 2;
     }
   
-  .delete {
-    grid-column: 2;
-    grid-row: 3;
-  }
+    .bnt-2{
+        grid-column: 2;
+        grid-row: 3;
+    }
   
 `
