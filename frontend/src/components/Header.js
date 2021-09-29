@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import BackButton from "./BackButton";
 import ProfileButton from "./ProfileButton";
-import {useAuth} from "../auth/AuthProvider";
 import {useLocation} from "react-router-dom";
 import LogoutButton from "./LogoutButton";
 
