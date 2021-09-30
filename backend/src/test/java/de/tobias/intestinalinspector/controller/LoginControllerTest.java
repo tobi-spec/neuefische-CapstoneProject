@@ -103,7 +103,7 @@ class LoginControllerTest {
         //THEN
         HttpStatus expected = HttpStatus.BAD_REQUEST;
         assertEquals(expected, responseEntity.getStatusCode());
-        assertThat(responseEntity.getBody(), nullValue());
+        assertThat(responseEntity.getBody().getToken(), nullValue());
     }
 
     @Test
@@ -124,6 +124,6 @@ class LoginControllerTest {
         //THEN
         HttpStatus expected = HttpStatus.BAD_REQUEST;
         assertEquals(expected, responseEntity.getStatusCode());
-        assertThat(responseEntity.getBody(), nullValue());
+        assertThat(responseEntity.getBody().getToken(), nullValue());
     }
 }

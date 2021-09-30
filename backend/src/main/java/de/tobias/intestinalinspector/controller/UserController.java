@@ -1,6 +1,7 @@
 package de.tobias.intestinalinspector.controller;
 
 
+import de.tobias.intestinalinspector.api.CredentialsDto;
 import de.tobias.intestinalinspector.api.NewPassword;
 import de.tobias.intestinalinspector.api.UserDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
@@ -30,9 +31,9 @@ public class UserController {
     }
 
     @PostMapping(CREATE_USER)
-    public ResponseEntity<UserDto> create(@RequestBody UserDto userDto) {
-        AppUserEntity newUser = map(userDto);
-        Optional<AppUserEntity> foundUser = appUserService.findUser(userDto.getUserName());
+    public ResponseEntity<UserDto> create(@RequestBody CredentialsDto credentialsDto) {
+        AppUserEntity newUser = map(credentialsDto);
+        Optional<AppUserEntity> foundUser = appUserService.findUser(newUser.getUserName());
         if(foundUser.isEmpty()){
             AppUserEntity createdUser = appUserService.create(newUser);
             UserDto userToReturn = map(createdUser);
@@ -61,10 +62,10 @@ public class UserController {
         return ok(deletedUser);
     }
 
-    private AppUserEntity map(UserDto userDto) {
+    private AppUserEntity map( CredentialsDto credentialsDto) {
         return AppUserEntity.builder()
-                .userName(userDto.getUserName())
-                .userPassword(userDto.getUserPassword())
+                .userName(credentialsDto.getUserName())
+                .userPassword(credentialsDto.getUserPassword())
                 .build();
     }
 
