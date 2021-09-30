@@ -12,6 +12,7 @@ export default function Main() {
   const { token, user } = useAuth()
   const [food, setFood] = useState({ foodName: '' })
   const [pain, setPain] = useState({ painLevel: '' })
+  const [error, setError] = useState()
 
   const foodHandler = event =>
     setFood({
@@ -27,7 +28,7 @@ export default function Main() {
     event.preventDefault()
     addFood(food, token)
       .then(response => console.log(response))
-      .catch(error => console.error(error))
+      .catch(error => setError(error))
       .finally(() => setFood({ foodName: '' }))
   }
 
@@ -62,6 +63,7 @@ export default function Main() {
           />
           <Button type="submit">save</Button>
         </form>
+        {error && <p className="error">{error.response.data.message}</p>}
       </Content>
       <Footer />
     </Wrapper>
@@ -86,5 +88,10 @@ const Wrapper = styled.div`
     grid-row: 3;
     display: flex;
     align-items: center;
+  }
+  
+  .error {
+    grid-column: 2;
+    grid-row: 4;
   }
 `

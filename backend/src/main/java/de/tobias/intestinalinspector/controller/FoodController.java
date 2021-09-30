@@ -35,8 +35,8 @@ public class FoodController {
     public ResponseEntity<FoodDto> add(@AuthenticationPrincipal AppUserEntity appUser,
                                        @RequestBody FoodDto foodDto) {
         String foodName = foodDto.getFoodName();
-        if(foodName == null || foodName.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if(foodName == null || foodName.isEmpty() || foodName == ""){
+            throw new IllegalArgumentException("please type in food");
         }
         FoodEntity foodToPersist = map(appUser, foodDto);
         FoodEntity persistedFood = foodService.add(foodToPersist);
