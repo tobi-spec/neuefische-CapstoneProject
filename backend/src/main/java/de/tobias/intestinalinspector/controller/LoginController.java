@@ -50,11 +50,11 @@ public class LoginController {
         String password = credentials.getUserPassword();
 
         if(username == null || username.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("username must not be empty");
         }
 
         if(password == null || password.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("password must not be empty");
         }
 
 

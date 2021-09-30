@@ -33,6 +33,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return createRestException(e, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler({
+            IllegalArgumentException.class
+    })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<RestException> handle400(Throwable e) {
+        return createRestException(e, HttpStatus.BAD_REQUEST);
+    }
 
     private ResponseEntity<RestException> createRestException(Throwable e, HttpStatus httpStatus) {
         RestException restException = new RestException(e.getMessage(), httpStatus);

@@ -10,6 +10,7 @@ import Footer from '../components/Footer'
 
 export default function Login() {
   const { login, user } = useAuth()
+  const [error, setError] = useState({})
   const [credentials, setCredentials] = useState({
     userName: '',
     userPassword: '',
@@ -20,7 +21,7 @@ export default function Login() {
 
   const submitHandler = event => {
     event.preventDefault()
-    login(credentials).catch(error => console.error(error))
+    login(credentials).catch(error => setError(error))
   }
 
   if (user) {
@@ -47,6 +48,7 @@ export default function Login() {
             onChange={credentialsHandler}
           />
           <Button type="submit">Login</Button>
+          {error && <p>{error.response.data.error}</p>}
         </form>
       </Content>
       <Footer />
