@@ -19,6 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.security.auth.login.CredentialException;
 
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
@@ -76,7 +77,7 @@ public class LoginController {
 
             return ok(accessToken);
         } catch (AuthenticationException e) {
-            throw new CredentialException("username or password wrong");
+            return new ResponseEntity<>(UNAUTHORIZED);
         }
     }
 }
