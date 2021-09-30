@@ -48,7 +48,7 @@ public class LoginController {
     }
 
     @PostMapping(ACCESS_TOKEN_URL)
-    public ResponseEntity<AccessTokenDto> getAccessToken(@RequestBody CredentialsDto credentials) throws CredentialException {
+    public ResponseEntity<AccessTokenDto> getAccessToken(@RequestBody CredentialsDto credentials){
         String username = credentials.getUserName();
         String password = credentials.getUserPassword();
 
