@@ -37,7 +37,7 @@ export default function Main() {
     addPain(pain, token)
       .then(response => console.log(response))
       .catch(error => console.error(error))
-      .finally(() => setPain({ painLevel: '' }))
+      .finally(() => setPain({ painLevel: "" }))
   }
 
   return (
@@ -56,10 +56,12 @@ export default function Main() {
         </form>
         <form className="form2" onSubmit={painSubmitHandler}>
           <InputField
-            type="text"
+            type="number"
             value={pain.painLevel}
             onChange={painHandler}
             placeholder="experienced pain"
+            max = "10"
+            min="1"
           />
           <Button type="submit">save</Button>
         </form>
@@ -71,6 +73,9 @@ export default function Main() {
 }
 
 const Wrapper = styled.div`
+  
+  position: fixed;
+  
   h1 {
     grid-column: 2;
     grid-row: 1;

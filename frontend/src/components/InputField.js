@@ -6,6 +6,8 @@ export default function InputField({
   value,
   onChange,
   placeholder,
+  min,
+  max
 }) {
   return (<Wrapper
         type={type}
@@ -13,10 +15,14 @@ export default function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
+        min={min}
+        max={max}
       />
   )
 }
 
 const Wrapper = styled.input`
-    margin: 5px;
+    width: 153px;
+    height: 21px;
+    margin:  5px;
 `
