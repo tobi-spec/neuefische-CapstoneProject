@@ -32,6 +32,15 @@ public class UserController {
 
     @PostMapping(CREATE_USER)
     public ResponseEntity<UserDto> create(@RequestBody CredentialsDto credentialsDto) {
+
+        if(credentialsDto.getUserName() == null || credentialsDto.getUserName().isEmpty()){
+            throw new IllegalArgumentException("username must not be empty");
+        }
+
+        if(credentialsDto.getUserPassword() == null || credentialsDto.getUserPassword().isEmpty()){
+            throw new IllegalArgumentException("password must not be empty");
+        }
+
         AppUserEntity newUser = map(credentialsDto);
         Optional<AppUserEntity> foundUser = appUserService.findUser(newUser.getUserName());
         if(foundUser.isEmpty()){
