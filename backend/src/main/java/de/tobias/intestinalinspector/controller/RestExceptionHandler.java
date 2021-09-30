@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import javax.security.auth.login.CredentialException;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -39,6 +40,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<RestException> handle400(Throwable e) {
         return createRestException(e, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({
+            CredentialException.class
+    })
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<RestException> handle401(Throwable e) {
+        return createRestException(e, HttpStatus.UNAUTHORIZED);
     }
 
     private ResponseEntity<RestException> createRestException(Throwable e, HttpStatus httpStatus) {
