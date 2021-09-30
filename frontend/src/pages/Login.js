@@ -10,6 +10,7 @@ import Footer from '../components/Footer'
 
 export default function Login() {
   const { login, user } = useAuth()
+  const [error, setError] = useState()
   const [credentials, setCredentials] = useState({
     userName: '',
     userPassword: '',
@@ -20,7 +21,7 @@ export default function Login() {
 
   const submitHandler = event => {
     event.preventDefault()
-    login(credentials).catch(error => console.error(error))
+    login(credentials).catch(error => setError(error))
   }
 
   if (user) {
@@ -48,6 +49,7 @@ export default function Login() {
           />
           <Button type="submit">Login</Button>
         </form>
+        {error && <p className="error">{error.response.data.message}</p>}
       </Content>
       <Footer />
     </Wrapper>
@@ -55,13 +57,14 @@ export default function Login() {
 }
 
 const Wrapper = styled.div`
-  h1 {
-    grid-column: 2;
-    grid-row: 1;
-  }
 
   form {
     grid-column: 2;
     grid-row: 2;
+  }
+  
+  .error {
+    grid-column: 2;
+    grid-row: 3;
   }
 `

@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 
 export default function Registration() {
     const {user, login} = useAuth()
+    const [error, setError] = useState()
     const [credentials, setCredentials] = useState({
         userName: "",
         userPassword: "",
@@ -25,7 +26,7 @@ export default function Registration() {
         createUser(credentials)
             .then(response => console.log(response))
             .then(() => login(credentials))
-            .catch(error => console.error(error))
+            .catch(error => setError(error))
             .finally(() => setCredentials({
                 userName: "",
                 userPassword: "",
@@ -53,6 +54,7 @@ export default function Registration() {
                         value={credentials.userPassword}
                         onChange={credentialsHandler }/>
                     <Button>sign</Button>
+                    {error && <p className="error">{error.response.data.message}</p>}
                 </form>
             </Content>
             <Footer/>
@@ -64,6 +66,11 @@ const Wrapper = styled.div`
   Form {
     grid-column: 2;
     grid-row: 2;
+  }
+
+  .error {
+    grid-column: 2;
+    grid-row: 3;
   }
 `
 

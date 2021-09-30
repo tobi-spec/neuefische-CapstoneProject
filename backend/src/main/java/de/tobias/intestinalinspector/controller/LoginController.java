@@ -17,6 +17,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.security.auth.login.CredentialException;
+
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
@@ -45,16 +48,16 @@ public class LoginController {
     }
 
     @PostMapping(ACCESS_TOKEN_URL)
-    public ResponseEntity<AccessTokenDto> getAccessToken(@RequestBody CredentialsDto credentials) {
+    public ResponseEntity<AccessTokenDto> getAccessToken(@RequestBody CredentialsDto credentials){
         String username = credentials.getUserName();
         String password = credentials.getUserPassword();
 
         if(username == null || username.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("username must not be empty");
         }
 
         if(password == null || password.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("password must not be empty");
         }
 
 
@@ -74,7 +77,7 @@ public class LoginController {
 
             return ok(accessToken);
         } catch (AuthenticationException e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(UNAUTHORIZED);
         }
     }
 }
