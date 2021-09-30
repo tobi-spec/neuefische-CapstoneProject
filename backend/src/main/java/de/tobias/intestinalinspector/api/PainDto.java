@@ -8,7 +8,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PainDto {
+public class PainDto implements BasicDtoInterface{
 
     private int painLevel;
     private long id;
