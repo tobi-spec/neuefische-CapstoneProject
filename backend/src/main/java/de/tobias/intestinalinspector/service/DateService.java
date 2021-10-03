@@ -1,7 +1,6 @@
 package de.tobias.intestinalinspector.service;
 
-import de.tobias.intestinalinspector.api.FoodDto;
-import de.tobias.intestinalinspector.api.PainDto;
+import de.tobias.intestinalinspector.api.BasicDtoInterface;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,15 +17,9 @@ public class DateService {
         return now.format(dtf);
     }
 
-    public Map<String, List<FoodDto>> sortFoodByDay(List<FoodDto> list){
-        Map<String, List<FoodDto>> entriesPerDay = list.stream()
-                .collect(Collectors.groupingBy(FoodDto::getDate));
-        return entriesPerDay;
-    }
-
-    public Map<String, List<PainDto>> sortPainByDay(List<PainDto> list){
-        Map<String, List<PainDto>> entriesPerDay = list.stream()
-                .collect(Collectors.groupingBy(PainDto::getDate));
+    public <T extends BasicDtoInterface> Map<String, List<T>> sortByDay(List<T> list){
+        Map<String, List<T>> entriesPerDay = list.stream()
+                .collect(Collectors.groupingBy(T::getDate));
         return entriesPerDay;
     }
 }

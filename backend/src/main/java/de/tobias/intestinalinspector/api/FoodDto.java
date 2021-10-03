@@ -8,7 +8,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FoodDto {
+public class FoodDto implements BasicDtoInterface{
 
     private String foodName;
     private long id;

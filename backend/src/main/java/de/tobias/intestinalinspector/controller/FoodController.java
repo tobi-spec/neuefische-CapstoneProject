@@ -9,7 +9,6 @@ import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.DateService;
 import de.tobias.intestinalinspector.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +47,7 @@ public class FoodController {
     public ResponseEntity<FoodMapsDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
         List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
         List<FoodDto> foodListToMap = map(listOfFood);
-        Map<String, List<FoodDto>> results = dateService.sortFoodByDay(foodListToMap);
+        Map<String, List<FoodDto>> results = dateService.sortByDay(foodListToMap);
         FoodMapsDto foodMapsDto = new FoodMapsDto();
 
         for(Map.Entry<String, List<FoodDto>> entry: results.entrySet()){

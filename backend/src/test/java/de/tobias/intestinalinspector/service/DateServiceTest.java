@@ -33,7 +33,7 @@ class DateServiceTest {
         list.add(food1);
         list.add(food2);
         //WHEN
-        Map<String, List<FoodDto>> actual = dateService.sortFoodByDay(list);
+        Map<String, List<FoodDto>> actual = dateService.sortByDay(list);
         //THEN
         Map<String, List<FoodDto>> expected = new HashMap<>();
         expected.put("2021/09/23", List.of(food1));
@@ -59,7 +59,7 @@ class DateServiceTest {
         list.add(pain1);
         list.add(pain2);
         //WHEN
-        Map<String, List<PainDto>> actual = dateService.sortPainByDay(list);
+        Map<String, List<PainDto>> actual = dateService.sortByDay(list);
         //THEN
         Map<String, List<PainDto>> expected = new HashMap<>();
         expected.put("2021/09/23", List.of(pain1));
