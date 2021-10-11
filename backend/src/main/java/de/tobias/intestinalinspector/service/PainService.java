@@ -13,46 +13,22 @@ import java.util.Optional;
 
 
 @Service
-public class PainService {
-
-    private final PainRepository painRepository;
-    private final DateService dateService;
-
-    @Autowired
-    public PainService(PainRepository painRepository, DateService dateService) {
-        this.painRepository = painRepository;
-        this.dateService = dateService;
-    }
+public class PainService extends GenericDBService<PainEntity, PainRepository>{
 
 
-    public PainEntity add(PainEntity painEntity) {
-        painEntity.setDate(dateService.getDate());
-        return painRepository.save(painEntity);
-    }
-
-    public List<PainEntity> getAll(String username) {
-        return painRepository.findAllByUserNameOrderByDate(username);
+    public PainService(DateService dateService, PainRepository repository) {
+        super(dateService, repository);
     }
 
     @Transactional
     public PainEntity update(Long id, int newNumber) {
-        Optional<PainEntity> entityToChange= painRepository.findById(id);
+        Optional<PainEntity> entityToChange= repository.findById(id);
         if(entityToChange.isPresent()) {
             entityToChange.get().setPainLevel(newNumber);
-            return painRepository.save(entityToChange.get());
+            return repository.save(entityToChange.get());
         } else {
             throw new EntityNotFoundException("No such entry found");
         }
     }
 
-    @Transactional
-    public PainEntity delete(Long id) {
-        Optional<PainEntity> entityToDelete = painRepository.findById(id);
-        if(entityToDelete.isPresent()) {
-            painRepository.delete(entityToDelete.get());
-            return entityToDelete.get();
-        } else {
-            throw new EntityNotFoundException("No such entry found");
-        }
-    }
 }

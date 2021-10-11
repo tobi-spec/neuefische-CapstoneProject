@@ -10,47 +10,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FoodService {
+public class FoodService extends GenericDBService<FoodEntity, FoodRepository> {
 
-    private final FoodRepository foodRepository;
-    private final DateService dateService;
-
-    @Autowired
-    public FoodService(FoodRepository foodRepository, DateService dateService) {
-        this.foodRepository = foodRepository;
-        this.dateService = dateService;
-    }
-
-
-
-    public FoodEntity add(FoodEntity foodEntity) {
-        foodEntity.setDate(dateService.getDate());
-        return foodRepository.save(foodEntity);
-    }
-
-    public List<FoodEntity> getAll(String userName) {
-        return foodRepository.findAllByUserNameOrderByDate(userName);
+    public FoodService(DateService dateService, FoodRepository repository) {
+        super(dateService, repository);
     }
 
     @Transactional
     public FoodEntity update(Long id, String newName) {
-        Optional<FoodEntity> entityToChange = foodRepository.findById(id);
+        Optional<FoodEntity> entityToChange = repository.findById(id);
         if (entityToChange.isPresent()) {
             entityToChange.get().setFoodName(newName);
-            return foodRepository.save(entityToChange.get());
+            return repository.save(entityToChange.get());
         } else {
             throw new EntityNotFoundException("No such entry found");
         }
     }
 
-    @Transactional
-    public FoodEntity delete(Long id) {
-        Optional<FoodEntity> entityToDelete = foodRepository.findById(id);
-        if (entityToDelete.isPresent()) {
-            foodRepository.delete(entityToDelete.get());
-            return entityToDelete.get();
-        } else {
-            throw new EntityNotFoundException("No such entry found");
-        }
-    }
 }
