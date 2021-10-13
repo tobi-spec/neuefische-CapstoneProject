@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.cache.support.NullValue;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -22,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         properties = "spring.profiles.active:h2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FoodControllerChangeTest {
 
     @LocalServerPort
@@ -52,17 +54,11 @@ class FoodControllerChangeTest {
         foodRepository.save(filler);
     }
 
-    @AfterEach
-    public void reset() {
-        foodRepository.deleteAll();
-    }
-
 
     @Test
-    @Order(1)
     public void testUpdate() {
         //GIVEN
-        String id = "1";
+        long id = foodRepository.findByUserName("Frank").getId();
         FoodUpdateDto update = FoodUpdateDto.builder()
                 .newValue("ErsatzErbse").build();
         //WHEN
@@ -79,13 +75,13 @@ class FoodControllerChangeTest {
     }
 
     @Test
-    @Order(2)
     public void testUpdateBadId() {
         //GIVEN
         String id = "99";
         FoodUpdateDto update = FoodUpdateDto.builder()
                 .newValue("ErsatzErbse").build();
         //WHEN
+        String foodName = foodRepository.findByUserName("Frank").getFoodName();
         HttpEntity<FoodUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url() + "/" + id,
@@ -93,14 +89,14 @@ class FoodControllerChangeTest {
                 httpEntityPut,
                 FoodDto.class);
         //THEN
+        assertThat(foodName, is(not(nullValue())));
         assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }
 
     @Test
-    @Order(3)
     public void testDelete() {
         //GIVEN
-        String id = "3";
+        long id = foodRepository.findByUserName("Frank").getId();
         //WHEN
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url() + "/" + id,
@@ -114,17 +110,18 @@ class FoodControllerChangeTest {
     }
 
     @Test
-    @Order(4)
     public void testDeleteBadId() {
         //GIVEN
         String id = "99";
         //WHEN
+        String foodName = foodRepository.findByUserName("Frank").getFoodName();
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url() + "/" + id,
                 HttpMethod.DELETE,
                 httpEntityDelete,
                 FoodDto.class);
         //THEN
+        assertThat(foodName, is(not(nullValue())));
         assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }
 }

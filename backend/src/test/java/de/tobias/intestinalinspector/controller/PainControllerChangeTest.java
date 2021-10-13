@@ -15,6 +15,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -22,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         properties = "spring.profiles.active:2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class PainControllerChangeTest {
 
     @LocalServerPort
@@ -52,16 +53,10 @@ class PainControllerChangeTest {
         painRepository.save(filler);
     }
 
-    @AfterEach
-    public void reset(){
-        painRepository.deleteAll();
-    }
-
     @Test
-    @Order(1)
     public void testUpdate(){
         //GIVEN
-        String id = "1";
+        long id = painRepository.findByUserName("Frank").getId();
         PainUpdateDto update = PainUpdateDto.builder()
                 .newValue(1).build();
         //WHEN
@@ -78,13 +73,13 @@ class PainControllerChangeTest {
     }
 
     @Test
-    @Order(2)
     public void testUpdateBadId(){
         //GIVEN
         String id = "99";
         PainUpdateDto update = PainUpdateDto.builder()
                 .newValue(1).build();
         //WHEN
+        int painLevel = painRepository.findByUserName("Frank").getPainLevel();
         HttpEntity<PainUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
                 "user"));
         ResponseEntity<PainDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
@@ -92,14 +87,14 @@ class PainControllerChangeTest {
                 httpEntityPut,
                 PainDto.class);
         //THEN
+        assertThat(painLevel, is(not(nullValue())));
         assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }
 
     @Test
-    @Order(3)
     public void testDelete(){
         //GIVEN
-        String id = "3";
+        long id = painRepository.findByUserName("Frank").getId();
         //WHEN
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<PainDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
@@ -113,17 +108,18 @@ class PainControllerChangeTest {
     }
 
     @Test
-    @Order(4)
     public void testDeleteBadId(){
         //GIVEN
         String id = "99";
         //WHEN
+        int painLevel = painRepository.findByUserName("Frank").getPainLevel();
         HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
         ResponseEntity<PainDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
                 HttpMethod.DELETE,
                 httpEntityDelete,
                 PainDto.class) ;
         //THEN
+        assertThat(painLevel, is(not(nullValue())));
         assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }
 }
