@@ -1,19 +1,18 @@
-package de.tobias.intestinalinspector.service;
+package de.tobias.intestinalinspector.service.dbservice;
 
 import de.tobias.intestinalinspector.model.EntityInterface;
-import de.tobias.intestinalinspector.model.FoodEntity;
-import de.tobias.intestinalinspector.repository.GenericDBRepository;
-import lombok.NoArgsConstructor;
+import de.tobias.intestinalinspector.repository.GenericRepository;
+import de.tobias.intestinalinspector.service.DateService;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class GenericDBService <T extends EntityInterface, G extends GenericDBRepository<T>> {
+public abstract class GenericDBService <T extends EntityInterface, G extends GenericRepository<T>> {
 
     private final DateService dateService;
-    final GenericDBRepository<T> repository;
+    final GenericRepository<T> repository;
 
     public GenericDBService(DateService dateService, G repository) {
         this.dateService = dateService;

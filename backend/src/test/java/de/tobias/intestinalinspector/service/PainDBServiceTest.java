@@ -2,6 +2,7 @@ package de.tobias.intestinalinspector.service;
 
 import de.tobias.intestinalinspector.SpringBootTests;
 import de.tobias.intestinalinspector.model.PainEntity;
+import de.tobias.intestinalinspector.service.dbservice.PainDBService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,10 +11,10 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.jupiter.api.Assertions.*;
 
-class PainServiceTest extends SpringBootTests {
+class PainDBServiceTest extends SpringBootTests {
 
     @Autowired
-    PainService painService;
+    PainDBService painDBService;
 
     @Test
     public void testAddPain(){
@@ -23,7 +24,7 @@ class PainServiceTest extends SpringBootTests {
                 .userName("Frank")
                 .build();
         //WHEN
-        PainEntity addedPain = painService.add(painToAdd);
+        PainEntity addedPain = painDBService.add(painToAdd);
         //THEN
         assertEquals(7, addedPain.getPainLevel());
     }
@@ -36,7 +37,7 @@ class PainServiceTest extends SpringBootTests {
                 .userName("Frank")
                 .build();
         //WHEN
-        PainEntity addedPain = painService.add(painToAdd);
+        PainEntity addedPain = painDBService.add(painToAdd);
         //THEN
         assertThat(addedPain.getDate(), is(not("")));
     }

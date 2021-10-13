@@ -6,7 +6,6 @@ import de.tobias.intestinalinspector.api.NewPassword;
 import de.tobias.intestinalinspector.api.UserDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.service.AppUserService;
-import de.tobias.intestinalinspector.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

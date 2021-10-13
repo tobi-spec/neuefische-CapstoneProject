@@ -1,18 +1,17 @@
-package de.tobias.intestinalinspector.service;
+package de.tobias.intestinalinspector.service.dbservice;
 
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.repository.FoodRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.tobias.intestinalinspector.service.DateService;
 import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class FoodService extends GenericDBService<FoodEntity, FoodRepository> {
+public class FoodDBService extends GenericDBService<FoodEntity, FoodRepository> {
 
-    public FoodService(DateService dateService, FoodRepository repository) {
+    public FoodDBService(DateService dateService, FoodRepository repository) {
         super(dateService, repository);
     }
 

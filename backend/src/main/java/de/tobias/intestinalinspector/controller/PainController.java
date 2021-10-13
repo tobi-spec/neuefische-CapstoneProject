@@ -8,7 +8,7 @@ import de.tobias.intestinalinspector.api.PainUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.service.DateService;
-import de.tobias.intestinalinspector.service.PainService;
+import de.tobias.intestinalinspector.service.dbservice.PainDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,12 +25,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("/api/pain")
 public class PainController {
 
-    private final PainService painService;
+    private final PainDBService painDBService;
     private final DateService dateService;
 
     @Autowired
-    public PainController(PainService painService, DateService dateService) {
-        this.painService = painService;
+    public PainController(PainDBService painDBService, DateService dateService) {
+        this.painDBService = painDBService;
         this.dateService = dateService;
     }
 
@@ -39,14 +39,14 @@ public class PainController {
                                        @RequestBody PainDto painDto){
 
         PainEntity painToPersist = map(appUser, painDto);
-        PainEntity persistedPain = painService.add(painToPersist);
+        PainEntity persistedPain = painDBService.add(painToPersist);
         PainDto painToReturn = map(persistedPain);
         return  ok(painToReturn);
     }
 
     @GetMapping
     public ResponseEntity<PainMapsDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
-        List<PainEntity> listOfPain = painService.getAll(appUser.getUserName());
+        List<PainEntity> listOfPain = painDBService.getAll(appUser.getUserName());
         List<PainDto> painListToMap = map(listOfPain);
         Map<String, List<PainDto>> results = dateService.sortByDay(painListToMap);
         PainMapsDto painMapsDto = new PainMapsDto();
@@ -66,14 +66,14 @@ public class PainController {
     @PutMapping("{id}")
     public ResponseEntity<PainDto> update(@PathVariable Long id, @RequestBody PainUpdateDto updateDto){
         int newNumber = updateDto.getNewValue();
-        PainEntity changedEntity = painService.update(id, newNumber);
+        PainEntity changedEntity = painDBService.update(id, newNumber);
         PainDto returnDto = map(changedEntity);
         return ok(returnDto);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<PainDto> delete(@PathVariable Long id) {
-        PainEntity deleteEntity = painService.delete(id);
+        PainEntity deleteEntity = painDBService.delete(id);
         PainDto returnDto = map(deleteEntity);
         return ok(returnDto);
     }

@@ -1,22 +1,20 @@
-package de.tobias.intestinalinspector.service;
+package de.tobias.intestinalinspector.service.dbservice;
 
-import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.repository.PainRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import de.tobias.intestinalinspector.service.DateService;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class PainService extends GenericDBService<PainEntity, PainRepository>{
+public class PainDBService extends GenericDBService<PainEntity, PainRepository>{
 
 
-    public PainService(DateService dateService, PainRepository repository) {
+    public PainDBService(DateService dateService, PainRepository repository) {
         super(dateService, repository);
     }
 

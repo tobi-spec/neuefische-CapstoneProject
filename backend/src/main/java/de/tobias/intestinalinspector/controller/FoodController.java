@@ -7,7 +7,7 @@ import de.tobias.intestinalinspector.api.FoodUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.DateService;
-import de.tobias.intestinalinspector.service.FoodService;
+import de.tobias.intestinalinspector.service.dbservice.FoodDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,12 +21,12 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequestMapping("api/food")
 public class FoodController {
 
-    private final FoodService foodService;
+    private final FoodDBService foodDBService;
     private final DateService dateService;
 
     @Autowired
-    public FoodController(FoodService foodService, DateService dateService) {
-        this.foodService = foodService;
+    public FoodController(FoodDBService foodDBService, DateService dateService) {
+        this.foodDBService = foodDBService;
         this.dateService = dateService;
     }
 
@@ -38,14 +38,14 @@ public class FoodController {
             throw new IllegalArgumentException("please type in food");
         }
         FoodEntity foodToPersist = map(appUser, foodDto);
-        FoodEntity persistedFood = foodService.add(foodToPersist);
+        FoodEntity persistedFood = foodDBService.add(foodToPersist);
         FoodDto foodToReturn = map(persistedFood);
         return ok(foodToReturn);
     }
 
     @GetMapping
     public ResponseEntity<FoodMapsDto> getAll(@AuthenticationPrincipal AppUserEntity appUser){
-        List<FoodEntity> listOfFood = foodService.getAll(appUser.getUserName());
+        List<FoodEntity> listOfFood = foodDBService.getAll(appUser.getUserName());
         List<FoodDto> foodListToMap = map(listOfFood);
         Map<String, List<FoodDto>> results = dateService.sortByDay(foodListToMap);
         FoodMapsDto foodMapsDto = new FoodMapsDto();
@@ -65,14 +65,14 @@ public class FoodController {
     @PutMapping("{id}")
     public ResponseEntity<FoodDto> update(@PathVariable Long id, @RequestBody FoodUpdateDto updateDto){
         String newName = updateDto.getNewValue();
-        FoodEntity changedEntity = foodService.update(id, newName);
+        FoodEntity changedEntity = foodDBService.update(id, newName);
         FoodDto returnDto = map(changedEntity);
         return ok(returnDto);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity<FoodDto> delete(@PathVariable Long id) {
-        FoodEntity deleteEntity = foodService.delete(id);
+        FoodEntity deleteEntity = foodDBService.delete(id);
         FoodDto returnDto = map(deleteEntity);
         return ok(returnDto);
     }

@@ -7,7 +7,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 import java.util.List;
 
 @NoRepositoryBean
-public interface GenericDBRepository<T> extends JpaRepository<T, Long> {
+public interface GenericRepository<T> extends JpaRepository<T, Long> {
 
     List<T> findAllByUserNameOrderByDate(String userName);
 

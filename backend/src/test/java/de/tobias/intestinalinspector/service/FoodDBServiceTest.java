@@ -2,6 +2,7 @@ package de.tobias.intestinalinspector.service;
 
 import de.tobias.intestinalinspector.SpringBootTests;
 import de.tobias.intestinalinspector.model.FoodEntity;
+import de.tobias.intestinalinspector.service.dbservice.FoodDBService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,10 +14,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-class FoodServiceTest extends SpringBootTests {
+class FoodDBServiceTest extends SpringBootTests {
 
     @Autowired
-    FoodService foodService;
+    FoodDBService foodDBService;
 
     @Test
     public void testAddName(){
@@ -26,7 +27,7 @@ class FoodServiceTest extends SpringBootTests {
                 .userName("Frank")
                 .build();
         //WHEN
-        FoodEntity addedFood = foodService.add(foodToAdd);
+        FoodEntity addedFood = foodDBService.add(foodToAdd);
         //THEN
         assertEquals("Prüfpanacotta", addedFood.getFoodName());
     }
@@ -39,7 +40,7 @@ class FoodServiceTest extends SpringBootTests {
                 .userName("Frank")
                 .build();
         //WHEN
-        FoodEntity addedFood = foodService.add(foodToAdd);
+        FoodEntity addedFood = foodDBService.add(foodToAdd);
         //THEN
         assertThat(addedFood.getDate(), is(not("")));
     }
