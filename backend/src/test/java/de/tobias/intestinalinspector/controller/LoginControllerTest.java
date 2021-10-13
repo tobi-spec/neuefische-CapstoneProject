@@ -1,7 +1,7 @@
 package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.AccessTokenDto;
-import de.tobias.intestinalinspector.api.CredentialsDto;
+import de.tobias.intestinalinspector.api.UserDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.repository.AppUserRepository;
 import org.junit.jupiter.api.Test;
@@ -55,7 +55,7 @@ class LoginControllerTest {
 
         appUserRepository.save(user);
 
-        CredentialsDto credentials = CredentialsDto.builder()
+        UserDto credentials = UserDto.builder()
                 .userName(username)
                 .userPassword(password)
                 .build();
@@ -76,7 +76,7 @@ class LoginControllerTest {
         String username = "FalscherFrank";
         String password = "1";
 
-         CredentialsDto credentials = CredentialsDto.builder()
+        UserDto credentials = UserDto.builder()
                 .userName(username)
                 .userPassword(password)
                 .build();
@@ -95,7 +95,7 @@ class LoginControllerTest {
     @Test
     public void testNullCredentials(){
         //GIVEN
-        CredentialsDto noCredentials = new CredentialsDto();
+        UserDto noCredentials = new UserDto();
         //WHEN
         ResponseEntity<AccessTokenDto> responseEntity = testRestTemplate.postForEntity(url(),
                                                                                     noCredentials,
@@ -112,7 +112,7 @@ class LoginControllerTest {
         String username = "";
         String password = "";
 
-        CredentialsDto emptyCredentials = CredentialsDto.builder()
+        UserDto emptyCredentials = UserDto.builder()
                 .userName(username)
                 .userPassword(password)
                 .build();

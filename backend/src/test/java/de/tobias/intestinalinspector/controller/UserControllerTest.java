@@ -2,7 +2,6 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.TestAuthorization;
 import de.tobias.intestinalinspector.api.AccessTokenDto;
-import de.tobias.intestinalinspector.api.CredentialsDto;
 import de.tobias.intestinalinspector.api.NewPassword;
 import de.tobias.intestinalinspector.api.UserDto;
 import org.junit.jupiter.api.MethodOrderer;
@@ -93,7 +92,7 @@ class UserControllerTest {
                 .build();
         NewPassword newPassword = new NewPassword("54321");
 
-        CredentialsDto credentialsWithNewPassword = CredentialsDto.builder()
+        UserDto credentialsWithNewPassword = UserDto.builder()
                 .userName("Frank")
                 .userPassword(newPassword.getNewPassword())
                 .build();
