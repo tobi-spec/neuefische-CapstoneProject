@@ -8,6 +8,7 @@ import de.tobias.intestinalinspector.api.food.FoodUpdateDto;
 import de.tobias.intestinalinspector.TestAuthorization;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.repository.FoodRepository;
+import de.tobias.intestinalinspector.service.DateService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,8 +32,7 @@ import static org.junit.jupiter.api.Assertions.*;
         properties = "spring.profiles.active:h2",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class FoodControllerTest {
+class FoodControllerAddTest {
 
     @LocalServerPort
     private int port;
@@ -48,23 +48,8 @@ class FoodControllerTest {
     private TestAuthorization testAuthorization;
 
     @Autowired
-    private FoodRepository foodRepository;
+    private DateService dateService;
 
-    @BeforeEach
-    public void fill(){
-        FoodEntity filler = FoodEntity.builder()
-                .id(1)
-                .foodName("Testtrauben")
-                .date("Placeholder")
-                .userName("Frank")
-                .build();
-        foodRepository.save(filler);
-    }
-
-    @AfterEach
-    public void reset(){
-        foodRepository.deleteAll();
-    }
 
     @Test
     public void testAddFood(){
@@ -132,7 +117,7 @@ class FoodControllerTest {
         FoodDto foodDto= FoodDto.builder()
                 .id(1)
                 .foodName("Testtrauben")
-                .date("Placeholder")
+                .date(dateService.getDate())
                 .build();
 
         List<FoodDto> list = new ArrayList<>();
@@ -147,72 +132,6 @@ class FoodControllerTest {
 
         assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
         assertEquals(expectedMap, actualResponse.getBody());
-    }
-
-    @Test
-    public void testUpdate(){
-        //GIVEN
-        String id = "1";
-        FoodUpdateDto update = FoodUpdateDto.builder()
-                .newValue("ErsatzErbse").build();
-        //WHEN
-        HttpEntity<FoodUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
-                "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
-                HttpMethod.PUT,
-                httpEntityPut,
-                FoodDto.class);
-        //THEN
-        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
-        assertNotNull(actualResponse.getBody());
-        assertEquals("ErsatzErbse", actualResponse.getBody().getFoodName());
-    }
-
-    @Test
-    public void testUpdateBadId(){
-        //GIVEN
-        String id = "99";
-        FoodUpdateDto update = FoodUpdateDto.builder()
-                .newValue("ErsatzErbse").build();
-        //WHEN
-        HttpEntity<FoodUpdateDto> httpEntityPut = new HttpEntity<>(update, testAuthorization.Header("Frank",
-                "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
-                HttpMethod.PUT,
-                httpEntityPut,
-                FoodDto.class);
-        //THEN
-        assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
-    }
-
-    @Test
-    public void testDelete(){
-        //GIVEN
-        String id = "1";
-        //WHEN
-        HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
-                HttpMethod.DELETE,
-                httpEntityDelete,
-                FoodDto.class) ;
-        //THEN
-        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
-        assertNotNull(actualResponse.getBody());
-        assertEquals("Testtrauben", actualResponse.getBody().getFoodName());
-    }
-
-    @Test
-    public void testDeleteBadId(){
-        //GIVEN
-        String id = "99";
-        //WHEN
-        HttpEntity<Void> httpEntityDelete = new HttpEntity<>(testAuthorization.Header("Frank", "user"));
-        ResponseEntity<FoodDto> actualResponse = testRestTemplate.exchange(url()+"/" + id,
-                HttpMethod.DELETE,
-                httpEntityDelete,
-                FoodDto.class) ;
-        //THEN
-        assertEquals(HttpStatus.NOT_FOUND, actualResponse.getStatusCode());
     }
 
 }
