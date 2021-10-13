@@ -1,6 +1,7 @@
-package de.tobias.intestinalinspector.api;
+package de.tobias.intestinalinspector.api.food;
 
 
+import de.tobias.intestinalinspector.api.BasicDtoInterface;
 import lombok.*;
 import java.util.Objects;
 
@@ -8,7 +9,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FoodDto implements BasicDtoInterface{
+public class FoodDto implements BasicDtoInterface {
 
     private String foodName;
     private long id;

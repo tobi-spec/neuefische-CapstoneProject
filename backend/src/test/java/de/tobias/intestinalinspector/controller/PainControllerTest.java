@@ -1,7 +1,10 @@
 package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.TestAuthorization;
-import de.tobias.intestinalinspector.api.*;
+import de.tobias.intestinalinspector.api.pain.PainDto;
+import de.tobias.intestinalinspector.api.pain.PainMapDto;
+import de.tobias.intestinalinspector.api.pain.PainMapsDto;
+import de.tobias.intestinalinspector.api.pain.PainUpdateDto;
 import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.repository.PainRepository;
 import org.junit.jupiter.api.*;

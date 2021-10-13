@@ -1,7 +1,7 @@
 package de.tobias.intestinalinspector.service;
 
-import de.tobias.intestinalinspector.api.FoodDto;
-import de.tobias.intestinalinspector.api.PainDto;
+import de.tobias.intestinalinspector.api.food.FoodDto;
+import de.tobias.intestinalinspector.api.pain.PainDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

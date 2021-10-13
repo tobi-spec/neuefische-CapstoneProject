@@ -1,9 +1,9 @@
 package de.tobias.intestinalinspector.controller;
 
-import de.tobias.intestinalinspector.api.FoodDto;
-import de.tobias.intestinalinspector.api.FoodMapDto;
-import de.tobias.intestinalinspector.api.FoodMapsDto;
-import de.tobias.intestinalinspector.api.FoodUpdateDto;
+import de.tobias.intestinalinspector.api.food.FoodDto;
+import de.tobias.intestinalinspector.api.food.FoodMapDto;
+import de.tobias.intestinalinspector.api.food.FoodMapsDto;
+import de.tobias.intestinalinspector.api.food.FoodUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.FoodEntity;
 import de.tobias.intestinalinspector.service.DateService;

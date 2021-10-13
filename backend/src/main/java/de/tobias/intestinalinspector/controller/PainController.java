@@ -1,10 +1,10 @@
 package de.tobias.intestinalinspector.controller;
 
 
-import de.tobias.intestinalinspector.api.PainDto;
-import de.tobias.intestinalinspector.api.PainMapDto;
-import de.tobias.intestinalinspector.api.PainMapsDto;
-import de.tobias.intestinalinspector.api.PainUpdateDto;
+import de.tobias.intestinalinspector.api.pain.PainDto;
+import de.tobias.intestinalinspector.api.pain.PainMapDto;
+import de.tobias.intestinalinspector.api.pain.PainMapsDto;
+import de.tobias.intestinalinspector.api.pain.PainUpdateDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.model.PainEntity;
 import de.tobias.intestinalinspector.service.DateService;

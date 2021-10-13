@@ -1,5 +1,6 @@
-package de.tobias.intestinalinspector.api;
+package de.tobias.intestinalinspector.api.pain;
 
+import de.tobias.intestinalinspector.api.BasicDtoInterface;
 import lombok.*;
 
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PainDto implements BasicDtoInterface{
+public class PainDto implements BasicDtoInterface {
 
     private int painLevel;
     private long id;
