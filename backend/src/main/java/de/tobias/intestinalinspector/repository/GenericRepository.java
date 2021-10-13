@@ -11,5 +11,8 @@ public interface GenericRepository<T> extends JpaRepository<T, Long> {
 
     List<T> findAllByUserNameOrderByDate(String userName);
 
+    T findByUserName(String userName);
+
     void deleteAllByUserName(String userName);
+
 }
