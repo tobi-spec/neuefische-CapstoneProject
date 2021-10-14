@@ -1,12 +1,10 @@
 package de.tobias.intestinalinspector.controller;
 
 
-import de.tobias.intestinalinspector.api.CredentialsDto;
 import de.tobias.intestinalinspector.api.NewPassword;
 import de.tobias.intestinalinspector.api.UserDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.service.AppUserService;
-import de.tobias.intestinalinspector.service.FoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,17 +29,17 @@ public class UserController {
     }
 
     @PostMapping(CREATE_USER)
-    public ResponseEntity<UserDto> create(@RequestBody CredentialsDto credentialsDto) {
+    public ResponseEntity<UserDto> create(@RequestBody UserDto userDto) {
 
-        if(credentialsDto.getUserName() == null || credentialsDto.getUserName().isEmpty()){
+        if(userDto.getUserName() == null || userDto.getUserName().isEmpty()){
             throw new IllegalArgumentException("username must not be empty");
         }
 
-        if(credentialsDto.getUserPassword() == null || credentialsDto.getUserPassword().isEmpty()){
+        if(userDto.getUserPassword() == null || userDto.getUserPassword().isEmpty()){
             throw new IllegalArgumentException("password must not be empty");
         }
 
-        AppUserEntity newUser = map(credentialsDto);
+        AppUserEntity newUser = map(userDto);
         Optional<AppUserEntity> foundUser = appUserService.findUser(newUser.getUserName());
         if(foundUser.isEmpty()){
             AppUserEntity createdUser = appUserService.create(newUser);
@@ -71,10 +69,10 @@ public class UserController {
         return ok(deletedUser);
     }
 
-    private AppUserEntity map( CredentialsDto credentialsDto) {
+    private AppUserEntity map( UserDto userDto) {
         return AppUserEntity.builder()
-                .userName(credentialsDto.getUserName())
-                .userPassword(credentialsDto.getUserPassword())
+                .userName(userDto.getUserName())
+                .userPassword(userDto.getUserPassword())
                 .build();
     }
 

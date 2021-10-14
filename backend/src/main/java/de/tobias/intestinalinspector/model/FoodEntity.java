@@ -12,7 +12,7 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FoodEntity {
+public class FoodEntity implements EntityInterface{
 
     @Id
     @GeneratedValue
@@ -50,4 +50,5 @@ public class FoodEntity {
                 ", date=" + date +
                 '}';
     }
+
 }

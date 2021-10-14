@@ -1,4 +1,4 @@
-package de.tobias.intestinalinspector.api;
+package de.tobias.intestinalinspector.api.pain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

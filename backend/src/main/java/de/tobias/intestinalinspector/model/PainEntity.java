@@ -12,7 +12,7 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PainEntity {
+public class PainEntity implements EntityInterface{
 
     @Id
     @GeneratedValue

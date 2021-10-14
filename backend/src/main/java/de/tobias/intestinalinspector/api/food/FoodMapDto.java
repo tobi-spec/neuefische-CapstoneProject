@@ -1,4 +1,4 @@
-package de.tobias.intestinalinspector.api;
+package de.tobias.intestinalinspector.api.food;
 
 
 import lombok.AllArgsConstructor;

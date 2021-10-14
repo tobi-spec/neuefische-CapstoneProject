@@ -3,7 +3,7 @@ package de.tobias.intestinalinspector.controller;
 
 import de.tobias.intestinalinspector.api.AccessTokenDto;
 import de.tobias.intestinalinspector.api.AppUserDto;
-import de.tobias.intestinalinspector.api.CredentialsDto;
+import de.tobias.intestinalinspector.api.UserDto;
 import de.tobias.intestinalinspector.model.AppUserEntity;
 import de.tobias.intestinalinspector.service.AppUserService;
 import de.tobias.intestinalinspector.service.JwtService;
@@ -16,8 +16,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import javax.security.auth.login.CredentialException;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.ResponseEntity.ok;
@@ -48,9 +46,9 @@ public class LoginController {
     }
 
     @PostMapping(ACCESS_TOKEN_URL)
-    public ResponseEntity<AccessTokenDto> getAccessToken(@RequestBody CredentialsDto credentials){
-        String username = credentials.getUserName();
-        String password = credentials.getUserPassword();
+    public ResponseEntity<AccessTokenDto> getAccessToken(@RequestBody UserDto userDto){
+        String username = userDto.getUserName();
+        String password = userDto.getUserPassword();
 
         if(username == null || username.isEmpty()){
             throw new IllegalArgumentException("username must not be empty");
