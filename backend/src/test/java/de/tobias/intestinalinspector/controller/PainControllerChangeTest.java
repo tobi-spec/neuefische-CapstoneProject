@@ -53,6 +53,11 @@ class PainControllerChangeTest {
         painRepository.save(filler);
     }
 
+    @AfterEach
+    public void reset(){
+        painRepository.deleteAll();
+    }
+
     @Test
     public void testUpdate(){
         //GIVEN
